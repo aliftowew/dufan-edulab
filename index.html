@@ -128,7 +128,7 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 .chip.active{background:var(--text);color:var(--panel)}
 .ctrl{display:flex;gap:6px}
 .ctrl button{width:36px;height:36px;border:0;border-radius:10px;background:var(--chip);color:var(--text);font:600 18px 'Plus Jakarta Sans',sans-serif;cursor:pointer;display:grid;place-items:center}
-.chip:focus-visible,.btn:focus-visible,.ctrl button:focus-visible,.rchip:focus-visible,.grab:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.chip:focus-visible,.btn:focus-visible,.ctrl button:focus-visible,.card:focus-visible,.grab:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
 .sheet{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,560px);background:var(--panel);color:var(--text);
   border-radius:20px 20px 0 0;box-shadow:0 -6px 30px rgba(0,0,0,.18);padding:6px 16px calc(14px + env(safe-area-inset-bottom,0px));
@@ -155,9 +155,29 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 .actions{display:flex;gap:8px;flex-wrap:wrap}
 .list h3{font:600 15px 'Fraunces',Georgia,serif;margin:8px 0 6px}
 .list h3:first-child{margin-top:0}
-.grid{display:flex;flex-wrap:wrap;gap:6px}
-.rchip{border:0;border-radius:10px;padding:7px 10px;font:600 12px 'Plus Jakarta Sans',sans-serif;background:var(--chip);color:var(--text);cursor:pointer}
-.rchip.closed{text-decoration:line-through;opacity:.7}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.card{position:relative;border:0;border-radius:14px;padding:12px 5px 9px;background:var(--chip);color:var(--text);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;overflow:hidden;transition:transform .16s ease,box-shadow .16s ease}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--red)}
+.card.keluarga::before{background:var(--blue)}
+.card.anak::before{background:var(--green)}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card .art{width:100%;height:58px;display:block}
+.card .art svg{width:100%;height:100%;display:block;overflow:visible}
+svg.still *{animation:none!important}
+.card .cname{font:600 11px/1.25 'Plus Jakarta Sans',sans-serif;text-align:center}
+.card .czone{font-size:9.5px;color:var(--muted);line-height:1.2}
+.card.closed .art,.card.closed .cname{opacity:.5}
+.card .cbadge{margin-top:2px;font-size:9px;font-weight:700;letter-spacing:.3px;padding:2px 6px;border-radius:999px;background:var(--red);color:#fff}
+.hero{margin:10px 0 2px;border-radius:16px;background:var(--chip);padding:4px 4px 0;overflow:hidden}
+.hero .art{display:block;height:170px}
+.hero .art svg{width:100%;height:100%;display:block;overflow:visible}
+.hero-cap{margin:0;padding:2px 10px 8px;font-size:11px;color:var(--muted);text-align:center}
+.shot{margin:10px 0 2px}
+.shot img{width:100%;border-radius:12px;display:block}
+.shot figcaption{margin-top:5px;font-size:11px;color:var(--muted);line-height:1.4}
+.shot.empty{border:1px dashed var(--line);border-radius:12px;padding:18px 14px;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+h4.ph{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:16px 0 2px}
 .note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.4}
 
 /* MathJax SVG output */
@@ -812,7 +832,13 @@ var R = String.raw;
 var PHYS = {
   halilintar: {
     konsep: 'Kekekalan energi dan gaya sentripetal di loop',
-    text: 'Kereta hanya ditarik rantai sampai puncak lift. Setelah itu tidak ada mesin: seluruh perjalanan dibiayai energi potensial yang berubah menjadi energi kinetik. Di loop, kereta harus cukup cepat agar tetap menempel rel, karena di puncak loop gaya normal dari rel tidak boleh menjadi nol.',
+    text: [
+      ["Cara kerjanya", "Rantai lift menarik rangkaian kereta naik ke puncak bukit pertama dengan kecepatan tetap. Di situlah satu-satunya tempat mesin bekerja. Begitu kereta melewati puncak, rantai dilepas dan sisa perjalanan sepenuhnya dibiayai oleh ketinggian yang sudah dibeli tadi: turun, loop, dua corkscrew, sampai kembali ke stasiun tanpa satu pun motor mendorong."],
+      ["Fisika yang bekerja", "Energi potensial di puncak, yaitu massa dikali g dikali tinggi, ditukar menjadi energi kinetik saat kereta turun. Karena total energi kekal, kecepatan di titik mana pun hanya bergantung pada selisih ketinggian terhadap puncak, bukan pada bentuk lintasan yang dilewati. Itu sebabnya dua kereta yang start dari tinggi sama akan tiba di lembah dengan laju yang sama meski jalurnya berbeda."],
+      ["Kenapa loop-nya tidak jatuh", "Di puncak loop, kereta terbalik dan gravitasi menarik lurus ke bawah, tepat ke arah pusat lingkaran. Gravitasi justru menjadi gaya sentripetal yang dibutuhkan. Syaratnya kereta harus cukup cepat: kalau v kurang dari akar g dikali R, rel harus menarik kereta ke atas, padahal rel hanya bisa mendorong. Perancang memberi margin besar, biasanya kecepatan nyata dua kali lipat batas minimum itu."],
+      ["Yang tubuhmu rasakan", "Yang kamu rasakan bukan kecepatan, melainkan gaya kursi menekan punggungmu. Di dasar loop kursi harus menahan berat sekaligus membelokkan tubuh ke atas, jadi tekanannya bisa mencapai tiga sampai empat kali berat badan. Di puncak loop, tekanan itu justru berkurang drastis, dan sesaat kamu merasa ringan walaupun sedang terbalik."],
+      ["Coba di lab", "Geser posisi kereta pelan-pelan dan perhatikan dua batang energi di bawah gambar. Batang merah dan biru selalu berjumlah sama, hanya saling menukar isi. Bandingkan kecepatan di dasar lintasan dengan angka v minimum di puncak loop untuk melihat berapa besar margin keamanannya."]
+    ],
     f: [
       [R`E_p = m g h`, 'energi potensial di puncak lift'],
       [R`\tfrac{1}{2} m v^2 = m g (h_0 - h)`, 'kecepatan di titik setinggi h, tanpa gesekan'],
@@ -824,7 +850,12 @@ var PHYS = {
   },
   hysteria: {
     konsep: 'Hukum Newton II dan gaya-g',
-    text: 'Udara bertekanan mendorong kursi ke atas dengan gaya jauh lebih besar dari berat penumpang, sehingga tubuh terasa empat kali lebih berat (4 g). Begitu dorongan berhenti, kursi meluncur bebas: hanya gravitasi yang bekerja, penumpang sesaat merasa tanpa bobot, lalu jatuh kembali.',
+    text: [
+      ["Cara kerjanya", "Empat kursi dikunci di rangka yang meluncur pada menara setinggi 56 meter. Udara bertekanan tinggi dilepaskan sekaligus ke dalam silinder, mendorong rangka ke atas jauh lebih cepat daripada jatuh biasa. Setelah dorongan habis, rangka terus melesat karena kelembamannya sendiri, melambat, berhenti sesaat di puncak, lalu jatuh kembali."],
+      ["Fisika yang bekerja", "Hukum Newton kedua mengatur seluruh perjalanan ini: percepatan adalah gaya total dibagi massa. Saat diluncurkan, gaya dorong udara dikurangi berat menghasilkan percepatan sekitar tiga kali g ke atas. Setelah dorongan berhenti, satu-satunya gaya yang tersisa adalah gravitasi, jadi percepatannya persis g ke bawah, baik ketika masih naik maupun ketika sudah turun."],
+      ["Kenapa terasa 4 g lalu 0 g", "Tubuh tidak bisa merasakan gravitasi secara langsung; yang terasa adalah gaya kursi. Saat dipercepat 3 g ke atas, kursi harus mendorong dengan gaya sebesar m dikali empat g, jadi tubuh terasa empat kali lebih berat. Begitu dorongan dilepas, kursi dan tubuh jatuh bersama dengan percepatan yang sama persis, kursi tidak lagi menekan apa pun, dan inilah rasa tanpa bobot yang bikin perut terangkat."],
+      ["Coba di lab", "Jalankan simulasi dan baca label gaya-g yang berubah di tiap fase: 4 g saat didorong, 0 g selama melayang bebas, lalu sekitar 3 g saat rem magnet bekerja di bawah. Ubah tinggi puncaknya dan lihat bahwa lama melayang bertambah sebanding dengan akar tinggi, bukan sebanding lurus dengan tingginya."]
+    ],
     f: [
       [R`N - mg = ma \;\Rightarrow\; N = m(g + a)`, 'gaya kursi ke tubuh saat diluncurkan'],
       [R`\text{gaya-g} = \frac{N}{mg} = 1 + \frac{a}{g}`, '4 g berarti percepatan kursi a = 3g'],
@@ -835,7 +866,12 @@ var PHYS = {
   },
   tornado: {
     konsep: 'Dua putaran sekaligus',
-    text: 'Lengan besar berputar sementara gondola berputar pada porosnya sendiri. Percepatan sentripetal dari kedua putaran saling menambah, dan karena arah gravitasi terus berubah relatif terhadap tubuh, kepala merasakan gaya-g yang berayun antara positif dan negatif.',
+    text: [
+      ["Cara kerjanya", "Dua lengan besar berputar pada poros pusat sambil terangkat ke posisi hampir tegak. Di ujung tiap lengan menggantung gondola berisi kursi yang bebas berputar pada sumbunya sendiri. Jadi ada dua putaran yang berjalan bersamaan: lengan mengelilingi poros, gondola berjungkir pada dirinya sendiri."],
+      ["Fisika yang bekerja", "Percepatan sentripetal tiap putaran adalah omega kuadrat dikali jari-jari. Karena ada dua putaran dengan pusat berbeda, percepatan yang dirasakan badan adalah jumlah vektor keduanya ditambah gravitasi. Ketiganya kadang searah dan saling menguatkan, kadang berlawanan dan saling meniadakan, dan komposisi itu berubah beberapa kali dalam satu putaran."],
+      ["Kenapa bikin kaget", "Otak memakai telinga dalam untuk menebak ke mana arah bawah. Di Tornado arah itu berpindah terus-menerus dan tidak pernah sempat ditebak, sehingga tubuh kehilangan patokan. Ditambah gaya-g yang berayun antara positif dan negatif, inilah kombinasi yang membuat wahana ini terasa jauh lebih ekstrem daripada sekadar cepat."],
+      ["Coba di lab", "Naikkan rpm sedikit demi sedikit dan amati panjang panah merah, yaitu percepatan sentripetal. Panjangnya tumbuh sebanding kuadrat rpm: menggandakan putaran membuat percepatan menjadi empat kali lipat. Perhatikan juga meter berat semu di sebelah kanan."]
+    ],
     f: [
       [R`a_s = \omega^2 r`, 'percepatan sentripetal tiap putaran'],
       [R`\omega = \frac{2\pi}{T}`, 'kecepatan sudut dari periode putaran'],
@@ -845,7 +881,12 @@ var PHYS = {
   },
   kora: {
     konsep: 'Bandul raksasa: energi potensial menjadi kinetik',
-    text: 'Kora-Kora adalah bandul. Motor hanya memberi dorongan kecil tiap kali perahu lewat titik terendah, sisanya pertukaran energi: di puncak ayunan hampir seluruh energi berbentuk potensial dan perahu berhenti sesaat, di titik terbawah semuanya sudah menjadi kinetik. Rasa melayang di puncak muncul karena kursi ikut jatuh bersama tubuh.',
+    text: [
+      ["Cara kerjanya", "Kora-Kora adalah bandul raksasa berbentuk perahu. Roda karet menekan bagian bawah perahu dan memberi dorongan kecil setiap kali perahu lewat titik terendah, persis seperti mendorong ayunan tepat pada waktunya. Dorongan kecil yang berulang dan sefase itu menumpuk menjadi ayunan sampai 75 derajat."],
+      ["Fisika yang bekerja", "Ketinggian perahu dari titik terbawah adalah L dikali satu dikurangi kosinus theta. Di puncak ayunan perahu berhenti sesaat, seluruh energinya berbentuk potensial. Di titik terbawah semuanya sudah berubah menjadi kinetik, dan lajunya sama dengan akar dari dua g h, tidak bergantung pada berat penumpang."],
+      ["Kenapa perut terasa kosong", "Sensasi terkuat justru muncul di dekat puncak ayunan, bukan di titik tercepat. Di sana perahu sedang dipercepat ke bawah hampir sebesar gravitasi, sehingga kursi hampir tidak menekan tubuh. Sebaliknya di titik terbawah lintasan melengkung ke atas, kursi harus menahan berat sekaligus membelokkan tubuh, dan badan terasa dua kali lebih berat."],
+      ["Coba di lab", "Tarik perahu ke sudut besar lalu lepaskan, dan perhatikan dua batang energi bertukar isi secara berirama. Coba juga ubah sudut simpangan: periode ayunan hampir tidak berubah, karena untuk bandul periode ditentukan panjang lengan dan g, bukan seberapa jauh kamu menariknya."]
+    ],
     f: [
       [R`h = L\,(1 - \cos\theta)`, 'tinggi perahu dari titik terbawah pada sudut simpangan θ'],
       [R`E_p = m g h`, 'energi potensial per penumpang'],
@@ -857,7 +898,12 @@ var PHYS = {
   },
   kicir: {
     konsep: 'Gerak melingkar berlapis',
-    text: 'Tiga lengan berputar pada poros utama, sementara setiap gondola berputar sendiri. Hasilnya lintasan berbentuk epicycle: percepatan di badan bergantung pada kedua putaran, dan arah "bawah" yang dirasakan tubuh terus berpindah.',
+    text: [
+      ["Cara kerjanya", "Tiga lengan menjulur dari poros utama yang berputar, dan di ujung tiap lengan ada gondola berisi kursi yang ikut berputar pada sumbunya sendiri. Lengan utama juga bisa dimiringkan, sehingga bidang putarnya tidak selalu mendatar."],
+      ["Fisika yang bekerja", "Lintasan tiap kursi adalah epicycle, yaitu lingkaran kecil yang pusatnya sendiri sedang mengelilingi lingkaran besar. Percepatan totalnya merupakan penjumlahan vektor dari dua percepatan sentripetal yang berbeda pusat dan berbeda periode. Karena kedua periode itu tidak kelipatan bulat satu sama lain, polanya tidak pernah persis berulang dalam waktu singkat."],
+      ["Kenapa sulit ditebak", "Wahana yang gerakannya berulang teratur cepat dipelajari otak, dan sensasinya menurun setelah beberapa putaran. Kicir-Kicir sebaliknya: karena arah bawah yang dirasakan tubuh berpindah dengan pola yang tidak berulang, otak tidak pernah sempat beradaptasi sepanjang wahana berjalan."],
+      ["Coba di lab", "Model di bawah menyederhanakan Kicir-Kicir menjadi satu putaran saja supaya angkanya terbaca jelas. Perhatikan bahwa berat semu tidak pernah turun di bawah 1 g pada model ini, karena gravitasi dan percepatan sentripetal dijumlahkan sebagai vektor tegak lurus."]
+    ],
     f: [
       [R`a_1 = \omega_1^2 r_1, \qquad a_2 = \omega_2^2 r_2`, 'percepatan sentripetal lengan dan gondola'],
       [R`\vec{a} = \vec{a}_1 + \vec{a}_2`, 'dijumlahkan sebagai vektor, arahnya terus berubah']
@@ -866,7 +912,12 @@ var PHYS = {
   },
   rajawali: {
     konsep: 'Gerak melingkar di ketinggian 31 m',
-    text: 'Gondola bergerak di lintasan lingkaran sambil diangkat ke 31 m. Karena putarannya cepat, tubuh terasa terdorong keluar, padahal sebenarnya kursilah yang terus menarik Anda ke arah pusat lingkaran.',
+    text: [
+      ["Cara kerjanya", "Piringan berisi kursi berputar di ujung sebuah lengan panjang. Lengan itu diangkat perlahan oleh silinder hidraulik sampai penumpang berada di ketinggian sekitar 31 meter, sambil piringannya terus berputar."],
+      ["Fisika yang bekerja", "Sepanjang wahana berjalan, laju putar hampir tetap, tetapi arah gerak berubah terus. Perubahan arah itulah yang disebut percepatan, besarnya omega kuadrat dikali jari-jari dan arahnya selalu menuju pusat lingkaran. Yang menahan tubuh tetap di lingkaran adalah kursi dan sabuk, bukan gaya misterius yang melempar ke luar."],
+      ["Gaya sentrifugal itu tidak ada", "Rasa terlempar ke luar adalah kelembaman: tubuhmu sebenarnya ingin bergerak lurus, dan kursilah yang terus membelokkannya ke dalam. Dari sudut pandang penumpang yang ikut berputar, dorongan ke luar itu terasa nyata, tetapi dari sudut pandang orang yang berdiri di tanah, satu-satunya gaya mendatar yang bekerja justru mengarah ke pusat."],
+      ["Coba di lab", "Ubah rpm dan perhatikan dua hal sekaligus: panah merah ke arah pusat dan meter berat semu. Berat semu adalah akar dari satu ditambah kuadrat perbandingan a terhadap g, jadi pada putaran sedang pun angkanya sudah naik di atas 1 g."]
+    ],
     f: [
       [R`F_s = \frac{m v^2}{r}`, 'gaya sentripetal yang diberikan kursi'],
       [R`E_p = m g h = 70 \cdot 9{,}8 \cdot 31 \approx 21\ \text{kJ}`, 'energi potensial satu penumpang 70 kg di puncak']
@@ -875,7 +926,12 @@ var PHYS = {
   },
   baling: {
     konsep: 'Bandul yang berputar',
-    text: 'Lengan berayun seperti bandul sampai hampir mendatar, sementara bintang berisi kursi berputar 360°. Di puncak ayunan energi potensial maksimal; putaran bintang menambah percepatan sentripetal pada badan penumpang.',
+    text: [
+      ["Cara kerjanya", "Sebuah bintang berisi kursi dipasang di ujung lengan sepanjang belasan meter. Lengan berayun seperti bandul sampai hampir mendatar di kedua sisi, dan pada saat bersamaan bintangnya berputar penuh 360 derajat pada porosnya. Wahana ini sedang tutup sementara, tetapi fisikanya tetap menarik dibahas."],
+      ["Fisika yang bekerja", "Ayunan lengan mengikuti aturan bandul: tinggi maksimum menentukan kecepatan di titik terbawah lewat pertukaran energi potensial dan kinetik. Di atas itu, putaran bintang menambahkan percepatan sentripetalnya sendiri terhadap pusat bintang, yang arahnya ikut berputar relatif terhadap tubuh penumpang."],
+      ["Yang tubuhmu rasakan", "Ketika lengan berada di puncak ayunan dan bintang kebetulan memutar kursimu menghadap ke luar, dua efek bertemu: ayunan sedang membuatmu ringan, sementara putaran bintang menarikmu ke arah lain. Perpaduan dua sumber percepatan dengan periode berbeda inilah yang membuat wahana jenis Star Shape terasa jauh lebih liar daripada bandul biasa."],
+      ["Coba di lab", "Lab di bawah memodelkan bagian ayunannya saja, dengan lengan 14 meter dan simpangan sampai 90 derajat. Perhatikan bahwa pada sudut 90 derajat, seluruh energi di puncak berbentuk potensial dan kecepatan benar-benar nol sesaat sebelum berbalik arah."]
+    ],
     f: [
       [R`h = L\,(1 - \cos\theta)`, 'tinggi kursi pada sudut ayunan θ'],
       [R`v_{\text{bawah}} = \sqrt{2 g h}`, 'kecepatan di titik terbawah'],
@@ -886,7 +942,12 @@ var PHYS = {
   },
   kereta: {
     konsep: 'Kekekalan energi dalam gelap',
-    text: 'Tanpa cahaya, otak kehilangan patokan visual, jadi setiap penurunan terasa lebih tajam. Fisikanya sama seperti coaster lain: energi potensial dari bukit pertama diubah menjadi kecepatan, dan gesekan rel serta udara perlahan memakannya, sehingga bukit berikutnya selalu lebih rendah.',
+    text: [
+      ["Cara kerjanya", "Kereta Misteri adalah coaster keluarga yang seluruh lintasannya berada di dalam ruangan gelap. Rantai menarik kereta ke bukit pertama, lalu sisa perjalanan berjalan sendiri dengan bukit-bukit yang makin lama makin rendah."],
+      ["Fisika yang bekerja", "Energi potensial dari bukit pertama adalah satu-satunya tabungan energi. Setiap meter lintasan, gesekan roda dengan rel dan hambatan udara mengambil sedikit demi sedikit dan mengubahnya menjadi panas serta bunyi. Karena itu tinggi tiap bukit berikutnya harus selalu lebih rendah dari bukit sebelumnya, kalau tidak kereta akan berhenti di tengah jalan."],
+      ["Kenapa gelap membuatnya seru", "Otak menebak gerakan dengan menggabungkan penglihatan dan telinga dalam. Dalam gelap, penglihatan tidak memberi peringatan apa-apa, sehingga setiap belokan dan penurunan datang tanpa antisipasi. Percepatan yang sama terasa jauh lebih tajam ketika tubuh tidak sempat bersiap."],
+      ["Coba di lab", "Model bukit-bukit di bawah memakai tinggi awal 12 meter. Jalankan dan perhatikan bahwa kereta paling lambat di puncak bukit dan paling cepat di lembah, dengan pola yang persis berlawanan dengan batang energi potensialnya."]
+    ],
     f: [
       [R`E_p = m g h`, 'energi di bukit pertama'],
       [R`\tfrac{1}{2} m v^2 = m g (h_0 - h) - W_{\text{gesek}}`, 'energi kinetik setelah dikurangi kerja gesekan']
@@ -896,7 +957,12 @@ var PHYS = {
   },
   niagara: {
     konsep: 'Jatuh bebas dan tumbukan dengan air',
-    text: 'Perahu balok ditarik ke puncak lalu meluncur di seluncuran curam. Energi potensial berubah menjadi kecepatan, dan saat perahu menghantam kolam, sebagian besar energi kinetik itu dipindahkan ke air. Itulah cipratan raksasa yang membasahi penonton di pinggir.',
+    text: [
+      ["Cara kerjanya", "Perahu berbentuk balok kayu ditarik konveyor ke puncak seluncuran, lalu dilepas menuruni jalur curam yang berakhir di kolam dangkal. Sudut seluncurannya dibuat tajam supaya sebagian besar ketinggian berubah menjadi kecepatan dalam waktu singkat."],
+      ["Fisika yang bekerja", "Sampai menyentuh air, ceritanya sama seperti coaster: energi potensial menjadi energi kinetik. Yang khas terjadi sesudahnya. Perahu menghantam air dan diperlambat mendadak, dan air harus menerima seluruh momentum yang hilang itu. Karena air tidak bisa dimampatkan, satu-satunya jalan keluar adalah ke samping dan ke atas."],
+      ["Kenapa cipratannya sebesar itu", "Massa air yang tersingkir hanya sedikit dibanding massa perahu berpenumpang, padahal energi yang dipindahkan besar. Energi besar pada massa kecil berarti kecepatan tinggi, jadi air terlempar jauh melewati pagar dan membasahi penonton yang sedang berdiri di jembatan."],
+      ["Coba di lab", "Jalankan model seluncuran 25 meter dan lihat kecepatan tepat sebelum menyentuh air. Kalikan dengan 3,6 untuk mendapat km per jam, lalu bayangkan energi sebesar itu harus diserap kolam hanya dalam waktu kurang dari satu detik."]
+    ],
     f: [
       [R`v = \sqrt{2 g h}`, 'kecepatan di dasar seluncuran'],
       [R`E_k = \tfrac{1}{2} m v^2`, 'energi yang diserahkan ke air'],
@@ -907,7 +973,12 @@ var PHYS = {
   },
   arung: {
     konsep: 'Gaya apung dan aliran air',
-    text: 'Pompa raksasa mengangkat ribuan liter air per detik ke hulu, lalu gravitasi menggerakkan air itu kembali ke hilir dan membawa perahu. Perahu mengapung karena gaya apung sama dengan berat totalnya, dan bebatuan buatan menyempitkan aliran sehingga air makin deras.',
+    text: [
+      ["Cara kerjanya", "Perahu karet bundar mengapung di kanal buatan. Pompa berkapasitas besar mengangkat air ke bagian hulu, lalu gravitasi membawa air itu turun kembali ke hilir sambil mendorong perahu. Perahu tidak punya mesin sama sekali dan bebas berputar pada sumbunya."],
+      ["Fisika yang bekerja", "Perahu mengapung karena hukum Archimedes: gaya apung sama dengan berat air yang dipindahkan. Semakin banyak penumpang, semakin dalam perahu tercelup, sampai berat air yang tersingkir persis sama dengan berat total perahu dan isinya. Kedalaman tercelup itu sebanding lurus dengan massa total dibagi luas dasar perahu."],
+      ["Kenapa ada bagian yang deras", "Debit air yang mengalir tetap sepanjang kanal. Ketika bebatuan buatan menyempitkan penampang, air yang jumlahnya sama harus lewat lubang yang lebih kecil, jadi lajunya naik. Di titik-titik sempit itulah perahu tersentak dan air paling mudah masuk ke dalam perahu."],
+      ["Coba di lab", "Tambah penumpang satu per satu dan amati kedalaman tercelup serta sisa tinggi bebas lambung. Perhatikan bahwa gaya apung selalu persis sama dengan berat total, sampai lambung kehabisan tinggi dan air mulai masuk."]
+    ],
     f: [
       [R`F_a = \rho\, g\, V_{\text{tercelup}}`, 'hukum Archimedes'],
       [R`Q = A\,v = \text{konstan}`, 'penampang menyempit, air makin cepat (kontinuitas)'],
@@ -917,7 +988,12 @@ var PHYS = {
   },
   paralayang: {
     konsep: 'Gerak melingkar sambil naik-turun',
-    text: 'Lengan berputar mendatar sambil naik-turun, jadi lintasan penumpang mirip spiral. Gaya sentripetal menahan tubuh ke arah pusat; saat naik cepat tubuh terasa berat, saat turun terasa ringan.',
+    text: [
+      ["Cara kerjanya", "Kursi-kursi tergantung pada lengan yang berputar mendatar, sementara seluruh rangka lengan diangkat dan diturunkan oleh poros di tengah. Hasilnya penumpang tidak hanya berputar, tetapi juga naik-turun sambil berputar, sehingga lintasannya menyerupai spiral."],
+      ["Fisika yang bekerja", "Ada dua percepatan yang bekerja bersamaan. Yang pertama mendatar, menuju poros, besarnya omega kuadrat dikali jari-jari, dan itulah yang membelokkan tubuh mengikuti lingkaran. Yang kedua vertikal, berasal dari naik-turunnya rangka, dan inilah yang menambah atau mengurangi tekanan kursi pada tubuh."],
+      ["Kenapa berat badan terasa berubah", "Ketika rangka sedang dipercepat ke atas, kursi harus mendorong lebih kuat daripada sekadar menahan berat, jadi tubuh terasa berat. Ketika rangka melambat di puncak atau mulai turun, dorongan kursi berkurang dan tubuh terasa ringan. Perubahan berat inilah yang memberi sensasi mengambang khas Paralayang."],
+      ["Coba di lab", "Ubah rpm lalu bandingkan periode dan laju. Menggandakan rpm memotong periode menjadi setengah, tetapi melipatempatkan percepatan sentripetal. Hubungan kuadrat ini adalah alasan wahana berputar cepat terasa jauh lebih keras daripada dugaan."]
+    ],
     f: [
       [R`a_s = \omega^2 r`, 'percepatan sentripetal'],
       [R`\text{gaya-g} = \sqrt{1 + \left(\frac{a_s}{g}\right)^2}`, 'berat semu saat berputar mendatar']
@@ -926,7 +1002,12 @@ var PHYS = {
   },
   alap: {
     konsep: 'Coaster keluarga: energi dan gesekan',
-    text: 'Bukit pertamanya rendah, jadi kecepatannya sopan. Prinsipnya tetap sama: energi potensial di bukit pertama menentukan seberapa cepat kereta di lembah, dan gesekan membuat tiap bukit berikutnya harus lebih rendah dari sebelumnya.',
+    text: [
+      ["Cara kerjanya", "Alap-Alap adalah coaster keluarga dengan bukit-bukit rendah dan belokan lebar. Rantai menarik kereta ke bukit pertama yang cuma beberapa meter, lalu kereta menyelesaikan lintasannya sendiri."],
+      ["Fisika yang bekerja", "Aturannya persis sama dengan coaster besar, hanya tabungan energinya lebih kecil. Kecepatan di lembah ditentukan akar dari dua g dikali selisih tinggi, jadi bukit 8 meter hanya menghasilkan sekitar 12,5 meter per detik, kira-kira 45 km per jam."],
+      ["Kenapa terasa aman tapi tetap seru", "Yang menentukan rasa di tubuh bukan kecepatan, melainkan seberapa cepat arah gerak berubah. Alap-Alap memakai belokan berjari-jari besar dan bukit yang landai, sehingga percepatannya tetap rendah walau keretanya bergerak. Anak-anak mendapat sensasi meluncur tanpa gaya-g yang membebani leher."],
+      ["Coba di lab", "Bandingkan model 8 meter ini dengan model Halilintar yang 30 meter. Perhatikan bahwa tinggi hampir empat kali lipat tidak berarti kecepatan empat kali lipat, melainkan hanya sekitar dua kali, karena kecepatan tumbuh mengikuti akar dari tinggi."]
+    ],
     f: [
       [R`E_p = m g h`, 'energi potensial di bukit pertama'],
       [R`v = \sqrt{2 g (h_0 - h)}`, 'kecepatan di titik setinggi h, tanpa gesekan']
@@ -936,7 +1017,12 @@ var PHYS = {
   },
   ontang: {
     konsep: 'Sudut rantai pada ayunan berputar',
-    text: 'Kursi menggantung di rantai dan berputar. Semakin cepat putaran, semakin besar gaya sentripetal yang dibutuhkan, dan rantai makin miring ke luar. Sudut miringnya hanya bergantung pada kecepatan sudut dan jari-jari, bukan massa penumpang. Itu sebabnya kursi kosong dan kursi berisi orang miring dengan sudut yang sama.',
+    text: [
+      ["Cara kerjanya", "Kursi tunggal digantung pada rantai dari piringan yang berputar di atas. Saat piringan mulai berputar, kursi terangkat dan rantainya makin miring ke luar, sampai mencapai sudut yang stabil selama kecepatan putar dijaga tetap."],
+      ["Fisika yang bekerja", "Rantai hanya bisa menarik searah dirinya. Komponen tegaknya menahan berat, komponen mendatarnya menyediakan gaya sentripetal. Dari kedua syarat itu diperoleh tangen sudut sama dengan percepatan sentripetal dibagi g, artinya sudut miring rantai ditentukan kecepatan sudut dan jari-jari saja."],
+      ["Massa penumpang tidak berpengaruh", "Ini bagian yang paling mengejutkan. Massa muncul di kedua sisi persamaan dan saling dicoret, sehingga kursi kosong dan kursi berisi orang dewasa miring dengan sudut yang persis sama. Kalau kamu memperhatikan wahana ini dari bawah, semua kursi memang membentuk satu kerucut yang rapi."],
+      ["Coba di lab", "Geser rpm dan perhatikan sudut rantai di panel kanan. Sudutnya tidak pernah mencapai 90 derajat berapa pun putarannya, karena komponen tegak rantai harus selalu tersisa untuk menahan berat."]
+    ],
     f: [
       [R`\tan\theta = \frac{\omega^2 r}{g}`, 'sudut kemiringan rantai'],
       [R`T_{\text{rantai}} = \frac{m g}{\cos\theta}`, 'tegangan rantai, lebih besar dari berat penumpang']
@@ -945,7 +1031,12 @@ var PHYS = {
   },
   bianglala: {
     konsep: 'Gerak melingkar lambat dan jarak cakrawala',
-    text: 'Bianglala berputar sangat pelan sehingga percepatan sentripetalnya hampir nol; tubuh nyaris tidak merasakan apa pun selain ketinggian. Dari 33 m, cakrawala laut yang terlihat berada sekitar 20 km jauhnya, dibatasi oleh lengkung Bumi.',
+    text: [
+      ["Cara kerjanya", "Roda besar berputar sangat pelan, satu putaran memakan waktu satu menit atau lebih. Gondola digantung pada pin sehingga selalu tetap tegak karena titik beratnya berada di bawah sumbu gantung, seperti timbangan yang selalu kembali datar."],
+      ["Fisika yang bekerja", "Percepatan sentripetalnya omega kuadrat dikali jari-jari. Dengan periode satu menit dan jari-jari 15 meter, angkanya hanya sekitar 0,16 meter per detik kuadrat, kurang dari dua persen g. Itulah sebabnya tubuh nyaris tidak merasakan gerakan sama sekali dan segelas minuman pun tidak akan tumpah."],
+      ["Sejauh mana kamu bisa melihat", "Jarak ke cakrawala dibatasi lengkung Bumi dan kira-kira sama dengan akar dari dua kali jari-jari Bumi dikali ketinggian mata. Dari puncak bianglala di sekitar 33 meter, batas pandang laut berada sekitar 20 kilometer. Naik dua kali lebih tinggi hanya menambah jarak pandang sekitar 1,4 kali, lagi-lagi karena hubungan akar."],
+      ["Coba di lab", "Turunkan rpm sampai nilai terendah dan perhatikan berat semu tetap bertahan di sekitar 1,00 g. Bandingkan dengan wahana lain di daftar: inilah satu-satunya wahana yang percepatannya benar-benar bisa diabaikan."]
+    ],
     f: [
       [R`v = \frac{2\pi r}{T}`, 'laju gondola'],
       [R`a_s = \frac{4\pi^2 r}{T^2}`, 'percepatan sentripetal, kecil sekali untuk T sekitar satu menit'],
@@ -955,7 +1046,12 @@ var PHYS = {
   },
   pontang: {
     konsep: 'Scrambler: penjumlahan kecepatan',
-    text: 'Lengan utama berputar pelan, tiap cluster kereta berputar berlawanan arah. Kecepatan kereta adalah jumlah vektor keduanya: hampir nol di sisi dalam, sangat cepat di sisi luar. Itu sebabnya kereta seolah menyerbu kereta lain lalu berhenti mendadak.',
+    text: [
+      ["Cara kerjanya", "Tiga lengan utama berputar pelan mengelilingi poros tengah. Di ujung tiap lengan ada cluster berisi kereta yang berputar ke arah berlawanan. Jenis wahana ini secara internasional disebut scrambler, dan seluruh sensasinya lahir dari dua putaran berlawanan arah tersebut."],
+      ["Fisika yang bekerja", "Kecepatan sebuah kereta adalah jumlah vektor dari kecepatan lengan utama dan kecepatan putar cluster. Ketika kedua kecepatan itu searah, keduanya dijumlahkan dan kereta melesat. Setengah putaran kemudian keduanya berlawanan arah, saling mengurangi, dan kereta hampir berhenti relatif terhadap tanah."],
+      ["Kenapa seperti hampir bertabrakan", "Mata menilai bahaya dari kecepatan relatif, bukan kecepatan absolut. Saat keretamu sedang berada di fase cepat dan kereta seberang di fase lambat, jarak keduanya menyusut dengan cepat, dan otak berteriak akan terjadi tabrakan. Sesaat kemudian kedua kereta berbelok, jarak melebar lagi, dan tidak pernah terjadi apa-apa."],
+      ["Coba di lab", "Model di bawah menyederhanakan Pontang-Pontang menjadi satu lingkaran. Ubah rpm dan perhatikan panah biru, yaitu arah kecepatan. Bayangkan panah kedua dari cluster yang berputar berlawanan, lalu jumlahkan keduanya secara vektor."]
+    ],
     f: [
       [R`\vec{v} = \vec{\omega}_1 \times \vec{r}_1 + \vec{\omega}_2 \times \vec{r}_2`, 'kecepatan kereta sebagai jumlah dua putaran'],
       [R`v_{\max} = \omega_1 r_1 + \omega_2 r_2`, 'laju tertinggi di sisi luar lintasan']
@@ -964,7 +1060,12 @@ var PHYS = {
   },
   ombang: {
     konsep: 'Gerak melingkar pada bidang miring',
-    text: 'Piringan berputar lalu dimiringkan. Di bagian tinggi lintasan penumpang melawan gravitasi dan terasa ringan, di bagian rendah terasa lebih berat, seperti terombang-ambing gelombang.',
+    text: [
+      ["Cara kerjanya", "Piringan besar berisi kursi berputar pada porosnya, lalu seluruh piringan dimiringkan sehingga bidang putarnya tidak lagi mendatar. Penumpang jadi bergerak naik di satu sisi lintasan dan turun di sisi seberangnya, berulang-ulang seperti diayun gelombang laut."],
+      ["Fisika yang bekerja", "Percepatan sentripetal tetap mengarah ke pusat piringan, tetapi karena piringan miring, arah itu kini punya komponen tegak. Di sisi rendah lintasan, komponen tersebut menambah efek gravitasi. Di sisi tinggi, komponen itu justru melawan gravitasi."],
+      ["Kenapa terasa berayun", "Dalam satu putaran, berat semu naik dan turun secara berirama mengikuti posisi di lintasan. Irama yang teratur dan periodenya beberapa detik inilah yang diterjemahkan otak sebagai rasa terombang-ambing, mirip perahu di gelombang panjang."],
+      ["Coba di lab", "Model mendatar di bawah menunjukkan besar percepatan sentripetal pada tiap rpm. Untuk piringan yang dimiringkan sebesar theta, tambahkan atau kurangkan sekitar a dikali sinus theta pada arah tegak untuk memperkirakan berat semu di sisi rendah dan sisi tinggi."]
+    ],
     f: [
       [R`a_s = \omega^2 r`, 'percepatan sentripetal'],
       [R`\Delta E_p = m g \cdot 2 r \sin\alpha`, 'selisih energi potensial antara puncak dan lembah piringan miring α']
@@ -973,7 +1074,12 @@ var PHYS = {
   },
   turbo: {
     konsep: 'Jatuh bebas',
-    text: 'Kursi dinaikkan pelan ke 8 m lalu dilepas. Selama jatuh hanya gravitasi yang bekerja, sehingga sekitar satu detik penumpang merasa hampir tanpa bobot, sebelum rem magnet memperlambatnya di bawah.',
+    text: [
+      ["Cara kerjanya", "Kursi dinaikkan pelan ke puncak menara mini, ditahan sebentar, lalu kuncian dilepas. Kursi jatuh bebas beberapa meter sebelum rem magnet menangkapnya dengan halus menjelang dasar menara."],
+      ["Fisika yang bekerja", "Selama meluncur turun, satu-satunya gaya yang berarti adalah gravitasi, sehingga percepatannya g dan tingginya berkurang mengikuti setengah g t kuadrat. Jatuh dari 8 meter memakan waktu sekitar 1,3 detik dan berakhir pada laju sekitar 12,5 meter per detik."],
+      ["Rem tanpa sentuhan", "Rem magnet bekerja tanpa kampas. Magnet permanen di kursi bergerak melewati pelat tembaga, menimbulkan arus pusar di dalam pelat, dan arus itu menciptakan medan yang melawan gerak. Gaya remnya sebanding dengan kecepatan, jadi pengereman otomatis kuat saat cepat dan lembut saat sudah pelan, dan tidak ada komponen yang aus."],
+      ["Coba di lab", "Ubah tinggi jatuh dan bandingkan lama jatuh bebas dengan kecepatan tiba di bawah. Untuk menggandakan waktu melayang, tingginya harus dijadikan empat kali lipat, itulah kenapa drop tower dewasa dibangun sangat tinggi."]
+    ],
     f: [
       [R`t = \sqrt{\frac{2h}{g}}`, 'lama jatuh bebas dari tinggi h'],
       [R`v = \sqrt{2 g h}`, 'kecepatan saat tiba di bawah'],
@@ -983,7 +1089,12 @@ var PHYS = {
   },
   karavel: {
     konsep: 'Gerak melingkar dengan lintasan bergelombang',
-    text: 'Perahu-perahu berputar mengelilingi poros sambil naik-turun di rel bergelombang. Lajunya tetap, tapi arah geraknya terus berubah, itulah percepatan sentripetal yang dirasakan sebagai dorongan ke luar.',
+    text: [
+      ["Cara kerjanya", "Perahu-perahu kecil dipasang pada lengan yang berputar mengelilingi poros, dan roda di bawah tiap perahu berjalan di atas rel yang dibuat bergelombang. Putaran mendatar berubah menjadi gerakan naik-turun tanpa motor tambahan."],
+      ["Fisika yang bekerja", "Lajunya boleh tetap, tetapi arah geraknya berubah terus, dan perubahan arah itu sudah termasuk percepatan. Ditambah gelombang rel, ada percepatan tegak yang berganti tanda setiap kali perahu melewati puncak dan lembah rel."],
+      ["Kenapa terasa ringan di puncak gelombang", "Di puncak gelombang rel, perahu sedang dipercepat ke bawah, jadi lantai mengurangi tekanannya pada kaki dan tubuh terasa ringan. Di lembah gelombang terjadi kebalikannya. Prinsipnya sama dengan mobil yang melewati jembatan melengkung dengan kecepatan tinggi."],
+      ["Coba di lab", "Jari-jarinya kecil, hanya sekitar 4 meter, jadi walau rpm dinaikkan, percepatan sentripetalnya tetap jauh lebih rendah daripada wahana dewasa. Coba bandingkan angkanya dengan Tornado pada rpm yang sama."]
+    ],
     f: [
       [R`v = \omega r`, 'laju perahu'],
       [R`a_s = \omega^2 r`, 'percepatan sentripetal']
@@ -992,7 +1103,12 @@ var PHYS = {
   },
   zigzag: {
     konsep: 'Momentum dan impuls',
-    text: 'Saat dua mobil bertabrakan, momentum total sebelum dan sesudah tumbukan sama. Bemper karet memperpanjang waktu tumbukan, sehingga gaya yang dirasakan penumpang jauh lebih kecil daripada menabrak benda keras: impulsnya sama, waktunya lebih lama.',
+    text: [
+      ["Cara kerjanya", "Mobil bumper mengambil listrik dari lantai dan langit-langit arena, dan tiap mobil dikelilingi bemper karet tebal berisi udara. Lantainya licin dan rata supaya mobil mudah berbelok dan bertabrakan dari segala arah."],
+      ["Fisika yang bekerja", "Momentum total dua mobil sebelum tabrakan selalu sama dengan sesudahnya. Kalau mobil bermassa sama saling bertabrakan dari depan dan tabrakannya lenting, keduanya praktis bertukar kecepatan. Kalau massanya berbeda, mobil yang lebih ringan terpental jauh lebih cepat."],
+      ["Kenapa bemper karet penting", "Impuls adalah gaya dikali waktu, dan besarnya sudah ditentukan oleh perubahan momentum yang harus terjadi. Karena impulsnya tetap, satu-satunya cara memperkecil gaya adalah memperpanjang waktu tumbukan. Bemper karet yang mengempis melakukan tepat itu: tabrakan berlangsung sekitar 0,15 detik alih-alih 0,02 detik, dan gaya yang sampai ke leher penumpang turun sampai sekitar sepersepuluh."],
+      ["Coba di lab", "Atur massa kedua mobil lalu jalankan tabrakannya. Bandingkan dua baris terakhir pada pembacaan: gaya dengan bemper karet dan gaya kalau tabrakannya keras. Angkanya menjelaskan kenapa sabuk pengaman dan airbag di mobil sungguhan bekerja dengan prinsip yang sama."]
+    ],
     f: [
       [R`m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2'`, 'kekekalan momentum'],
       [R`F\,\Delta t = \Delta p`, 'impuls: waktu tumbukan lebih lama, gaya lebih kecil'],
@@ -1002,7 +1118,12 @@ var PHYS = {
   },
   poci: {
     konsep: 'Dua putaran sekaligus',
-    text: 'Piringan besar berputar, dan tiap cangkir berputar sendiri saat penumpang memutar setirnya. Percepatan yang dirasakan adalah gabungan keduanya dengan arah yang terus berubah, itu yang membuat pusing walau lajunya pelan.',
+    text: [
+      ["Cara kerjanya", "Piringan besar berputar, di atasnya ada piringan-piringan kecil yang juga berputar, dan di atas tiap piringan kecil duduk cangkir yang bisa diputar sendiri oleh penumpang lewat setir di tengahnya. Jadi ada tiga tingkat putaran yang bisa berjalan bersamaan."],
+      ["Fisika yang bekerja", "Setiap tingkat putaran menyumbang percepatan sentripetalnya masing-masing, dan ketiganya dijumlahkan sebagai vektor. Karena arah tiap sumbangan berubah dengan periode yang berbeda, percepatan total di badan penumpang berubah-ubah dengan pola yang rumit meski setiap putarannya sendiri pelan."],
+      ["Kenapa pusing walau tidak cepat", "Telinga dalam punya tiga kanal setengah lingkaran yang mendeteksi putaran pada tiga sumbu. Putaran bertingkat merangsang ketiganya sekaligus dengan pola yang tidak cocok dengan apa yang dilihat mata. Ketidakcocokan antara mata dan telinga dalam inilah penyebab pusing, bukan besarnya kecepatan."],
+      ["Coba di lab", "Model satu lingkaran di bawah sengaja dibuat pelan, maksimal 8 rpm. Perhatikan bahwa percepatannya kecil, tetapi di wahana asli kamu merasakan tiga percepatan seperti itu sekaligus dengan arah yang terus berganti."]
+    ],
     f: [
       [R`\vec{a} = \omega_1^2\, \vec{r}_1 + \omega_2^2\, \vec{r}_2`, 'jumlah percepatan piringan dan cangkir']
     ],
@@ -1010,7 +1131,12 @@ var PHYS = {
   },
   galactica: {
     konsep: 'Cahaya sebagai pembawa sinyal',
-    text: 'Pistol di Galactica memancarkan cahaya inframerah berkode; sensor di tiap target menerimanya dan komputer menghitung skor. Cahaya menempuh 3 m hanya dalam 10 nanodetik, jadi tidak ada "peluru" yang harus ditunggu atau dikoreksi lintasannya.',
+    text: [
+      ["Cara kerjanya", "Kendaraan berjalan pelan di rel melewati serangkaian ruangan bertema Mars. Tiap penumpang memegang pistol yang memancarkan berkas inframerah berkode, dan tiap target punya sensor penerima yang tahu kode mana yang mengenainya, sehingga skor bisa dihitung per orang."],
+      ["Fisika yang bekerja", "Cahaya inframerah adalah gelombang elektromagnetik yang merambat 300 juta meter per detik. Menempuh jarak 3 meter ke target hanya butuh sekitar 10 nanodetik, jauh lebih singkat daripada waktu reaksi manusia yang sekitar 200 juta nanodetik."],
+      ["Kenapa tidak perlu memimpin sasaran", "Penembak jitu sungguhan harus mengarahkan senapan ke depan sasaran yang bergerak dan mengoreksi jatuhnya peluru karena gravitasi. Dengan cahaya, kedua koreksi itu hilang sama sekali: tidak ada lintasan parabola, tidak ada waktu terbang yang berarti. Titik yang kamu bidik adalah titik yang kena."],
+      ["Kode supaya tidak tertukar", "Kalau semua pistol memancarkan cahaya yang sama, sensor tidak akan tahu siapa yang menembak. Karena itu tiap pistol mengedipkan inframerahnya dalam pola waktu tertentu, semacam sidik jari digital. Remote televisi di rumah memakai prinsip yang persis sama."]
+    ],
     f: [
       [R`c = \lambda f`, 'hubungan panjang gelombang dan frekuensi cahaya'],
       [R`t = \frac{d}{c} = \frac{3\ \text{m}}{3 \times 10^{8}\ \text{m/s}} = 10\ \text{ns}`, 'waktu tempuh sinyal ke target'],
@@ -1019,7 +1145,12 @@ var PHYS = {
   },
   istana: {
     konsep: 'Hukum Archimedes',
-    text: 'Perahu mengapung karena mendesak air seberat dirinya beserta penumpang. Makin banyak penumpang, perahu tenggelam lebih dalam sampai berat air yang dipindahkan sama dengan beban. Air dialirkan pelan oleh pompa sehingga perahu terbawa arus tanpa mesin.',
+    text: [
+      ["Cara kerjanya", "Perahu berjalan di kanal dangkal melewati ratusan boneka dari berbagai daerah dan negara. Air dialirkan pelan oleh pompa, dan perahu hanya mengikuti arus, tanpa mesin dan tanpa rel penggerak."],
+      ["Fisika yang bekerja", "Hukum Archimedes menyatakan gaya apung sama dengan berat fluida yang dipindahkan benda. Perahu tenggelam sampai kedalaman tertentu sehingga berat air yang tersingkir persis mengimbangi berat perahu beserta penumpang. Kedalaman itu sama dengan massa total dibagi hasil kali massa jenis air dengan luas dasar perahu."],
+      ["Kenapa kanalnya dangkal", "Yang menentukan perahu mengapung atau tidak bukan kedalaman air, melainkan volume air yang dipindahkan. Kanal setinggi setengah meter sudah cukup selama lambung perahu tidak menyentuh dasar. Kanal dangkal juga membuat wahana lebih aman dan hemat air."],
+      ["Coba di lab", "Tambah penumpang satu per satu dan perhatikan angka gaya apung selalu sama persis dengan berat total. Kalau jumlah penumpang melewati kapasitas, sisa tinggi bebas habis dan air mulai masuk ke dalam perahu."]
+    ],
     f: [
       [R`F_a = \rho_{\text{air}}\, g\, V_{\text{tercelup}}`, 'gaya apung'],
       [R`F_a = (m_{\text{perahu}} + m_{\text{penumpang}})\, g`, 'saat mengapung, gaya apung sama dengan berat total'],
@@ -1029,7 +1160,12 @@ var PHYS = {
   },
   turangga: {
     konsep: 'Gerak melingkar beraturan dan gerak harmonik',
-    text: 'Platform berputar dengan laju tetap, sementara kuda naik-turun mengikuti pola sinus yang digerakkan poros engkol: gerak harmonik sederhana yang menumpang pada gerak melingkar beraturan.',
+    text: [
+      ["Cara kerjanya", "Komidi putar klasik: sebuah platform berputar dengan laju tetap, sementara kuda-kudanya naik-turun digerakkan poros engkol yang terhubung ke sumbu putar. Satu motor menghasilkan dua gerakan sekaligus."],
+      ["Fisika yang bekerja", "Putaran platform adalah gerak melingkar beraturan: laju tetap, arah berubah terus. Naik-turunnya kuda adalah gerak harmonik sederhana, karena poros engkol mengubah putaran seragam menjadi ketinggian yang mengikuti pola sinus terhadap waktu."],
+      ["Hubungan lingkaran dan sinus", "Kalau kamu memandang sebuah titik yang bergerak melingkar beraturan dari samping, yang kamu lihat persis gerak harmonik sederhana. Komidi putar adalah peraga fisika yang sangat baik untuk hubungan itu: putaran dan gelombang sinus sebenarnya dua cara memandang gerakan yang sama."],
+      ["Coba di lab", "Ubah rpm dan perhatikan periode putaran. Di wahana asli, periode naik-turun kuda sama persis dengan periode putaran platform, karena keduanya digerakkan poros yang sama."]
+    ],
     f: [
       [R`v = \omega r`, 'laju kuda, makin cepat di lingkaran luar'],
       [R`y(t) = A \sin(\omega t)`, 'gerak naik-turun kuda']
@@ -1038,7 +1174,13 @@ var PHYS = {
   },
   rango: {
     konsep: 'Persepsi gravitasi di lantai miring',
-    text: 'Rumah dan lantainya dimiringkan bersama, jadi mata melihat lantai "datar" padahal telinga dalam merasakan gravitasi yang miring. Bola bahkan bisa tampak menggelinding ke atas: sebenarnya ia turun mengikuti komponen gravitasi searah kemiringan.',
+    text: [
+      ["Cara kerjanya", "Seluruh rumah dibangun miring beberapa derajat, termasuk lantai, dinding, perabot, dan kusen jendelanya. Tidak ada satu pun bagian yang bisa dijadikan patokan tegak oleh mata."],
+      ["Fisika yang bekerja", "Gravitasi tentu saja tetap tegak lurus ke pusat Bumi. Pada lantai yang miring sebesar theta, gravitasi terurai menjadi komponen tegak lurus lantai sebesar g kosinus theta dan komponen sejajar lantai sebesar g sinus theta. Komponen sejajar itulah yang menarik benda menuruni lantai."],
+      ["Kenapa bola tampak naik", "Mata memakai garis-garis lantai dan dinding sebagai acuan horizontal, sehingga otak menyimpulkan lantai itu datar. Ketika bola menggelinding mengikuti komponen gravitasi, arahnya tampak menanjak menurut acuan palsu tadi. Sebenarnya bola selalu turun, hanya definisi bawah yang salah dibaca."],
+      ["Telinga dalam ikut bingung", "Organ otolit di telinga dalam merasakan arah gravitasi yang sebenarnya dan melaporkan bahwa tubuh sedang miring. Mata melaporkan sebaliknya. Konflik dua laporan ini membuat sebagian orang langsung pusing atau mual setelah beberapa menit di dalam."],
+      ["Coba di lab", "Naikkan sudut kemiringan sedikit demi sedikit dengan gesekan kecil, dan lihat percepatannya tumbuh mengikuti sinus theta. Lalu naikkan koefisien gesek sampai bola berhenti bergerak sama sekali."]
+    ],
     f: [
       [R`a = g \sin\alpha`, 'percepatan benda di bidang miring licin'],
       [R`a = g\,(\sin\alpha - \mu\cos\alpha)`, 'dengan gesekan; diam jika μ ≥ tan α']
@@ -1047,7 +1189,12 @@ var PHYS = {
   },
   riana: {
     konsep: 'Pemantulan dan pembiasan di labirin kaca',
-    text: 'Kaca bening dan cermin sama-sama memantulkan cahaya, sehingga otak sulit membedakan jalan asli dengan pantulannya. Cahaya yang menembus kaca juga dibelokkan, membuat jarak terasa salah.',
+    text: [
+      ["Cara kerjanya", "Labirin ini dibangun dari panel kaca bening dan panel cermin yang dipasang berselang-seling dengan ukuran dan bingkai yang sama. Dari luar keduanya terlihat nyaris identik."],
+      ["Fisika yang bekerja", "Cermin memantulkan hampir seluruh cahaya sesuai hukum pemantulan: sudut datang sama dengan sudut pantul. Kaca bening meneruskan sebagian besar cahaya, tetapi juga memantulkan sekitar empat persen di tiap permukaan. Karena itu kaca bening pun memberi bayangan samar yang membingungkan."],
+      ["Kenapa otak tertipu", "Otak menduga cahaya selalu merambat lurus dari benda ke mata. Pada pantulan cermin, dugaan itu menghasilkan bayangan yang seolah berada di belakang cermin sejauh benda aslinya di depan. Lorong pantulan karena itu terlihat persis senyata lorong asli, lengkap dengan kedalaman dan perspektifnya."],
+      ["Sedikit pembiasan", "Saat melewati kaca yang agak tebal, berkas cahaya sedikit bergeser karena kecepatan cahaya di dalam kaca lebih lambat daripada di udara. Pergeseran kecil itu membuat perkiraan jarak meleset sedikit, cukup untuk membuat tangan menabrak panel yang dikira masih jauh."]
+    ],
     f: [
       [R`\theta_{\text{datang}} = \theta_{\text{pantul}}`, 'hukum pemantulan'],
       [R`n_1 \sin\theta_1 = n_2 \sin\theta_2`, 'hukum Snellius untuk pembiasan'],
@@ -1056,7 +1203,12 @@ var PHYS = {
   },
   tembak: {
     konsep: 'Sensor cahaya dan waktu reaksi',
-    text: 'Senapan memancarkan berkas inframerah dan tiap sasaran memakai sensor fotodioda. Tidak ada peluru, jadi tidak ada lintasan parabola yang perlu dikoreksi. Skor ditentukan oleh waktu reaksi manusia, sekitar 0,2 detik, dan kestabilan bidikan.',
+    text: [
+      ["Cara kerjanya", "Senapan memancarkan berkas inframerah sempit, dan tiap sasaran dipasangi fotodioda yang menghasilkan arus kecil ketika terkena cahaya itu. Rangkaian di dalam sasaran memperkuat arus itu dan menghitungnya sebagai satu tembakan sah."],
+      ["Fisika yang bekerja", "Fotodioda bekerja lewat efek fotolistrik: foton yang datang membebaskan pembawa muatan di dalam bahan semikonduktor, dan muatan itu mengalir sebagai arus yang sebanding dengan terang cahaya yang diterima. Sensor hanya peka pada panjang gelombang inframerah agar lampu ruangan tidak ikut terhitung."],
+      ["Tidak ada peluru, tidak ada parabola", "Peluru sungguhan jatuh mengikuti lintasan parabola dan butuh koreksi sesuai jarak. Cahaya praktis tiba seketika dan lintasannya lurus, jadi keterampilan yang diuji berubah total: bukan menghitung jarak, melainkan menstabilkan bidikan dan bereaksi cepat."],
+      ["Batasnya ada di tubuhmu", "Waktu reaksi manusia dari melihat sampai jari menekan pelatuk sekitar 0,2 detik, dan itu jauh lebih lama daripada waktu tempuh cahaya. Karena itu skor hampir sepenuhnya ditentukan seberapa stabil tanganmu memegang senapan dan seberapa cepat matamu memutuskan."]
+    ],
     f: [
       [R`t_{\text{sinyal}} = \frac{d}{c} \approx 10\ \text{ns}`, 'sinyal tiba nyaris seketika'],
       [R`t_{\text{reaksi}} \approx 0{,}2\ \text{s}`, 'yang lambat justru manusianya']
@@ -1064,14 +1216,24 @@ var PHYS = {
   },
   teater: {
     konsep: 'Kemiringan yang menipu telinga dalam',
-    text: 'Kursi hanya bergerak beberapa derajat, tetapi otak menggabungkannya dengan gambar di layar. Dimiringkan ke belakang perlahan, telinga dalam menafsirkannya sebagai percepatan ke depan. Trik yang sama dipakai simulator latihan pilot.',
+    text: [
+      ["Cara kerjanya", "Kursi diletakkan di atas platform yang bisa digerakkan beberapa aktuator hidraulik. Platform hanya bisa memiringkan dan menggoyang kursi beberapa derajat, jauh dari cukup untuk benar-benar memindahkan penonton, tetapi itu memang bukan tujuannya."],
+      ["Fisika yang bekerja", "Otolit di telinga dalam sebenarnya tidak bisa membedakan percepatan dari kemiringan. Keduanya menghasilkan arah gaya yang sama relatif terhadap kepala. Prinsip ini punya nama, yaitu kesetaraan antara percepatan dan gravitasi, dan merupakan gagasan yang sama yang dipakai Einstein sebagai titik awal teori relativitas umum."],
+      ["Kenapa trik ini berhasil", "Layar besar mengisi hampir seluruh bidang pandang dan memberitahu otak bahwa kamu sedang melaju ke depan. Platform lalu memiringkan kursi ke belakang perlahan, cukup lambat agar tidak terasa sebagai kemiringan. Otak menerima dua masukan yang cocok satu sama lain dan menyimpulkan satu-satunya penjelasan yang masuk akal: tubuh sedang dipercepat ke depan."],
+      ["Dipakai juga untuk hal serius", "Simulator latihan pilot memakai mekanisme yang identik dan disebut tilt coordination. Pesawat latih di darat hanya miring beberapa derajat, tetapi pilot merasakan akselerasi lepas landas yang meyakinkan, sehingga latihan bisa dilakukan tanpa terbang sungguhan."]
+    ],
     f: [
       [R`\tan\theta = \frac{a}{g}`, 'kemiringan kursi θ yang terasa setara percepatan a']
     ]
   },
   burung: {
     konsep: 'Gerak melingkar dengan lengan hidraulik',
-    text: 'Burung berputar mengelilingi poros, dan lengan hidraulik mengangkatnya sampai 15 m sesuai tuas yang ditarik penumpang. Makin tinggi dan makin jauh dari poros, makin besar laju dan percepatan sentripetalnya.',
+    text: [
+      ["Cara kerjanya", "Sekelompok burung logam berputar mengelilingi poros pusat. Tiap penumpang memegang tuas yang mengatur silinder hidraulik, sehingga burungnya bisa dinaikkan atau diturunkan sampai sekitar 15 meter sambil terus berputar."],
+      ["Fisika yang bekerja", "Saat tuas ditarik, pompa mendorong oli ke dalam silinder. Karena zat cair praktis tidak bisa dimampatkan, tekanan yang diberikan diteruskan sama besar ke seluruh bagian fluida. Itulah hukum Pascal, dan itulah yang membuat gaya kecil pada tuas sanggup mengangkat kursi berisi orang."],
+      ["Makin tinggi, makin cepat", "Pada wahana ini, naik juga berarti bergerak sedikit menjauh dari poros. Karena laju sama dengan omega dikali jari-jari, bertambahnya jari-jari langsung menambah laju meski putaran per menitnya tidak berubah sama sekali. Percepatan sentripetalnya pun ikut naik sebanding jari-jari."],
+      ["Coba di lab", "Model memakai jari-jari 8 meter. Ubah rpm dan bandingkan laju dalam km per jam dengan berat semu. Wahana ini tetap ramah keluarga karena rpm-nya dijaga rendah walau jari-jarinya besar."]
+    ],
     f: [
       [R`a_s = \omega^2 r`, 'percepatan sentripetal'],
       [R`P = F\, v`, 'daya hidraulik yang dibutuhkan untuk mengangkat burung']
@@ -1080,7 +1242,12 @@ var PHYS = {
   },
   gajah: {
     konsep: 'Gerak melingkar pelan',
-    text: 'Gajah-gajah berputar pelan mengelilingi poros. Karena kecepatan sudutnya kecil, percepatan sentripetalnya juga kecil, itulah sebabnya wahana ini aman untuk anak kecil.',
+    text: [
+      ["Cara kerjanya", "Gajah-gajah berwarna cerah dipasang pada lengan yang berputar pelan mengelilingi poros, dan sebagian bisa naik-turun sedikit. Kecepatan putarnya sengaja dibatasi rendah supaya aman untuk balita yang duduk bersama orang tuanya."],
+      ["Fisika yang bekerja", "Rumusnya sama dengan semua wahana berputar: percepatan sentripetal adalah omega kuadrat dikali jari-jari. Bedanya hanya pada angka. Dengan putaran sekitar 3 rpm dan jari-jari 5 meter, percepatannya hanya sekitar setengah meter per detik kuadrat, sekitar lima persen g."],
+      ["Kenapa aman untuk anak kecil", "Leher anak kecil belum kuat menahan gaya samping, jadi batas percepatan untuk wahana anak dibuat jauh lebih rendah daripada wahana dewasa. Karena percepatan tumbuh mengikuti kuadrat kecepatan sudut, memelankan putaran sedikit saja sudah memotong percepatan secara drastis."],
+      ["Coba di lab", "Naikkan rpm dari nol sampai maksimum dan perhatikan berat semu hampir tidak beranjak dari 1 g. Bandingkan dengan Tornado atau Rajawali untuk melihat betapa jauh jaraknya."]
+    ],
     f: [
       [R`v = \omega r`, 'laju gajah'],
       [R`a_s = \omega^2 r`, 'percepatan sentripetal yang kecil']
@@ -1089,7 +1256,12 @@ var PHYS = {
   },
   kolibri: {
     konsep: 'Gerak melingkar dengan ketinggian yang bisa diatur',
-    text: 'Pesawat mini berputar mengelilingi poros; tuas di kokpit mengatur ketinggian. Anak belajar bahwa laju di lingkaran yang lebih besar ikut lebih besar meski putarannya sama.',
+    text: [
+      ["Cara kerjanya", "Pesawat-pesawat mini berputar mengelilingi poros pusat, dan di dalam tiap kokpit ada tuas yang mengatur ketinggian sayap. Anak bisa memilih terbang rendah atau tinggi tanpa mengubah kecepatan putar wahana."],
+      ["Fisika yang bekerja", "Semua pesawat menyelesaikan satu putaran dalam waktu yang sama, jadi kecepatan sudutnya identik. Tetapi laju linear sama dengan omega dikali jari-jari, sehingga pesawat di lingkaran luar menempuh jarak lebih panjang dalam waktu sama dan bergerak lebih cepat."],
+      ["Pelajaran yang terbawa pulang", "Konsep yang sama menjelaskan kenapa orang di khatulistiwa bergerak lebih cepat mengelilingi sumbu Bumi daripada orang di dekat kutub, padahal keduanya sama-sama menyelesaikan satu putaran dalam 24 jam. Bedanya hanya jari-jari lingkaran yang ditempuh."],
+      ["Coba di lab", "Model memakai jari-jari 4 meter. Ubah rpm dan perhatikan laju, lalu bayangkan jari-jari dua kali lipat pada rpm yang sama: laju ikut dua kali lipat dan percepatannya juga dua kali lipat."]
+    ],
     f: [
       [R`v = \omega r`, 'laju pesawat'],
       [R`a_s = \omega^2 r`, 'percepatan sentripetal']
@@ -1098,7 +1270,12 @@ var PHYS = {
   },
   bakutoki: {
     konsep: 'Tumbukan dan momentum',
-    text: 'Versi kecil dari Zig Zag. Mobil yang lebih berat dan lebih cepat membawa momentum lebih besar, dan bemper karet membuat tumbukan terasa empuk karena waktunya diperpanjang.',
+    text: [
+      ["Cara kerjanya", "Arena bumper car versi anak dengan mobil yang lebih kecil, lebih ringan, dan dibatasi kecepatannya. Bempernya tetap dari karet tebal, dan lantainya rata serta licin seperti versi dewasa."],
+      ["Fisika yang bekerja", "Momentum adalah massa dikali kecepatan, dan jumlah momentum dua mobil tidak berubah oleh tabrakan. Mobil yang lebih berat memberi dorongan lebih besar pada mobil yang lebih ringan, sementara mobil ringan itulah yang terpental paling jauh."],
+      ["Kenapa tabrakannya terasa empuk", "Perubahan momentum yang harus terjadi sudah tertentu, dan itu sama dengan gaya dikali waktu. Bemper karet yang mengempis memperpanjang waktu tumbukan berkali-kali lipat, dan karena hasil kalinya tetap, gaya yang sampai ke tubuh anak menjadi jauh lebih kecil."],
+      ["Coba di lab", "Buat massa kedua mobil berbeda jauh lalu jalankan tabrakannya, dan perhatikan kecepatan keduanya sesudah bertumbukan. Lalu samakan massanya: keduanya akan hampir bertukar kecepatan, hasil khas tumbukan lenting antara benda bermassa sama."]
+    ],
     f: [
       [R`p = m v`, 'momentum tiap mobil'],
       [R`m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2'`, 'momentum total tetap']
@@ -1107,7 +1284,12 @@ var PHYS = {
   },
   iceage: {
     konsep: 'Mengapung: perahu dan gunung es',
-    text: 'Perahu mengapung karena gaya apung sama dengan beratnya. Es pun mengapung karena massa jenisnya lebih kecil daripada air, dan sekitar 90% volumenya berada di bawah permukaan.',
+    text: [
+      ["Cara kerjanya", "Perahu berjalan mengikuti kanal di dalam ruangan bertema Arktik, melewati boneka animatronik dan latar es. Seperti Istana Boneka, perahunya tidak bermesin dan hanya mengikuti aliran air."],
+      ["Fisika yang bekerja", "Benda mengapung kalau massa jenis rata-ratanya lebih kecil daripada massa jenis air. Perahu terbuat dari bahan yang lebih berat daripada air, tetapi sebagian besar isinya udara, sehingga massa jenis rata-ratanya jatuh jauh di bawah seribu kilogram per meter kubik."],
+      ["Kenapa gunung es hanya tampak sedikit", "Massa jenis es sekitar 917 kilogram per meter kubik, sementara air sekitar seribu. Perbandingan keduanya kira-kira 0,9, dan itu berarti sekitar 90 persen volume es berada di bawah permukaan. Bagian yang terlihat di atas air hanya sepersepuluhnya, dan dari situlah ungkapan puncak gunung es berasal."],
+      ["Coba di lab", "Tambah penumpang dan lihat perahu tercelup makin dalam. Perhatikan juga bahwa gaya apung selalu mengikuti berat total, bukan sebaliknya: air tidak pernah mendorong lebih dari yang dibutuhkan."]
+    ],
     f: [
       [R`F_a = \rho_{\text{air}}\, g\, V_{\text{tercelup}}`, 'gaya apung pada perahu'],
       [R`\frac{V_{\text{tercelup}}}{V_{\text{es}}} = \frac{\rho_{\text{es}}}{\rho_{\text{air}}} \approx 0{,}92`, 'bagian gunung es yang tenggelam']
@@ -1116,7 +1298,12 @@ var PHYS = {
   },
   kontiki: {
     konsep: 'Bandul kecil',
-    text: 'Kontiki adalah Kora-Kora versi anak: lengannya pendek dan sudut ayunannya kecil, jadi kecepatannya rendah. Pertukaran energi potensial dan kinetiknya sama persis.',
+    text: [
+      ["Cara kerjanya", "Kontiki adalah kapal ayun versi anak. Lengannya pendek dan sudut ayunnya dibatasi sekitar 45 derajat, sehingga perahu tidak pernah sampai ke posisi hampir tegak seperti Kora-Kora."],
+      ["Fisika yang bekerja", "Pertukaran energinya persis sama dengan bandul besar. Tinggi perahu dari titik terbawah adalah L kali satu dikurangi kosinus theta, dan laju di titik terbawah adalah akar dari dua g h. Lengan yang lebih pendek dan sudut yang lebih kecil membuat h kecil, jadi lajunya pun rendah."],
+      ["Periode tidak bergantung berat", "Untuk simpangan kecil, periode ayunan adalah dua pi akar L per g. Tidak ada massa di dalam rumus itu. Perahu yang penuh anak-anak dan perahu yang hampir kosong berayun dengan irama yang sama, dan inilah sifat bandul yang dulu dipakai untuk menjalankan jam."],
+      ["Coba di lab", "Atur sudut simpangan ke nilai kecil lalu ke nilai besar, dan bandingkan periode yang ditampilkan dengan waktu ayunan yang kamu amati. Untuk sudut kecil keduanya cocok; untuk sudut besar periode sebenarnya sedikit lebih panjang daripada rumus sederhananya."]
+    ],
     f: [
       [R`h = L\,(1 - \cos\theta)`, 'tinggi kapal pada sudut simpangan θ'],
       [R`v_{\text{bawah}} = \sqrt{2 g h}`, 'kecepatan di titik terbawah'],
@@ -1127,7 +1314,12 @@ var PHYS = {
   },
   dream: {
     konsep: 'Bidang miring dan gesekan',
-    text: 'Di perosotan, gravitasi hanya sebagian yang bekerja searah lintasan, dan gesekan pakaian dengan permukaan melawan gerak. Makin curam sudutnya, makin besar percepatan; makin kasar permukaannya, makin lambat sampai di bawah.',
+    text: [
+      ["Cara kerjanya", "Area bermain dalam ruangan berisi perosotan, jaring panjat, dan kolam bola. Perosotan adalah bidang miring paling jujur yang bisa ditemui anak-anak: tidak ada motor, tidak ada rem, hanya kemiringan dan permukaan."],
+      ["Fisika yang bekerja", "Di bidang miring, gravitasi terurai menjadi dua komponen. Yang sejajar permukaan sebesar g sinus theta menarik anak turun. Yang tegak lurus permukaan sebesar g kosinus theta ditahan oleh permukaan dan menentukan besar gaya gesek. Percepatan akhirnya adalah g dikali sinus theta dikurangi mu kosinus theta."],
+      ["Kenapa celana menentukan kecepatan", "Koefisien gesek mu bergantung pada pasangan bahan yang bersentuhan. Celana berbahan licin punya mu kecil dan membuat luncuran cepat, sedangkan karet sandal punya mu besar dan bisa membuat anak berhenti di tengah perosotan. Berat badan hampir tidak berpengaruh, karena massa muncul di kedua suku dan saling dicoret."],
+      ["Coba di lab", "Naikkan koefisien gesek pelan-pelan pada sudut tetap sampai percepatannya menjadi nol. Titik itu terjadi ketika mu sama dengan tangen theta, dan itulah batas antara meluncur dan diam yang dipakai insinyur saat merancang perosotan."]
+    ],
     f: [
       [R`a = g\,(\sin\theta - \mu\cos\theta)`, 'percepatan di perosotan bersudut θ dengan gesekan μ'],
       [R`v = \sqrt{2 a L}`, 'kecepatan di ujung perosotan sepanjang L'],
@@ -1137,7 +1329,12 @@ var PHYS = {
   },
   maksima: {
     konsep: 'Bunyi menyebar ke segala arah',
-    text: 'Intensitas bunyi dari panggung berkurang dengan kuadrat jarak. Itu sebabnya penonton di baris belakang butuh pengeras suara tambahan, bukan sekadar volume yang lebih besar.',
+    text: [
+      ["Cara kerjanya", "Panggung terbuka dengan susunan pengeras suara yang diarahkan ke area penonton. Karena penonton duduk dan berdiri menyebar di lapangan, suara harus sampai merata dari barisan depan sampai barisan paling belakang."],
+      ["Fisika yang bekerja", "Bunyi menyebar dari sumber sebagai permukaan bola yang terus membesar. Energi yang sama tersebar di luas permukaan yang sebanding kuadrat jarak, sehingga intensitas berkurang mengikuti satu per r kuadrat. Setiap kali jarak digandakan, intensitasnya tinggal seperempat."],
+      ["Kenapa menaikkan volume tidak cukup", "Telinga mendengar dalam skala desibel yang bersifat logaritmik. Jarak dua kali lipat berarti penurunan sekitar 6 desibel, dan untuk menutupnya di barisan belakang, daya di panggung harus dinaikkan empat kali lipat. Barisan depan akan tersiksa jauh sebelum barisan belakang merasa cukup."],
+      ["Solusinya pengeras suara tambahan", "Karena itu panggung besar memasang speaker delay di tengah lapangan, bukan sekadar memperbesar speaker utama. Speaker tambahan itu diberi tunda waktu beberapa milidetik agar suaranya tiba bersamaan dengan suara dari panggung, sehingga penonton tetap merasa sumber bunyinya ada di panggung."]
+    ],
     f: [
       [R`I = \frac{P}{4\pi r^2}`, 'intensitas bunyi pada jarak r dari sumber'],
       [R`\beta = 10 \log_{10}\frac{I}{I_0}`, 'taraf intensitas dalam desibel']
@@ -1168,12 +1365,21 @@ var DufanPhysics = (function () {
   function add(parent, tag, attrs) { var e = document.createElementNS(NS, tag); if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
   function fm(tex) { var s = (typeof FSVG !== 'undefined') && FSVG[tex]; return s ? '<div class="fx-svg">' + s + '</div>' : '<code class="fx-raw">' + esc(tex) + '</code>'; }
 
-  function section(id) {
+  function labHTML(id) {
+    var p = (typeof PHYS !== 'undefined') && PHYS[id];
+    return (p && p.lab) ? '<div class="lab" data-id="' + id + '"></div>' : '';
+  }
+  function section(id, photo) {
     var p = (typeof PHYS !== 'undefined') && PHYS[id]; if (!p) return '';
-    var h = '<div class="phys"><h3>Fisika di balik wahana</h3><p class="konsep">' + esc(p.konsep) + '</p><p class="desc">' + esc(p.text) + '</p><div class="formulas">';
+    var h = '<div class="phys"><h3>Fisika di balik wahana</h3><p class="konsep">' + esc(p.konsep) + '</p>' + (photo || '');
+    var t = typeof p.text === 'string' ? [p.text] : p.text;
+    t.forEach(function (x) {
+      if (typeof x === 'string') h += '<p class="desc">' + esc(x) + '</p>';
+      else h += '<h4 class="ph">' + esc(x[0]) + '</h4><p class="desc">' + esc(x[1]) + '</p>';
+    });
+    h += '<h4 class="ph">Rumus yang dipakai</h4><div class="formulas">';
     p.f.forEach(function (f) { h += '<div class="fx">' + fm(f[0]) + '<span class="cap">' + esc(f[1]) + '</span></div>'; });
     h += '</div>';
-    if (p.lab) h += '<div class="lab" data-id="' + id + '"></div>';
     h += '<p class="note">' + (p.note ? esc(p.note) + ' ' : '') + 'Model sederhana untuk belajar: gesekan diabaikan kecuali disebut, g = 9,8 m/s², massa penumpang 70 kg.</p></div>';
     return h;
   }
@@ -1225,7 +1431,7 @@ var DufanPhysics = (function () {
 
   /* ---------- 1. pendulum ---------- */
   function labPendulum(host, p) {
-    var ui = shell(host, 'pendulum', 'Geser slider atau tarik perahu ke atas, lalu tekan Lepaskan. Perhatikan E<sub>p</sub> dan E<sub>k</sub> bertukar.');
+    var ui = shell(host, 'pendulum', 'Ayunan berjalan otomatis. Tarik perahu dengan jari atau geser slider untuk mengubah simpangan, lalu tekan Lepaskan. Perhatikan E<sub>p</sub> dan E<sub>k</sub> bertukar.');
     var sc = ui.scene, L = p.L, thMax = p.thetaMax * Math.PI / 180, px = 160, py = 26, Lpx = 120, groundY = py + Lpx + 14;
     add(sc, 'line', {x1: 10, y1: groundY, x2: 310, y2: groundY, 'class': 'ln'});
     add(sc, 'path', {d: 'M' + (px - 46) + ',' + groundY + ' L' + px + ',' + py + ' L' + (px + 46) + ',' + groundY, 'class': 'frame'});
@@ -1260,6 +1466,7 @@ var DufanPhysics = (function () {
     sc.addEventListener('pointerup', function () { dragging = false; }); sc.addEventListener('pointercancel', function () { dragging = false; });
     function move(e) { var q = scenePt(sc, e); th = Math.max(-thMax, Math.min(thMax, Math.atan2(q.x - px, q.y - py))); draw(); }
     draw();
+    anim.start();
     return {destroy: anim.stop};
   }
 
@@ -1270,7 +1477,7 @@ var DufanPhysics = (function () {
     drop: 'M6,160 L40,160 L110,40 L146,40 C158,40 168,124 198,158 L314,158'
   };
   function labCoaster(host, p) {
-    var ui = shell(host, 'coaster', 'Geser slider untuk memindahkan kereta, atau tekan Jalankan. Rantai hanya menarik sampai puncak; sisanya energi potensial.');
+    var ui = shell(host, 'coaster', 'Kereta berjalan otomatis dan mengulang terus. Tekan Berhenti dulu kalau ingin memindahkan kereta dengan slider. Rantai hanya menarik sampai puncak; sisanya energi potensial.');
     var sc = ui.scene;
     add(sc, 'line', {x1: 6, y1: 170, x2: 314, y2: 170, 'class': 'ln'});
     if (p.profile === 'drop') add(sc, 'ellipse', {cx: 250, cy: 166, rx: 60, ry: 8, 'class': 'water'});
@@ -1305,13 +1512,14 @@ var DufanPhysics = (function () {
       var vpx = st.lift ? 45 : Math.max(18, st.v * kpx);
       var prev = s; s += vpx * dt;
       if (splash && prev < 0.55 * total && s >= 0.55 * total) splashT = 0;
-      if (s >= total) { s = total; anim.stop(); go.textContent = 'Ulangi'; }
+      if (s >= total) s = 0;
       syncing = true; sl.value = Math.round(s / total * 1000); sl.dispatchEvent(new Event('input')); syncing = false;
     });
     sl.addEventListener('input', function () { if (syncing || anim.running()) return; s = parseFloat(sl.value) / 1000 * total; place(); go.textContent = 'Jalankan'; });
     go.addEventListener('click', function () { if (s >= total) s = 0; go.textContent = 'Jalankan'; anim.start(); });
     stop.addEventListener('click', function () { anim.stop(); });
     place();
+    anim.start();
     return {destroy: anim.stop};
   }
 
@@ -1363,7 +1571,7 @@ var DufanPhysics = (function () {
 
   /* ---------- 4. drop tower ---------- */
   function labDrop(host, p) {
-    var ui = shell(host, 'drop', p.launch ? 'Tekan Luncurkan: didorong 3g ke atas (terasa 4 g), melayang bebas (0 g), lalu jatuh.' : 'Atur tinggi, lalu tekan Jatuhkan. Selama jatuh bebas penumpang merasa 0 g.');
+    var ui = shell(host, 'drop', p.launch ? 'Berjalan otomatis dan mengulang: didorong 3g ke atas (terasa 4 g), melayang bebas (0 g), lalu direm di bawah. Ubah tinggi puncaknya kapan saja.' : 'Berjalan otomatis dan mengulang. Atur tinggi jatuhnya kapan saja; selama jatuh bebas penumpang merasa 0 g.');
     var sc = ui.scene, tx = 90, topY = 22, botY = 172, pxPerM = (botY - topY) / p.hmax;
     add(sc, 'rect', {x: tx - 5, y: topY, width: 10, height: botY - topY, 'class': 'tower'});
     add(sc, 'line', {x1: 20, y1: botY + 4, x2: 300, y2: botY + 4, 'class': 'ln'});
@@ -1382,29 +1590,33 @@ var DufanPhysics = (function () {
       setR([fnum(Math.sqrt(2 * h0() / G), 2) + ' s', fnum(Math.sqrt(2 * G * h0()), 1) + ' m/s (' + fnum(Math.sqrt(2 * G * h0()) * 3.6, 0) + ' km/h)', fnum(t, 2) + ' s', fnum(hh, 1) + ' m']);
       setB(Ep, Ek, M * G * h0());
     }
-    function reset() { anim.stop(); t = 0; v = 0; phase = 'idle'; h = p.launch ? 0 : h0(); setCar(h, p.launch ? '1 g' : '1 g', 'diam'); }
+    var hold = 0;
+    function rearm() { t = 0; v = 0; phase = 'idle'; h = p.launch ? 0 : h0(); setCar(h, '1 g', 'diam'); }
+    function reset() { anim.stop(); hold = 0; rearm(); }
     var anim = loop(function (dt) {
+      if (hold > 0) { hold -= dt; if (hold <= 0) rearm(); return; }
       t += dt; var H = h0();
       if (p.launch) {
         var d = H / 4, a = 3 * G, vl = Math.sqrt(2 * a * d), t1 = vl / a, t2 = vl / G, t3 = Math.sqrt(2 * H / G);
         if (t < t1) { h = 0.5 * a * t * t; v = a * t; setCar(h, '4 g', 'didorong ke atas'); }
         else if (t < t1 + t2 + t3) { var tt = t - t1; h = d + vl * tt - 0.5 * G * tt * tt; v = Math.abs(vl - G * tt); setCar(Math.max(0, h), '0 g', tt < t2 ? 'melayang ke atas' : 'jatuh bebas'); }
-        else { h = 0; v = Math.sqrt(2 * G * H); setCar(0, '≈ 3 g', 'direm magnet'); anim.stop(); }
+        else { h = 0; v = Math.sqrt(2 * G * H); setCar(0, '≈ 3 g', 'direm magnet'); hold = 1.4; }
       } else {
         h = H - 0.5 * G * t * t; v = G * t;
-        if (h <= 0) { h = 0; v = Math.sqrt(2 * G * H); setCar(0, '≈ 3 g', 'direm magnet'); anim.stop(); } else setCar(h, '0 g', 'jatuh bebas');
+        if (h <= 0) { h = 0; v = Math.sqrt(2 * G * H); setCar(0, '≈ 3 g', 'direm magnet'); hold = 1.4; } else setCar(h, '0 g', 'jatuh bebas');
       }
     });
-    sl.addEventListener('input', reset);
+    sl.addEventListener('input', function () { reset(); anim.start(); });
     go.addEventListener('click', function () { reset(); anim.start(); });
     stop.addEventListener('click', reset);
     reset();
+    anim.start();
     return {destroy: anim.stop};
   }
 
   /* ---------- 5. collision ---------- */
   function labCollision(host, p) {
-    var ui = shell(host, 'collision', 'Atur massa dan kecepatan, lalu tekan Tabrak. Mobil kedua semula diam; tumbukan dianggap elastis.');
+    var ui = shell(host, 'collision', 'Tabrakan berjalan otomatis dan mengulang. Atur massa dan kecepatan kapan saja; mobil kedua semula diam dan tumbukan dianggap elastis.');
     var sc = ui.scene, floorY = 140, pxPerM = 24;
     add(sc, 'line', {x1: 6, y1: floorY, x2: 314, y2: floorY, 'class': 'ln'});
     function mkCar(cls, label) { var g = add(sc, 'g'); g.innerHTML = '<rect x="0" y="-26" width="48" height="24" rx="8" class="' + cls + '"/><circle cx="12" cy="0" r="5" class="wheel"/><circle cx="36" cy="0" r="5" class="wheel"/><text x="24" y="-10" class="sl carlbl" text-anchor="middle">' + label + '</text>'; return g; }
@@ -1421,18 +1633,21 @@ var DufanPhysics = (function () {
       return {m1: m1, v1: v1, m2: m2, v1n: v1n, v2n: v2n};
     }
     function draw() { A.setAttribute('transform', 'translate(' + xA + ',' + floorY + ')'); B.setAttribute('transform', 'translate(' + xB + ',' + floorY + ')'); pa.textContent = 'v_A = ' + fnum(vA, 2) + ' m/s'; pb.textContent = 'v_B = ' + fnum(vB, 2) + ' m/s'; }
-    function reset() { anim.stop(); var c = calc(); xA = 14; xB = 150; vA = c.v1; vB = 0; hit = false; draw(); }
+    var hold = 0;
+    function rearm() { var c = calc(); xA = 14; xB = 150; vA = c.v1; vB = 0; hit = false; draw(); }
+    function reset() { anim.stop(); hold = 0; rearm(); }
     var anim = loop(function (dt) {
+      if (hold > 0) { hold -= dt; if (hold <= 0) rearm(); return; }
       xA += vA * pxPerM * dt; xB += vB * pxPerM * dt;
       if (!hit && xA + 48 >= xB) { hit = true; var c = calc(); xA = xB - 48; vA = c.v1n; vB = c.v2n; }
       draw();
-      if (xB > 330 && (xA > 330 || vA <= 0)) anim.stop();
-      if (hit && xA < -60) anim.stop();
+      if ((xB > 330 && (xA > 330 || vA <= 0)) || (hit && xA < -60)) hold = 1.2;
     });
-    [s1, s2, s3].forEach(function (s) { s.addEventListener('input', reset); });
+    [s1, s2, s3].forEach(function (s) { s.addEventListener('input', function () { reset(); anim.start(); }); });
     go.addEventListener('click', function () { reset(); anim.start(); });
     stop.addEventListener('click', reset);
     reset();
+    anim.start();
     return {destroy: anim.stop};
   }
 
@@ -1458,13 +1673,15 @@ var DufanPhysics = (function () {
       warn.textContent = sunk ? 'Air masuk, ' + p.nama + ' tenggelam!' : (n > p.cap ? 'Melebihi kapasitas ' + p.cap + ' orang' : '');
       setR([fnum(m, 0) + ' kg', fnum(d * 100, 0) + ' cm', fnum(d * p.area, 2) + ' m³', fnum(m * G / 1000, 2) + ' kN (= berat total)', sunk ? '0 cm' : fnum((p.H - d) * 100, 0) + ' cm']);
     }
-    sl.addEventListener('input', draw); draw();
-    return {destroy: function () {}};
+    var tb = 0;
+    var anim = loop(function (dt) { tb += dt; boat.setAttribute('transform', 'translate(0,' + (Math.sin(tb * 1.9) * 1.7).toFixed(2) + ')'); });
+    sl.addEventListener('input', draw); draw(); anim.start();
+    return {destroy: anim.stop};
   }
 
   /* ---------- 7. incline ---------- */
   function labIncline(host, p) {
-    var ui = shell(host, 'incline', 'Atur sudut dan gesekan, lalu tekan Luncurkan.');
+    var ui = shell(host, 'incline', 'Luncuran berjalan otomatis dan mengulang. Atur sudut dan gesekan kapan saja untuk melihat pengaruhnya.');
     var sc = ui.scene, L = p.L, Lpx = 240, bx = 30, by = 170;
     add(sc, 'line', {x1: 6, y1: by, x2: 314, y2: by, 'class': 'ln'});
     var plane = add(sc, 'path', {'class': 'plane'}); var angT = add(sc, 'text', {'class': 'sl'});
@@ -1485,12 +1702,21 @@ var DufanPhysics = (function () {
       var f = Math.min(1, sPos / L), x = g.tx + (g.ex - g.tx) * f, y = g.ty + (g.ey - g.ty) * f, nx = Math.sin(g.th), ny = -Math.cos(g.th);
       ball.setAttribute('transform', 'translate(' + (x + 9 * nx) + ',' + (y + 9 * ny) + ')');
     }
-    function reset() { anim.stop(); t = 0; sPos = 0; calc(); draw(); }
-    var anim = loop(function (dt) { var a = calc(); if (a <= 0) { anim.stop(); return; } t += dt; sPos = 0.5 * a * t * t; if (sPos >= L) { sPos = L; anim.stop(); } draw(); });
-    s1.addEventListener('input', reset); s2.addEventListener('input', reset);
-    go.addEventListener('click', function () { reset(); anim.start(); });
+    var hold = 0;
+    function rearm() { t = 0; sPos = 0; calc(); draw(); }
+    function reset() { anim.stop(); hold = 0; rearm(); }
+    var anim = loop(function (dt) {
+      if (hold > 0) { hold -= dt; if (hold <= 0) rearm(); return; }
+      var a = calc(); if (a <= 0) { draw(); return; }
+      t += dt; sPos = 0.5 * a * t * t; if (sPos >= L) { sPos = L; hold = 1.2; }
+      draw();
+    });
+    function restart() { reset(); anim.start(); }
+    s1.addEventListener('input', restart); s2.addEventListener('input', restart);
+    go.addEventListener('click', restart);
     stop.addEventListener('click', reset);
     reset();
+    anim.start();
     return {destroy: anim.stop};
   }
 
@@ -1503,7 +1729,7 @@ var DufanPhysics = (function () {
     var p = PHYS[host.getAttribute('data-id')]; if (!p || !p.lab || !FN[p.lab.type]) return;
     try { active = FN[p.lab.type](host, p.lab); } catch (e) { host.innerHTML = '<p class="note">Lab mini tidak bisa dimuat di browser ini.</p>'; }
   }
-  return {section: section, mount: mount, unmount: unmount};
+  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount};
 })();
 
 </script>
@@ -1606,20 +1832,69 @@ document.getElementById('zreset').addEventListener('click',resetView);
 var selWrap=document.getElementById('selWrap'),sheet=document.getElementById('sheet'),content=document.getElementById('content'),listBtn=document.getElementById('listBtn');
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function posOf(g){var m=g.transform.baseVal.consolidate();return m?{x:m.matrix.e,y:m.matrix.f}:{x:0,y:0};}
-function openSheet(html){DufanPhysics.unmount();content.innerHTML=html;sheet.classList.remove('peek');listBtn.textContent='Tutup';content.scrollTop=0;}
+/* Foto asli per wahana. Isi dengan data URI (data:image/jpeg;base64,...) atau URL gambar,
+   kuncinya memakai id wahana yang sama dengan daftar RIDES di bawah. */
+var PHOTOS={};
+/* Salin gambar wahana dari peta menjadi SVG mandiri untuk kartu dan panel.
+   Semua id di dalam salinan diberi akhiran unik supaya animasi animateMotion tidak saling rebut. */
+var artSeq=0,XLINK='http://www.w3.org/1999/xlink';
+function rideArt(id){
+  var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return null;
+  var c=g.cloneNode(true);c.removeAttribute('transform');c.removeAttribute('data-id');c.removeAttribute('data-cat');c.removeAttribute('class');
+  Array.prototype.slice.call(c.querySelectorAll('.hit,.lbl,.tag')).forEach(function(n){n.parentNode.removeChild(n);});
+  var ren={};
+  Array.prototype.slice.call(c.querySelectorAll('[id]')).forEach(function(n){var o=n.getAttribute('id'),w=o+'-a'+(++artSeq);ren['#'+o]='#'+w;n.setAttribute('id',w);});
+  Array.prototype.slice.call(c.querySelectorAll('*')).forEach(function(n){
+    var h=n.getAttribute('href');if(h&&ren[h])n.setAttribute('href',ren[h]);
+    var x=n.getAttributeNS(XLINK,'href');if(x&&ren[x])n.setAttributeNS(XLINK,'href',ren[x]);
+  });
+  var out=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  out.setAttribute('viewBox','-44 -44 88 88');out.setAttribute('aria-hidden','true');out.appendChild(c);
+  return out;
+}
+/* Pas-kan viewBox ke kotak gambar yang sebenarnya supaya wahana selalu di tengah kartu.
+   Animasi dimatikan sesaat saat diukur agar ukurannya tidak ikut bergoyang. */
+function fitArt(a){
+  var g=a.firstChild;if(!g)return;
+  a.classList.add('still');
+  var bb=null;try{bb=g.getBBox();}catch(err){}
+  a.classList.remove('still');
+  if(!bb||!(bb.width>0)||!(bb.height>0))return;
+  var pad=Math.max(bb.width,bb.height)*0.09;
+  a.setAttribute('viewBox',(bb.x-pad)+' '+(bb.y-pad)+' '+(bb.width+2*pad)+' '+(bb.height+2*pad));
+}
+function hydrateArt(root){
+  Array.prototype.slice.call(root.querySelectorAll('[data-art]')).forEach(function(box){
+    var a=rideArt(box.getAttribute('data-art'));box.removeAttribute('data-art');
+    if(!a)return;box.innerHTML='';box.appendChild(a);fitArt(a);
+    if(paused){try{a.pauseAnimations();}catch(err){}}
+  });
+}
+function openSheet(html){DufanPhysics.unmount();content.innerHTML=html;sheet.classList.remove('peek');hydrateArt(content);listBtn.textContent='Tutup';content.scrollTop=0;}
 function closeSheet(){DufanPhysics.unmount();sheet.classList.add('peek');listBtn.textContent='Daftar wahana';selWrap.style.display='none';current=null;}
 function isOpen(){return !sheet.classList.contains('peek');}
-function photoURL(r){return 'https://www.google.com/search?tbm=isch&q='+encodeURIComponent('wahana '+r.name+' Dufan Ancol');}
+function photoHTML(r,id){var src=PHOTOS[id]||r.photo;
+  if(src)return '<figure class="shot"><img src="'+esc(src)+'" alt="Foto wahana '+esc(r.name)+' di Dufan"><figcaption>Wahana '+esc(r.name)+', kawasan '+esc(r.zone)+'.</figcaption></figure>';
+  return '<div class="shot empty">Foto asli '+esc(r.name)+' belum dipasang di aplikasi ini.</div>';}
 function detailHTML(r,id){var cat=CATS[r.cat];var dots='';
   if(r.thrill){dots='<span class="dots" aria-label="Adrenalin '+r.thrill+' dari 5">';for(var i=1;i<=5;i++)dots+=i<=r.thrill?'●':'○';dots+='</span>';}
   return '<div class="tags"><span class="tag">Kawasan '+esc(r.zone)+'</span>'+(cat?'<span class="tag '+r.cat+'">'+cat+'</span>':'')+(r.closed?'<span class="tag closed">Tutup sementara</span>':'')+'</div>'
     +'<h2>'+esc(r.name)+'</h2><p class="meta">'+esc(r.type)+'</p>'+(dots?'<p class="meta">Adrenalin '+dots+'</p>':'')
+    +'<div class="hero"><span class="art" data-art="'+id+'"></span><p class="hero-cap">Animasi '+esc(r.name)+'</p></div>'
     +'<p class="desc">'+esc(r.desc)+'</p>'
-    +(r.photo?'<img class="photo" src="'+esc(r.photo)+'" alt="'+esc(r.name)+'">':'')
-    +'<div class="actions"><button class="btn" data-act="focus">Lihat di peta</button><a class="btn ghost" href="'+photoURL(r)+'" target="_blank" rel="noopener">Lihat foto asli</a><button class="btn ghost" data-act="list">Semua wahana</button></div>'
-    +DufanPhysics.section(id);}
+    +DufanPhysics.labHTML(id)
+    +DufanPhysics.section(id,photoHTML(r,id))
+    +'<div class="actions"><button class="btn" data-act="focus">Lihat di peta</button><button class="btn ghost" data-act="list">Semua wahana</button></div>';}
 function listHTML(){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Keluarga, semua umur'],['anak','Anak-anak dan indoor']],h='<div class="list">';
-  groups.forEach(function(gr){h+='<h3>'+gr[1]+'</h3><div class="grid">';RIDES.filter(function(r){return r.cat===gr[0];}).forEach(function(r){h+='<button class="rchip'+(r.closed?' closed':'')+'" data-id="'+r.id+'">'+esc(r.name)+'</button>';});h+='</div>';});
+  groups.forEach(function(gr){h+='<h3>'+gr[1]+'</h3><div class="cards">';
+    RIDES.filter(function(r){return r.cat===gr[0];}).forEach(function(r){
+      h+='<button class="card '+r.cat+(r.closed?' closed':'')+'" data-id="'+r.id+'">'
+        +'<span class="art" data-art="'+r.id+'"></span>'
+        +'<span class="cname">'+esc(r.name)+'</span>'
+        +'<span class="czone">'+esc(r.zone)+'</span>'
+        +(r.closed?'<span class="cbadge">tutup</span>':'')
+        +'</button>';});
+    h+='</div>';});
   h+='<p class="note">Tata letak peta ini ilustratif. Beberapa wahana bisa tutup untuk perawatan, cek aplikasi atau situs Ancol sebelum datang.</p></div>';return h;}
 function select(id,move){var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return;var r=byId[id]||LANDMARKS[id];if(!r)return;
   var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;openSheet(detailHTML(r,id));DufanPhysics.mount(content);if(move)focusOn(p.x,p.y);}
@@ -1640,7 +1915,8 @@ chips.forEach(function(c){c.addEventListener('click',function(){chips.forEach(fu
 
 /* animation toggle */
 var animBtn=document.getElementById('anim'),paused=false;
-function setPaused(p){paused=p;document.body.classList.toggle('paused',p);try{if(p)svg.pauseAnimations();else svg.unpauseAnimations();}catch(err){}
+function setPaused(p){paused=p;document.body.classList.toggle('paused',p);
+  Array.prototype.slice.call(document.querySelectorAll('svg')).forEach(function(s){try{if(p)s.pauseAnimations();else s.unpauseAnimations();}catch(err){}});
   animBtn.textContent=p?'▶':'⏸';animBtn.setAttribute('aria-label',p?'Jalankan animasi':'Jeda animasi');}
 animBtn.addEventListener('click',function(){setPaused(!paused);});
 if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)setPaused(true);
