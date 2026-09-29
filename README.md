@@ -34,14 +34,21 @@ menembak ke atas, kereta Halilintar menyusuri lintasan, Niagara-Gara mencipratka
 air. Wahana dikelompokkan sebagai ekstrem (11), keluarga (17), dan anak (6);
 wahana yang sedang tutup diberi label di peta.
 
-**Daftar wahana.** Tombol "Daftar wahana" membuka grid kartu, bukan deretan
-teks. Tiap kartu menampilkan animasi wahana itu sendiri — gambarnya disalin
-langsung dari peta, lengkap dengan animasinya — plus nama, kawasan, dan garis
-warna sesuai kategori.
+**Dua tampilan.** Tombol Peta / Daftar di bagian atas halaman memilih antara
+peta dan grid kartu wahana; tidak ada lagi daftar yang tersembunyi di balik
+panel. Di sebelahnya ada tombol tema dengan tiga keadaan: Auto (ikut sistem),
+Terang, dan Gelap. Pilihan tema disimpan di browser.
 
-**Panel wahana.** Mengetuk sebuah wahana membuka bottom sheet dengan urutan:
-animasi wahana di paling atas, lalu lab mini interaktif, lalu penjelasan fisika
-beserta fotonya, dan tombol aksi di bagian bawah.
+**Daftar wahana** berupa grid kartu, bukan deretan teks. Tiap kartu menampilkan
+animasi wahana itu sendiri — gambarnya disalin langsung dari peta, lengkap
+dengan animasinya — plus nama, kawasan, dan garis warna sesuai kategori.
+
+**Panel wahana.** Mengetuk sebuah wahana membuka panel dengan urutan: animasi
+wahana di paling atas, lalu lab mini interaktif, lalu penjelasan fisika beserta
+fotonya, dan tombol aksi di bagian bawah. Pada layar potret panel muncul sebagai
+bottom sheet; pada layar lanskap yang cukup lebar (mulai 640 px) panel berpindah
+ke sisi kanan sebagai sidebar setinggi layar, dan area peta ikut menyusut supaya
+tidak ada bagian peta yang tertutup panel.
 
 **Bagian fisika.** Tiap wahana dijelaskan dalam empat sampai lima bagian
 bersubjudul (cara kerjanya, fisika yang bekerja, apa yang tubuh rasakan, dan apa
@@ -79,8 +86,8 @@ tanpa internet) atau path/URL gambar biasa. Id wahana bisa dilihat pada daftar
 - Angka pada lab adalah nilai model untuk keperluan belajar, bukan spesifikasi
   resmi wahana. Wahana yang punya spesifikasi publik (misalnya sudut ayun 75°
   pada Kora-Kora) diberi catatan tersendiri di panelnya.
-- Mendukung mode gelap otomatis (`prefers-color-scheme`) dan menghormati
-  `prefers-reduced-motion`.
+- Mode gelap bisa dipilih lewat tombol tema, dan secara bawaan mengikuti sistem
+  (`prefers-color-scheme`). Animasi juga menghormati `prefers-reduced-motion`.
 - Tata letak aman untuk ponsel berlayar berlekuk (`env(safe-area-inset-*)`).
 - Satu-satunya sumber daya eksternal adalah Google Fonts (Fraunces dan Plus
   Jakarta Sans); tanpa jaringan, halaman tetap berfungsi dengan font sistem.

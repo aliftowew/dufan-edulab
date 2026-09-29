@@ -126,6 +126,9 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border:0;border-radius:999px;padding:7px 12px;font:600 12px 'Plus Jakarta Sans',sans-serif;background:var(--panel);color:var(--text);box-shadow:var(--shadow);cursor:pointer}
 .chip.active{background:var(--text);color:var(--panel)}
+.seg{display:inline-flex;gap:3px;padding:3px;border-radius:999px;background:var(--panel);box-shadow:var(--shadow)}
+.seg .chip{background:transparent;box-shadow:none;padding:6px 13px}
+.seg .chip.active{background:var(--text);color:var(--panel)}
 .ctrl{display:flex;gap:6px}
 .ctrl button{width:36px;height:36px;border:0;border-radius:10px;background:var(--chip);color:var(--text);font:600 18px 'Plus Jakarta Sans',sans-serif;cursor:pointer;display:grid;place-items:center}
 .chip:focus-visible,.btn:focus-visible,.ctrl button:focus-visible,.card:focus-visible,.grab:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
@@ -348,6 +351,22 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
 .lab-scene .carA{fill:#E63946}.lab-scene .carB{fill:#2D6CDF}.lab-scene .carlbl{fill:#fff}
 .lab-scene .hull{fill:#A1735B;stroke:#6D4C41;stroke-width:2}
 .lab-scene .plane{fill:#FFEAA7;stroke:#FDCB6E;stroke-width:2}.lab-scene .ballc{fill:#E63946}
+/* ---------- panel jadi sidebar di layar lanskap ---------- */
+@media (orientation:landscape) and (min-width:640px){
+  .bar{max-width:min(48vw,540px)}
+  .title h1{font-size:19px}
+  .title .sub{display:none}
+  #stage{transition:right .28s ease}
+  body.sidebar #stage{right:clamp(330px,38vw,430px)}
+  .sheet{left:auto;right:0;top:0;bottom:0;transform:none;height:100%;width:clamp(330px,38vw,430px);
+    max-height:none;border-radius:18px 0 0 18px;box-shadow:-8px 0 30px rgba(0,0,0,.25);
+    padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(12px + env(safe-area-inset-bottom,0px))}
+  .sheet:not(.peek){max-height:none}
+  .sheet.peek{top:auto;height:auto;width:auto;max-width:min(360px,52vw);border-radius:16px 0 0 0}
+  .grab{display:none}
+  .sheet .hint{margin:0 0 8px}
+}
+.sheet.peek #listBtn{display:none}
 </style>
 </head>
 <body>
@@ -802,6 +821,13 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
   <div class="title">
     <h1>Peta Dufan</h1>
     <span class="sub">Peta ilustratif Dunia Fantasi Ancol, tidak berskala</span>
+  </div>
+  <div class="chips">
+    <div class="seg" role="group" aria-label="Pilih tampilan">
+      <button class="chip active" data-view="map" aria-pressed="true">🗺️ Peta</button>
+      <button class="chip" data-view="list" aria-pressed="false">📋 Daftar</button>
+    </div>
+    <button class="chip" id="theme" aria-label="Ganti tema tampilan">🌗 Auto</button>
   </div>
   <div class="chips" role="group" aria-label="Saring wahana">
     <button class="chip active" data-cat="all">Semua</button>
@@ -1800,6 +1826,9 @@ function animateTo(t,ms){cancelAnimationFrame(animId);var from={x:vb.x,y:vb.y,w:
     if(k<1)animId=requestAnimationFrame(step);}
   animId=requestAnimationFrame(step);}
 function focusOn(x,y){var s=sMin/2.6,w=cw()*s,h=ch()*s;animateTo(clampVB({x:x-w/2,y:y-h*0.14,w:w,h:h}));}
+/* Dipanggil saat ukuran panggung berubah (jendela diubah, atau sidebar dibuka/ditutup):
+   pertahankan titik tengah dan tingkat zoom, lalu hitung ulang batas peta. */
+function relayout(){var c={x:vb.x+vb.w/2,y:vb.y+vb.h/2},s=vb.w/cw();fit();setScale(s,c.x,c.y);}
 function resetView(){var s=sMin;animateTo(clampVB({x:0,y:0,w:cw()*s,h:ch()*s}));}
 
 /* pan and pinch */
@@ -1870,8 +1899,10 @@ function hydrateArt(root){
     if(paused){try{a.pauseAnimations();}catch(err){}}
   });
 }
-function openSheet(html){DufanPhysics.unmount();content.innerHTML=html;sheet.classList.remove('peek');hydrateArt(content);listBtn.textContent='Tutup';content.scrollTop=0;}
-function closeSheet(){DufanPhysics.unmount();sheet.classList.add('peek');listBtn.textContent='Daftar wahana';selWrap.style.display='none';current=null;}
+function openSheet(html){DufanPhysics.unmount();content.innerHTML=html;sheet.classList.remove('peek');hydrateArt(content);listBtn.textContent='Tutup';content.scrollTop=0;setViewBtn('list');
+  document.body.classList.add('sidebar');relayout();}
+function closeSheet(){DufanPhysics.unmount();sheet.classList.add('peek');listBtn.textContent='Daftar wahana';selWrap.style.display='none';current=null;setViewBtn('map');
+  document.body.classList.remove('sidebar');relayout();}
 function isOpen(){return !sheet.classList.contains('peek');}
 function photoHTML(r,id){var src=PHOTOS[id]||r.photo;
   if(src)return '<figure class="shot"><img src="'+esc(src)+'" alt="Foto wahana '+esc(r.name)+' di Dufan"><figcaption>Wahana '+esc(r.name)+', kawasan '+esc(r.zone)+'.</figcaption></figure>';
@@ -1898,6 +1929,11 @@ function listHTML(){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Kelu
   h+='<p class="note">Tata letak peta ini ilustratif. Beberapa wahana bisa tutup untuk perawatan, cek aplikasi atau situs Ancol sebelum datang.</p></div>';return h;}
 function select(id,move){var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return;var r=byId[id]||LANDMARKS[id];if(!r)return;
   var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;openSheet(detailHTML(r,id));DufanPhysics.mount(content);if(move)focusOn(p.x,p.y);}
+var viewBtns=Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
+function setViewBtn(v){viewBtns.forEach(function(b){var on=b.getAttribute('data-view')===v;
+  b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');});}
+viewBtns.forEach(function(b){b.addEventListener('click',function(){
+  if(b.getAttribute('data-view')==='list')openSheet(listHTML());else closeSheet();});});
 listBtn.addEventListener('click',function(){if(isOpen())closeSheet();else openSheet(listHTML());});
 document.getElementById('grab').addEventListener('click',function(){if(isOpen())closeSheet();else openSheet(listHTML());});
 content.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
@@ -1908,7 +1944,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen())cl
 
 /* filter */
 RIDES.forEach(function(r){var g=svg.querySelector('[data-id="'+r.id+'"]');if(g)g.setAttribute('data-cat',r.cat);});
-var chips=Array.prototype.slice.call(document.querySelectorAll('.chip'));
+var chips=Array.prototype.slice.call(document.querySelectorAll('.chip[data-cat]'));
 chips.forEach(function(c){c.addEventListener('click',function(){chips.forEach(function(x){x.classList.toggle('active',x===c);});var cat=c.getAttribute('data-cat');
   Array.prototype.forEach.call(svg.querySelectorAll('.ride'),function(g){g.classList.toggle('dim',cat!=='all'&&g.getAttribute('data-cat')!==cat);});
   if(current&&cat!=='all'&&byId[current]&&byId[current].cat!==cat)closeSheet();});});
@@ -1921,12 +1957,25 @@ function setPaused(p){paused=p;document.body.classList.toggle('paused',p);
 animBtn.addEventListener('click',function(){setPaused(!paused);});
 if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)setPaused(true);
 
+/* tema: ikut sistem, terang, atau gelap */
+var THEMES=[['auto','🌗 Auto','Tema mengikuti sistem'],['light','☀️ Terang','Tema terang'],['dark','🌙 Gelap','Tema gelap']];
+var themeBtn=document.getElementById('theme'),themeIdx=0;
+function applyTheme(i){themeIdx=((i%THEMES.length)+THEMES.length)%THEMES.length;var t=THEMES[themeIdx];
+  if(t[0]==='auto')document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme',t[0]);
+  themeBtn.textContent=t[1];themeBtn.title=t[2];themeBtn.setAttribute('aria-label',t[2]+', ketuk untuk mengganti');
+  try{localStorage.setItem('dufan-tema',t[0]);}catch(err){}}
+(function(){var k=0;try{var saved=localStorage.getItem('dufan-tema');THEMES.forEach(function(t,i){if(t[0]===saved)k=i;});}catch(err){}applyTheme(k);})();
+themeBtn.addEventListener('click',function(){applyTheme(themeIdx+1);});
+
 /* sea waves */
 var waves=document.getElementById('waves');
 [[24,''],[42,'w2'],[60,'w3']].forEach(function(w){var d='M-96,'+w[0];for(var i=0;i<20;i++)d+=' q12,-5 24,0 t24,0';
   var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);p.setAttribute('class','a wave '+w[1]);waves.appendChild(p);});
 
-window.addEventListener('resize',function(){var c={x:vb.x+vb.w/2,y:vb.y+vb.h/2},s=vb.w/cw();fit();setScale(s,c.x,c.y);});
+window.addEventListener('resize',relayout);
+/* lebar panggung dianimasikan, jadi hitung ulang lagi setelah geserannya selesai */
+stage.addEventListener('transitionend',function(e){if(e.propertyName==='right')relayout();});
 fit();
 })();
 </script>
