@@ -23,10 +23,21 @@ python3 -m http.server 8000
 ## Isi
 
 **Peta.** Ilustrasi SVG taman (viewBox 640×1000) yang bisa digeser dan di-zoom
-dengan sentuh maupun tetikus, memuat Laut Jawa, pantai, plaza, area parkir, jalur
-pejalan kaki, dan pepohonan. Sepuluh kawasan ditandai: Asia, Hikayat, Eropa,
-Amerika, Indonesia, Kidz Fantasy (indoor), Istana Boneka, Yunani, Dunia Kartun,
-dan Jakarta.
+dengan sentuh maupun tetikus. Latarnya digambar berlapis: rumput bertekstur,
+Laut Jawa bergradasi dengan awan dan perahu yang hanyut, garis pantai berombak
+beserta buih, pohon berbatang dengan tiga gumpalan daun, pohon kelapa di tepi
+pantai, kolam, serta properti taman berupa lampu jalan, bangku, kios, dan
+petak bunga. Jalur pejalan kaki digambar tiga lapis (tepi, badan, garis tengah)
+dan tiap wahana diberi bayangan lembut dari lapisan tersendiri.
+
+Sepuluh kawasan ditandai dengan bentuk organik dan garis putus-putus di
+dalamnya: Asia, Hikayat, Eropa, Amerika, Indonesia, Kidz Fantasy (digambar
+sebagai bangunan karena memang di dalam ruangan), Istana Boneka, Yunani, Dunia
+Kartun, dan Jakarta.
+
+Saat peta dipaskan ke layar, tinggi header dan panel yang sedang mengintip ikut
+diperhitungkan supaya taman tidak tertutup keduanya — selama itu tidak membuat
+peta menyusut lebih dari sepuluh persen.
 
 **34 wahana**, masing-masing digambar dan dianimasikan sendiri dengan CSS
 keyframes atau `animateMotion` — bianglala berputar, Kora-Kora mengayun, Hysteria
