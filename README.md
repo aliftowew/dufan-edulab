@@ -75,6 +75,19 @@ besaran secara langsung, dan bar energi potensial/kinetik. Semua lab berjalan
 otomatis begitu panel dibuka dan mengulang sendiri; tombol ⏸ di panel
 menghentikan seluruh animasi, termasuk animasi di kartu.
 
+## Logo
+
+Logo Dufan dan Ancol disematkan sebagai data URI PNG di dalam objek `LOGO` pada
+bagian `<head>`, jadi halaman tetap satu berkas dan logonya tetap tampil tanpa
+koneksi. Ketiganya dipakai di empat tempat: wordmark Dufan di header, papan nama
+Ancol di dekat gerbang pada peta, keduanya sebagai kredit di bagian bawah daftar
+wahana, dan tanda "A" berbintang milik Ancol sebagai ikon tab (favicon serta
+apple-touch-icon, dipasang dari skrip saat halaman dimuat).
+
+Logo Dufan dan Ancol adalah milik PT Pembangunan Jaya Ancol Tbk. Proyek ini
+proyek belajar mandiri, bukan aplikasi resmi, dan hal itu dinyatakan di bagian
+kredit dalam aplikasinya.
+
 ## Menambahkan foto wahana
 
 Panel fisika punya slot foto untuk tiap wahana. Selama slot masih kosong, yang
