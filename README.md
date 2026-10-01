@@ -30,20 +30,31 @@ pantai, kolam, serta properti taman berupa lampu jalan, bangku, kios, dan
 petak bunga. Jalur pejalan kaki digambar tiga lapis (tepi, badan, garis tengah)
 dan tiap wahana diberi bayangan lembut dari lapisan tersendiri.
 
-Sepuluh kawasan ditandai dengan bentuk organik dan garis putus-putus di
-dalamnya: Asia, Hikayat, Eropa, Amerika, Indonesia, Kidz Fantasy (digambar
-sebagai bangunan karena memang di dalam ruangan), Istana Boneka, Yunani, Dunia
-Kartun, dan Jakarta.
+Delapan kawasan ditandai dengan bentuk organik dan garis putus-putus di
+dalamnya, memakai warna yang sama dengan legenda peta informasi resmi: Eropa
+(biru), Asia (merah), Yunani (abu), Amerika (cokelat), Indonesia (kuning),
+Hikayat (hijau), Jakarta (oranye), dan Dunia Kartun (merah muda). Kidz Fantasy
+digambar sebagai bangunan karena memang kawasan dalam ruangan.
 
 Saat peta dipaskan ke layar, tinggi header dan panel yang sedang mengintip ikut
 diperhitungkan supaya taman tidak tertutup keduanya — selama itu tidak membuat
 peta menyusut lebih dari sepuluh persen.
 
-**34 wahana**, masing-masing digambar dan dianimasikan sendiri dengan CSS
-keyframes atau `animateMotion` — bianglala berputar, Kora-Kora mengayun, Hysteria
-menembak ke atas, kereta Halilintar menyusuri lintasan, Niagara-Gara mencipratkan
-air. Wahana dikelompokkan sebagai ekstrem (11), keluarga (17), dan anak (6);
-wahana yang sedang tutup diberi label di peta.
+**Wahana**, masing-masing digambar dan dianimasikan sendiri dengan CSS keyframes
+atau `animateMotion` — bianglala berputar, Kora-Kora mengayun, Hysteria menembak
+ke atas, kereta Halilintar menyusuri lintasan, Niagara-Gara mencipratkan air.
+
+Isi dan tata letaknya mengikuti dua sumber resmi Dufan: peta informasi cetak
+(untuk posisi kawasan dan letak tiap wahana) dan daftar 31 wahana beserta 2 live
+show (untuk wahana apa saja yang beroperasi dan pembagian kategorinya). Jadi
+pengelompokannya persis seperti daftar resmi: 10 wahana ekstrem, 9 wahana
+keluarga, dan 12 wahana anak.
+
+Di luar ke-31 itu ada tiga tambahan: Tembak Jitu, yang ada di peta cetak sebagai
+permainan ketangkasan dan bukan wahana; serta Kicir-Kicir dan Rajawali, yang
+masih tercetak di peta tetapi tidak ada dalam daftar wahana beroperasi sehingga
+diberi label "tidak beroperasi" di peta. Dua live show diwakili Pentas Prestasi
+di Kawasan Yunani dan Pertunjukan Indoor Dufan di gedung Kidz Fantasy.
 
 **Dua tampilan.** Tombol Peta / Daftar di bagian atas halaman memilih antara
 peta dan grid kartu wahana; tidak ada lagi daftar yang tersembunyi di balik
