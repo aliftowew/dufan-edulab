@@ -89,6 +89,10 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 .prop .wall{fill:var(--wall)} .prop .wall2{fill:var(--wall2)}
 .prop .wood{fill:var(--trunk)} .prop .wood2{fill:var(--wall2)}
 .rshadow{fill:var(--shade);pointer-events:none}
+.landmark.dim{opacity:.16;pointer-events:none}
+#route .rline{fill:none;stroke:var(--red);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10 7;opacity:.9}
+#route .rnum{fill:var(--red)}
+#route text{font:700 10px 'Plus Jakarta Sans',sans-serif;fill:#fff;text-anchor:middle}
 .splate{fill:#FBF6EC;stroke:#D9C7A3;stroke-width:2}
 .kotatua .ktwall{fill:var(--wall);stroke:var(--wall2);stroke-width:1.5}
 .kotatua .ktroof{fill:#C0603C}
@@ -182,6 +186,7 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 .seg{display:inline-flex;gap:3px;padding:3px;border-radius:999px;background:var(--panel);box-shadow:var(--shadow)}
 .seg .chip{background:transparent;box-shadow:none;padding:6px 13px}
 .chip b{font-weight:600;margin-left:5px}
+.chip i{font-style:normal}
 .seg .chip.active{background:var(--text);color:var(--panel)}
 .ctrl{display:flex;gap:6px}
 .ctrl button{width:36px;height:36px;border:0;border-radius:10px;background:var(--chip);color:var(--text);font:600 18px 'Plus Jakarta Sans',sans-serif;cursor:pointer;display:grid;place-items:center}
@@ -235,6 +240,34 @@ svg.still *{animation:none!important}
 .shot figcaption{margin-top:5px;font-size:11px;color:var(--muted);line-height:1.4}
 .shot.empty{border:1px dashed var(--line);border-radius:12px;padding:18px 14px;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
 h4.ph{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:16px 0 2px}
+.kur{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.kur h3{font:600 17px 'Fraunces',Georgia,serif;margin:0 0 6px}
+.tag.fase{background:var(--blue-soft);color:var(--blue)}
+.tag.st-terverifikasi{background:var(--green-soft);color:var(--green)}
+.tag.st-observasional{background:var(--chip);color:var(--muted)}
+.tag.st-bersyarat{background:var(--red-soft);color:var(--red)}
+.tplist{list-style:none;margin:4px 0 0;padding:0}
+.tplist li{font-size:13px;line-height:1.45;margin:0 0 6px;padding-left:2px}
+.tplist li b{display:inline-block;min-width:30px;color:var(--red);font-variant-numeric:tabular-nums}
+.tp-btn{display:block;width:100%;text-align:left;border:0;background:var(--chip);color:var(--text);cursor:pointer;
+  border-radius:10px;padding:8px 10px;font:400 13px/1.45 'Plus Jakarta Sans',sans-serif}
+.tp-btn:hover{background:var(--line)}
+.tp-btn b{color:var(--red);font-weight:700;margin-right:5px}
+.tp-btn i{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:3px}
+.tp-btn.aktif{background:var(--text);color:var(--panel)}
+.tp-btn.aktif b,.tp-btn.aktif i{color:var(--panel)}
+.fase-kartu{border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;margin:10px 0}
+.fase-kartu.aktif{border-color:var(--red);box-shadow:0 0 0 2px var(--red-soft)}
+.fase-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.fase-head b{font:600 17px 'Fraunces',Georgia,serif}
+.fase-head span{font-size:11px;color:var(--muted)}
+.saring-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  background:var(--panel);padding:6px 0 8px;margin:-4px 0 6px;border-bottom:1px solid var(--line)}
+.saring-bar b{font-size:12px}
+.rute-list{list-style:none;margin:6px 0 0;padding:0;counter-reset:r}
+.rute-list li{display:flex;align-items:center;gap:9px;font-size:13px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.rute-list li span{flex:none;width:21px;height:21px;border-radius:50%;background:var(--red);color:#fff;
+  display:grid;place-items:center;font:700 11px 'Plus Jakarta Sans',sans-serif}
 .note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.4}
 
 /* MathJax SVG output */
@@ -405,10 +438,51 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
 .lab-scene .carA{fill:#E63946}.lab-scene .carB{fill:#2D6CDF}.lab-scene .carlbl{fill:#fff}
 .lab-scene .hull{fill:#A1735B;stroke:#6D4C41;stroke-width:2}
 .lab-scene .plane{fill:#FFEAA7;stroke:#FDCB6E;stroke-width:2}.lab-scene .ballc{fill:#E63946}
+.lab-field{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.lab-field h5{margin:0;font:700 12px 'Plus Jakarta Sans',sans-serif}
+.lab-field .fnote{margin:2px 0 8px;font-size:11px;color:var(--muted);line-height:1.4}
+.lab-field .frow{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.lab-field label{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted);flex:1 1 170px}
+.lab-field .fin{display:flex;align-items:center;gap:6px}
+.lab-field input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px;
+  background:var(--panel);color:var(--text);font:600 13px 'Plus Jakarta Sans',sans-serif}
+.lab-field input:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.lab-field .unit{font-size:12px;color:var(--muted)}
+.lab-field .fout{margin-top:8px;font-size:12px}
+.lab-field .fout div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding:4px 0}
+.lab-field .fout b{font-variant-numeric:tabular-nums;text-align:right}
+.lab-field .fbeda{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.4}
+.lab-field .fbeda.jauh{color:var(--red)}
+.data-tabel{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.data-tabel th,.data-tabel td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line)}
+.data-tabel th{font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.data-tabel td b{font-variant-numeric:tabular-nums}
+#lkpd{display:none}
+body.cetak #lkpd{display:block;position:fixed;inset:0;z-index:20;overflow:auto;background:#fff;color:#14181c;padding:18px 20px 60px}
+body.cetak #stage,body.cetak .bar,body.cetak .sheet{display:none}
+#lkpd .lk-bar{position:sticky;top:-18px;background:#fff;padding:10px 0;display:flex;gap:8px;border-bottom:1px solid #d6d6d6;margin-bottom:16px}
+#lkpd h1{font:600 22px/1.2 'Fraunces',Georgia,serif;margin:0 0 2px;color:#14181c}
+#lkpd .lk-sub{font-size:12px;color:#555;margin:0 0 4px}
+#lkpd h2{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.7px;color:#555;margin:18px 0 6px}
+#lkpd p,#lkpd li{font-size:12.5px;line-height:1.55;color:#222}
+#lkpd ol,#lkpd ul{padding-left:20px;margin:4px 0}
+#lkpd table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+#lkpd th,#lkpd td{border:1px solid #b9b9b9;padding:5px 6px;text-align:left;vertical-align:top}
+#lkpd th{background:#efefef;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px}
+#lkpd td.isi{height:24px}
+#lkpd .lk-ident{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;margin:8px 0 2px}
+#lkpd .lk-ident span{flex:1 1 150px;border-bottom:1px solid #999;padding-bottom:3px}
+@media print{
+  body.cetak #lkpd{position:static;padding:0;overflow:visible}
+  #lkpd .lk-bar{display:none}
+  @page{margin:14mm}
+}
 /* ---------- panel jadi sidebar di layar lanskap ---------- */
 @media (orientation:landscape) and (min-width:640px){
-  .bar{max-width:min(78vw,900px);flex-direction:row;flex-wrap:wrap;align-items:center}
+  .bar{max-width:min(88vw,1000px);flex-direction:row;flex-wrap:wrap;align-items:center}
   body.sidebar .bar{max-width:min(48vw,540px)}
+  .seg .chip{padding:6px 9px;font-size:12.5px}
+  #theme b{display:none}
   .title{padding:6px 12px 7px}
   .title h1{font-size:17px}
   .t-logo{height:21px}
@@ -1055,6 +1129,7 @@ ikon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAYFBM
     <text class="lbl" y="30">Pertunjukan Indoor</text>
   </g>
 
+  <g id="route"></g>
   <g id="selWrap" style="display:none" transform="translate(0,0)"><circle class="a pulse sel" r="30" stroke-width="3"/><circle class="sel" r="30" stroke-width="2" opacity=".7"/></g>
 </svg>
 </div>
@@ -1069,6 +1144,7 @@ ikon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAYFBM
     <div class="seg" role="group" aria-label="Pilih tampilan">
       <button class="chip active" data-view="map" aria-pressed="true">🗺️ Peta</button>
       <button class="chip" data-view="list" aria-pressed="false">📋 Daftar</button>
+      <button class="chip" data-view="kurikulum" aria-pressed="false">🎓 Kurikulum</button>
     </div>
     <button class="chip" id="theme" aria-label="Ganti tema tampilan">🌗 Auto</button>
   </div>
@@ -1079,6 +1155,8 @@ ikon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAYFBM
     <button class="chip" data-cat="anak" aria-label="Wahana anak">🧒<b>Anak</b></button>
   </div>
 </header>
+
+<div id="lkpd" aria-hidden="true"></div>
 
 <section class="sheet peek" id="sheet" aria-live="polite">
   <button class="grab" id="grab" aria-label="Buka atau tutup panel"></button>
@@ -1095,6 +1173,131 @@ ikon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAYFBM
   <div class="content" id="content"></div>
 </section>
 
+<script>
+/* Pemetaan kurikulum: Kurikulum Pembelajaran Sains dan Fisika Kontekstual Berbasis
+   Wahana Dunia Fantasi. Fase, tujuan pembelajaran, pasangan praktikum sekolah, dan
+   status data diambil dari dokumen kurikulum; CP nasional tetap acuan utamanya. */
+var KURIKULUM = {
+  fase: {
+    B: {nama: 'Fase B', jenjang: 'IPAS, kelas III–IV SD',
+        fokus: 'Energi dan perubahannya; gaya dan pengaruhnya terhadap gerak atau bentuk benda',
+        proses: 'Mengamati, mencatat, menggunakan alat ukur sederhana, menyajikan hasil dengan bimbingan',
+        produk: 'Poster, gambar, atau diagram sederhana'},
+    C: {nama: 'Fase C', jenjang: 'IPAS, kelas V–VI SD',
+        fokus: 'Bunyi dan cahaya; pemanfaatan dan penghematan energi dalam konteks kehidupan',
+        proses: 'Membandingkan hasil pengamatan, mengolah data sederhana, memberi saran perbaikan',
+        produk: 'Laporan sederhana'},
+    D: {nama: 'Fase D', jenjang: 'IPA, kelas VII–IX SMP',
+        fokus: 'Pengukuran, gerak, gaya, tekanan, usaha dan energi, gelombang, kelistrikan dan kemagnetan',
+        proses: 'Menggunakan alat ukur, mengolah data, membuat grafik dan model, mengenali ketidakpastian',
+        produk: 'Laporan penyelidikan'},
+    E: {nama: 'Fase E', jenjang: 'IPA, kelas X SMA',
+        fokus: 'Sistem pengukuran, gerak dua dimensi, serta konteks energi sesuai CP',
+        proses: 'Analisis data yang lebih mandiri, pemodelan, analisis hubungan antarvariabel',
+        produk: 'Laporan analisis data atau video'},
+    F: {nama: 'Fase F', jenjang: 'Fisika, kelas XI–XII SMA',
+        fokus: 'Gerak dan gaya, fluida, gelombang, listrik, elektromagnetik, dan sistem digital sesuai CP',
+        proses: 'Merumuskan pertanyaan, merencanakan penyelidikan, mengendalikan variabel, mengevaluasi data',
+        produk: 'Laporan ilmiah, karya, atau model'}
+  },
+  tp: {
+    'B.1': 'Mengidentifikasi perubahan energi yang terjadi ketika benda bergerak dari posisi tinggi ke posisi rendah.',
+    'B.2': 'Mengidentifikasi perubahan energi listrik menjadi gerak, bunyi, atau cahaya pada sistem wahana.',
+    'B.3': 'Menjelaskan pengaruh gaya dorong, tarik, dan gesek terhadap gerak benda.',
+    'B.4': 'Mengidentifikasi perubahan arah gerak benda akibat gaya melalui pengamatan gerak wahana.',
+    'C.1': 'Menjelaskan fenomena pemantulan cahaya melalui pengamatan sistem cermin.',
+    'C.2': 'Mengidentifikasi sumber dan perambatan bunyi dalam lingkungan wahana.',
+    'C.3': 'Mengidentifikasi penggunaan energi pada wahana dan menyusun usulan sederhana untuk menghemat energi.',
+    'D.1': 'Menerapkan pengukuran waktu, jarak, periode, atau sudut pada gerak wahana.',
+    'D.2': 'Menganalisis perubahan kelajuan dan arah gerak berdasarkan pengamatan fenomena wahana.',
+    'D.3': 'Menganalisis tekanan dan gaya apung melalui fenomena benda atau perahu di dalam zat cair.',
+    'D.4': 'Menganalisis hubungan usaha dan perubahan energi pada wahana yang bergerak naik-turun.',
+    'D.5': 'Menganalisis getaran, gelombang, bunyi, atau pemantulan cahaya melalui fenomena yang relevan.',
+    'D.6': 'Menganalisis gejala kelistrikan pada wahana yang menggunakan sistem tenaga listrik berdasarkan informasi yang tersedia.',
+    'E.1': 'Menggunakan sistem pengukuran untuk memperoleh data waktu, posisi, periode, atau sudut dan mengevaluasi kualitas data.',
+    'E.2': 'Menganalisis gerak melingkar melalui periode, frekuensi, kecepatan sudut, dan hubungannya.',
+    'E.3': 'Menganalisis gerak pada lintasan dua dimensi berdasarkan data video.',
+    'E.4': 'Menganalisis gerak relatif berdasarkan perubahan kerangka acuan.',
+    'F.1': 'Menganalisis hubungan gaya dan gerak pada wahana, termasuk gaya sentripetal dan perubahan berat semu.',
+    'F.2': 'Menganalisis perubahan energi mekanik pada lintasan wahana dan pengaruh gesekan sebagai konteks pendalaman.',
+    'F.3': 'Menganalisis momentum dan impuls pada fenomena tumbukan sebagai materi pilihan atau pengayaan.',
+    'F.4': 'Menganalisis dinamika rotasi dan kesetimbangan benda tegar sebagai materi pilihan atau pengayaan.',
+    'F.5': 'Membuat karya atau model yang menunjukkan penerapan prinsip fluida.',
+    'F.6': 'Menganalisis karakteristik getaran berdasarkan periode, frekuensi, amplitudo, dan data pengamatan.',
+    'F.7': 'Menganalisis sistem kelistrikan wahana berdasarkan informasi teknis yang tersedia dan terverifikasi.',
+    'F.8': 'Menganalisis aspek elektromagnetik pada sistem motor, audio, sensor, atau cahaya apabila mekanismenya dapat diverifikasi.',
+    'F.9': 'Menerapkan teori dasar digital untuk membuat model logika sederhana yang merepresentasikan sistem skor atau kendali.'
+  },
+  status: {
+    terverifikasi: 'Jenis dan mekanisme wahana tercantum pada sumber resmi Dufan.',
+    observasional: 'Mekanisme disusun dari pengamatan; belum ada konfirmasi sumber resmi.',
+    bersyarat: 'Mekanisme teknisnya belum dapat diverifikasi, jadi hanya dipakai bila ada informasi pendukung.',
+    pengayaan: 'Dipakai sebagai pengembangan di sekolah, bukan tuntutan CP fase.'
+  },
+  wahana: {
+    halilintar: {f: 'BDEF', tp: 'B.1 D.1 D.4 E.3 F.2', p: ['Bola atau kelereng pada lintasan', 'Ketinggian awal, bentuk lintasan']},
+    hysteria:   {f: 'BDEF', tp: 'B.3 B.4 D.1 D.2 E.1 F.1', p: ['Benda jatuh dan analisis video', 'Ketinggian, waktu, massa']},
+    tornado:    {f: 'DF',   tp: 'D.1 D.2 F.1', x: 'Getaran dan rotasi lintas fase dipakai sebagai pengayaan.'},
+    kora:       {f: 'DEF',  tp: 'D.1 D.4 E.1 F.2 F.6', p: ['Bandul sederhana', 'Panjang tali, simpangan awal, massa'], x: 'Getaran dan rotasi lintas fase dipakai sebagai pengayaan.'},
+    kicir:      {f: 'DEF',  tp: 'D.1 D.2 E.2 F.1', x: 'Wahana tidak beroperasi; dipakai sebagai konteks visual atau data sekunder.'},
+    rajawali:   {f: 'DEF',  tp: 'D.1 D.2 E.2 F.1', p: ['Massa diputar pada tali', 'Radius, kecepatan sudut, massa'], x: 'Wahana tidak beroperasi; dipakai sebagai konteks visual atau data sekunder.'},
+    baling:     {f: 'DF',   tp: 'D.1 D.4 F.2', x: 'Getaran dan rotasi lintas fase dipakai sebagai pengayaan.'},
+    kereta:     {f: 'DF',   tp: 'D.1 D.4 F.2'},
+    niagara:    {f: 'DF',   tp: 'D.1 D.3 F.3 F.5', p: ['Saluran air dan perahu model', 'Debit, luas saluran, beban']},
+    arung:      {f: 'DF',   tp: 'D.1 D.3 F.5', p: ['Saluran air dan perahu model', 'Debit, luas saluran, beban']},
+    paralayang: {f: 'F',    tp: 'F.9'},
+    alap:       {f: 'DF',   tp: 'D.1 D.4 F.2', p: ['Bola atau kelereng pada lintasan', 'Ketinggian awal, bentuk lintasan']},
+    ontang:     {f: 'BDF',  tp: 'B.3 B.4 D.1 D.2 F.1', p: ['Massa diputar pada tali', 'Radius, kecepatan sudut, massa']},
+    bianglala:  {f: 'EF',   tp: 'E.2 F.1 F.4'},
+    pontang:    {f: 'EF',   tp: 'E.4 F.1'},
+    ombang:     {f: 'DF',   tp: 'D.1 D.2 D.5 F.1 F.6'},
+    turbo:      {f: 'DE',   tp: 'D.1 D.2 E.1', p: ['Benda jatuh dan analisis video', 'Ketinggian, waktu, massa']},
+    karavel:    {f: 'DEF',  tp: 'D.1 D.5 E.1 F.6', x: 'Getaran dan rotasi lintas fase dipakai sebagai pengayaan.'},
+    zigzag:     {f: 'BCDF', tp: 'B.3 B.4 C.3 D.1 D.2 D.6 F.3', p: ['Tumbukan troli atau kelereng', 'Massa dan kecepatan awal'], x: 'Konteks sistem kelistrikan (F.7) hanya dipakai bila mekanismenya dikonfirmasi pengelola.'},
+    poci:       {f: 'F',    tp: 'F.4'},
+    galactica:  {f: 'CDF',  tp: 'C.2 C.3 D.6 F.8 F.9', p: ['Sensor cahaya dan logika', 'Kondisi input']},
+    istana:     {f: 'BCDF', tp: 'B.1 B.2 C.2 C.3 D.5 D.6 F.9'},
+    turangga:   {f: 'DE',   tp: 'D.1 D.5 E.1 E.2'},
+    rango:      {f: 'DF',   tp: 'D.1 D.2 F.4'},
+    riana:      {f: 'CD',   tp: 'C.1 D.5', s: 'observasional', x: 'Pemantulan cahaya pada Rumah Riana berstatus pengayaan dalam kurikulum.'},
+    tembak:     {f: 'DF',   tp: 'D.6 F.9', p: ['Sensor cahaya dan logika', 'Kondisi input']},
+    teater:     {f: 'DF',   tp: 'D.1 D.2 F.9', a: 'Teater Simulator'},
+    burung:     {f: 'F',    tp: 'F.5', s: 'bersyarat'},
+    gajah:      {f: 'B',    tp: 'B.3 B.4'},
+    kolibri:    {f: 'BF',   tp: 'B.3 B.4 F.2 F.9'},
+    bakutoki:   {f: 'BDF',  tp: 'B.3 B.4 D.1 D.2 F.3', p: ['Tumbukan troli atau kelereng', 'Massa dan kecepatan awal']},
+    iceage:     {f: 'BF',   tp: 'B.1 F.3 F.5', x: 'Konteks perubahan iklim dipakai sebagai isu prioritas, bukan pengganti materi termodinamika.'},
+    kontiki:    {f: 'DF',   tp: 'D.1 D.5 F.4 F.6', p: ['Bandul sederhana', 'Panjang tali, simpangan awal, massa'], a: 'Ice Age: Kontiki', x: 'Getaran dan rotasi lintas fase dipakai sebagai pengayaan.'},
+    dream:      {f: 'B',    tp: 'B.1 B.3', p: ['Bidang miring', 'Sudut dan jenis permukaan']},
+    pentas:     {f: 'C',    tp: 'C.2'},
+    indoor:     {f: 'C',    tp: 'C.2'}
+  }
+};
+/* Lengkapi bentuk datanya sekali di awal supaya pemakaiannya seragam. */
+(function () {
+  for (var id in KURIKULUM.wahana) {
+    var w = KURIKULUM.wahana[id];
+    w.fase = w.f.split('');
+    w.tpList = w.tp.split(' ');
+    w.status = w.s || 'terverifikasi';
+  }
+  KURIKULUM.wahanaFase = function (kode) {
+    var out = [];
+    for (var id in KURIKULUM.wahana) if (KURIKULUM.wahana[id].fase.indexOf(kode) >= 0) out.push(id);
+    return out;
+  };
+  KURIKULUM.wahanaTP = function (kode) {
+    var out = [];
+    for (var id in KURIKULUM.wahana) if (KURIKULUM.wahana[id].tpList.indexOf(kode) >= 0) out.push(id);
+    return out;
+  };
+  KURIKULUM.tpFase = function (kode) {
+    var out = [];
+    for (var t in KURIKULUM.tp) if (t.charAt(0) === kode) out.push(t);
+    return out;
+  };
+})();
+</script>
 <script>
 /* Konten fisika per wahana. TeX ditulis dengan String.raw agar backslash tidak perlu digandakan. */
 var R = String.raw;
@@ -1232,15 +1435,15 @@ var PHYS = {
       ["Cara kerjanya", "Perahu berbentuk balok kayu ditarik konveyor ke puncak seluncuran, lalu dilepas menuruni jalur curam yang berakhir di kolam dangkal. Sudut seluncurannya dibuat tajam supaya sebagian besar ketinggian berubah menjadi kecepatan dalam waktu singkat."],
       ["Fisika yang bekerja", "Sampai menyentuh air, ceritanya sama seperti coaster: energi potensial menjadi energi kinetik. Yang khas terjadi sesudahnya. Perahu menghantam air dan diperlambat mendadak, dan air harus menerima seluruh momentum yang hilang itu. Karena air tidak bisa dimampatkan, satu-satunya jalan keluar adalah ke samping dan ke atas."],
       ["Kenapa cipratannya sebesar itu", "Massa air yang tersingkir hanya sedikit dibanding massa perahu berpenumpang, padahal energi yang dipindahkan besar. Energi besar pada massa kecil berarti kecepatan tinggi, jadi air terlempar jauh melewati pagar dan membasahi penonton yang sedang berdiri di jembatan."],
-      ["Coba di lab", "Jalankan model seluncuran 25 meter dan lihat kecepatan tepat sebelum menyentuh air. Kalikan dengan 3,6 untuk mendapat km per jam, lalu bayangkan energi sebesar itu harus diserap kolam hanya dalam waktu kurang dari satu detik."]
+      ["Coba di lab", "Kurikulum memasangkan Niagara-Gara dengan praktikum saluran air dan perahu model, jadi lab di bawah memakai debit, lebar saluran, dan beban sebagai variabel. Perkecil lebar saluran tanpa mengubah debit dan lihat kecepatan aliran naik: itulah persamaan kontinuitas Q = A v. Tambah penumpang dan perhatikan kedalaman tercelup bertambah sesuai hukum Archimedes."]
     ],
     f: [
       [R`v = \sqrt{2 g h}`, 'kecepatan di dasar seluncuran'],
       [R`E_k = \tfrac{1}{2} m v^2`, 'energi yang diserahkan ke air'],
       [R`F = \frac{\Delta p}{\Delta t}`, 'gaya hambat air: momentum perahu dihabiskan dalam waktu singkat']
     ],
-    lab: {type: 'coaster', profile: 'drop', h0: 25},
-    note: 'Tinggi seluncuran 25 m adalah nilai model.'
+    lab: {type: 'flow', Q: 1.4, lebar: 2.4, dalam: 1.0, boat: 420, area: 7, H: 0.6, cap: 6, nama: 'perahu balok'},
+    note: 'Tinggi seluncuran 25 m serta debit dan ukuran saluran pada lab adalah nilai model.'
   },
   arung: {
     konsep: 'Gaya apung dan aliran air',
@@ -1406,13 +1609,15 @@ var PHYS = {
       ["Cara kerjanya", "Kendaraan berjalan pelan di rel melewati serangkaian ruangan bertema Mars. Tiap penumpang memegang pistol yang memancarkan berkas inframerah berkode, dan tiap target punya sensor penerima yang tahu kode mana yang mengenainya, sehingga skor bisa dihitung per orang."],
       ["Fisika yang bekerja", "Cahaya inframerah adalah gelombang elektromagnetik yang merambat 300 juta meter per detik. Menempuh jarak 3 meter ke target hanya butuh sekitar 10 nanodetik, jauh lebih singkat daripada waktu reaksi manusia yang sekitar 200 juta nanodetik."],
       ["Kenapa tidak perlu memimpin sasaran", "Penembak jitu sungguhan harus mengarahkan senapan ke depan sasaran yang bergerak dan mengoreksi jatuhnya peluru karena gravitasi. Dengan cahaya, kedua koreksi itu hilang sama sekali: tidak ada lintasan parabola, tidak ada waktu terbang yang berarti. Titik yang kamu bidik adalah titik yang kena."],
-      ["Kode supaya tidak tertukar", "Kalau semua pistol memancarkan cahaya yang sama, sensor tidak akan tahu siapa yang menembak. Karena itu tiap pistol mengedipkan inframerahnya dalam pola waktu tertentu, semacam sidik jari digital. Remote televisi di rumah memakai prinsip yang persis sama."]
+      ["Kode supaya tidak tertukar", "Kalau semua pistol memancarkan cahaya yang sama, sensor tidak akan tahu siapa yang menembak. Karena itu tiap pistol mengedipkan inframerahnya dalam pola waktu tertentu, semacam sidik jari digital. Remote televisi di rumah memakai prinsip yang persis sama."],
+      ["Coba di lab", "Lab di bawah memodelkan syarat sebuah tembakan dihitung sah: pelatuk ditekan, kode pistol cocok, dan sensor sasaran aktif. Ketiganya masuk ke satu gerbang AND, jadi mematikan salah satu saja membuat keluarannya nol dan skor berhenti bertambah. Geser jarak sasaran dan bandingkan waktu tempuh cahaya dengan waktu reaksi manusia."]
     ],
     f: [
       [R`c = \lambda f`, 'hubungan panjang gelombang dan frekuensi cahaya'],
       [R`t = \frac{d}{c} = \frac{3\ \text{m}}{3 \times 10^{8}\ \text{m/s}} = 10\ \text{ns}`, 'waktu tempuh sinyal ke target'],
       [R`E_{\text{foton}} = h f`, 'energi tiap foton yang diterima sensor']
-    ]
+    ],
+    lab: {type: 'logika', jarak: 3, sasaran: 3}
   },
   istana: {
     konsep: 'Hukum Archimedes',
@@ -1478,12 +1683,14 @@ var PHYS = {
       ["Cara kerjanya", "Senapan memancarkan berkas inframerah sempit, dan tiap sasaran dipasangi fotodioda yang menghasilkan arus kecil ketika terkena cahaya itu. Rangkaian di dalam sasaran memperkuat arus itu dan menghitungnya sebagai satu tembakan sah."],
       ["Fisika yang bekerja", "Fotodioda bekerja lewat efek fotolistrik: foton yang datang membebaskan pembawa muatan di dalam bahan semikonduktor, dan muatan itu mengalir sebagai arus yang sebanding dengan terang cahaya yang diterima. Sensor hanya peka pada panjang gelombang inframerah agar lampu ruangan tidak ikut terhitung."],
       ["Tidak ada peluru, tidak ada parabola", "Peluru sungguhan jatuh mengikuti lintasan parabola dan butuh koreksi sesuai jarak. Cahaya praktis tiba seketika dan lintasannya lurus, jadi keterampilan yang diuji berubah total: bukan menghitung jarak, melainkan menstabilkan bidikan dan bereaksi cepat."],
-      ["Batasnya ada di tubuhmu", "Waktu reaksi manusia dari melihat sampai jari menekan pelatuk sekitar 0,2 detik, dan itu jauh lebih lama daripada waktu tempuh cahaya. Karena itu skor hampir sepenuhnya ditentukan seberapa stabil tanganmu memegang senapan dan seberapa cepat matamu memutuskan."]
+      ["Batasnya ada di tubuhmu", "Waktu reaksi manusia dari melihat sampai jari menekan pelatuk sekitar 0,2 detik, dan itu jauh lebih lama daripada waktu tempuh cahaya. Karena itu skor hampir sepenuhnya ditentukan seberapa stabil tanganmu memegang senapan dan seberapa cepat matamu memutuskan."],
+      ["Coba di lab", "Lab di bawah memakai tiga masukan yang sama seperti sistem skor sungguhan: pelatuk, kode, dan sensor sasaran. Perhatikan bahwa menambah jarak sasaran hampir tidak mengubah waktu tempuh cahaya, sementara waktu reaksi tanganmu tetap sekitar 0,2 detik. Di situlah letak tantangan sesungguhnya."]
     ],
     f: [
       [R`t_{\text{sinyal}} = \frac{d}{c} \approx 10\ \text{ns}`, 'sinyal tiba nyaris seketika'],
       [R`t_{\text{reaksi}} \approx 0{,}2\ \text{s}`, 'yang lambat justru manusianya']
-    ]
+    ],
+    lab: {type: 'logika', jarak: 6, sasaran: 4}
   },
   teater: {
     konsep: 'Kemiringan yang menipu telinga dalam',
@@ -1641,7 +1848,7 @@ var FSVG={"E_p = m g h":"<mjx-container class=\"MathJax\" jax=\"SVG\" display=\"
 var DufanPhysics = (function () {
   'use strict';
   var G = 9.8, M = 70, NS = 'http://www.w3.org/2000/svg';
-  var LABEL = {pendulum: 'Ayunan bandul', coaster: 'Kereta di lintasan', circular: 'Gerak melingkar', drop: 'Menara jatuh bebas', collision: 'Tabrakan bumper car', buoy: 'Gaya apung', incline: 'Bidang miring'};
+  var LABEL = {pendulum: 'Ayunan bandul', coaster: 'Kereta di lintasan', circular: 'Gerak melingkar', drop: 'Menara jatuh bebas', collision: 'Tabrakan bumper car', buoy: 'Gaya apung', incline: 'Bidang miring', flow: 'Saluran air dan perahu model', logika: 'Sensor cahaya dan logika'};
 
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]; }); }
   function fnum(x, d) {
@@ -1677,8 +1884,57 @@ var DufanPhysics = (function () {
   function shell(host, type, tip) {
     host.innerHTML = '<div class="lab-head">Lab mini: ' + LABEL[type] + '</div><p class="lab-tip">' + tip + '</p>'
       + '<svg class="lab-scene" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"></svg>'
-      + '<div class="lab-ctl"></div><div class="lab-read"></div><div class="ebars"></div>';
-    return {scene: host.querySelector('svg'), ctl: host.querySelector('.lab-ctl'), read: host.querySelector('.lab-read'), ebars: host.querySelector('.ebars')};
+      + '<div class="lab-ctl"></div><div class="lab-read"></div><div class="ebars"></div><div class="lab-field"></div>';
+    return {scene: host.querySelector('svg'), ctl: host.querySelector('.lab-ctl'), read: host.querySelector('.lab-read'),
+            ebars: host.querySelector('.ebars'), field: host.querySelector('.lab-field'), id: host.getAttribute('data-id')};
+  }
+
+  /* ---------- mode data lapangan ----------
+     Kurikulum memisahkan Dufan sebagai tempat observasi dan sekolah sebagai tempat
+     pemodelan. Kotak ini tempat murid memasukkan hasil ukur di lapangan, lalu
+     membandingkannya dengan angka model di atasnya. */
+  var SIMPAN = 'dufan-data-lapangan';
+  function bacaData() { try { return JSON.parse(localStorage.getItem(SIMPAN) || '[]'); } catch (e) { return []; } }
+  function tulisData(arr) { try { localStorage.setItem(SIMPAN, JSON.stringify(arr.slice(-200))); } catch (e) {} }
+  function simpanBaris(baris) { var a = bacaData(); a.push(baris); tulisData(a); }
+
+  function fieldBox(ui, spec) {
+    /* spec: {label, unit, step, model, modelLabel, hitung(nilai) -> [[nama, teks], ...]} */
+    ui.field.innerHTML = '<h5>Data lapangan</h5>'
+      + '<p class="fnote">Ukur langsung di Dufan dari posisi aman, masukkan angkanya di sini, lalu bandingkan dengan model di atas. '
+      + 'Model dan hasil ukur tidak harus sama; selisihnya justru yang dibahas.</p>'
+      + '<div class="frow"><label><span>' + spec.label + '</span>'
+      + '<span class="fin"><input type="number" min="0" step="' + (spec.step || 0.01) + '" placeholder="0"><span class="unit">' + spec.unit + '</span></span>'
+      + '</label><button class="btn small" type="button">Simpan</button></div><div class="fout"></div>';
+    var inp = ui.field.querySelector('input'), out = ui.field.querySelector('.fout'), btn = ui.field.querySelector('button');
+    function hitung() {
+      var v = parseFloat(inp.value);
+      if (!isFinite(v) || v <= 0) { out.innerHTML = ''; return null; }
+      var baris = spec.hitung(v) || [];
+      var h = '';
+      baris.forEach(function (b) { h += '<div><span>' + b[0] + '</span><b>' + b[1] + '</b></div>'; });
+      var m = spec.model && spec.model();
+      if (isFinite(m) && m > 0) {
+        var beda = Math.abs(v - m) / m * 100;
+        h += '<p class="fbeda' + (beda > 20 ? ' jauh' : '') + '">' + (spec.modelLabel || 'Model') + ': ' + fnum(m, 2)
+          + ' ' + spec.unit + '. Selisih terhadap hasil ukurmu ' + fnum(beda, 1) + ' persen.'
+          + (beda > 20 ? ' Selisih sebesar ini biasanya berarti ada besaran model yang belum cocok dengan wahana aslinya, atau cara pengukurannya perlu diulang.' : '')
+          + '</p>';
+      }
+      out.innerHTML = h;
+      return {nilai: v, baris: baris};
+    }
+    inp.addEventListener('input', hitung);
+    btn.addEventListener('click', function () {
+      var r = hitung();
+      if (!r) { inp.focus(); return; }
+      simpanBaris({id: ui.id || '', besaran: spec.label, nilai: r.nilai, satuan: spec.unit,
+                   hasil: r.baris.map(function (b) { return b[0] + ': ' + b[1]; }).join('; '),
+                   waktu: new Date().toISOString().slice(0, 16).replace('T', ' ')});
+      btn.textContent = 'Tersimpan';
+      setTimeout(function () { btn.textContent = 'Simpan'; }, 1600);
+    });
+    return inp;
   }
   function slider(ctl, label, min, max, step, val, unit) {
     var lab = document.createElement('label');
@@ -1756,6 +2012,13 @@ var DufanPhysics = (function () {
     function move(e) { var q = scenePt(sc, e); th = Math.max(-thMax, Math.min(thMax, Math.atan2(q.x - px, q.y - py))); draw(); }
     draw();
     anim.start();
+    fieldBox(ui, {label: 'Periode satu ayunan penuh', unit: 's', step: 0.01,
+      model: function () { return 2 * Math.PI * Math.sqrt(L / G); }, modelLabel: 'Periode model',
+      hitung: function (v) {
+        return [['Frekuensi ayunan', fnum(1 / v, 3) + ' Hz'],
+                ['Panjang lengan efektif dari data', fnum(G * Math.pow(v / (2 * Math.PI), 2), 2) + ' m'],
+                ['Panjang lengan yang dipakai model', fnum(L, 1) + ' m']];
+      }});
     return {destroy: anim.stop};
   }
 
@@ -1809,6 +2072,13 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', function () { anim.stop(); });
     place();
     anim.start();
+    fieldBox(ui, {label: 'Tinggi bukit pertama hasil taksiran', unit: 'm', step: 0.5,
+      model: function () { return hTop; }, modelLabel: 'Tinggi model',
+      hitung: function (v) {
+        var vv = Math.sqrt(2 * G * v);
+        return [['Kecepatan di dasar tanpa gesekan', fnum(vv, 1) + ' m/s (' + fnum(vv * 3.6, 0) + ' km/jam)'],
+                ['Energi potensial penumpang 70 kg', fnum(M * G * v / 1000, 1) + ' kJ']];
+      }});
     return {destroy: anim.stop};
   }
 
@@ -1855,6 +2125,15 @@ var DufanPhysics = (function () {
       if (c.v > 0.05) arrow(arrows, sx, sy, sx - lv * Math.sin(ang), sy + lv * Math.cos(ang), 'arrV');
     });
     sl.addEventListener('input', calc); calc(); anim.start();
+    fieldBox(ui, {label: 'Waktu untuk 5 putaran', unit: 's', step: 0.1,
+      model: function () { var r = parseFloat(sl.value); return r > 0 ? 5 * 60 / r : NaN; },
+      modelLabel: 'Waktu model pada putaran sekarang',
+      hitung: function (v) {
+        var T = v / 5, w = 2 * Math.PI / T, laju = w * p.r, a = w * w * p.r;
+        return [['Periode satu putaran', fnum(T, 2) + ' s'], ['Putaran per menit', fnum(60 / T, 1) + ' rpm'],
+                ['Kecepatan sudut', fnum(w, 2) + ' rad/s'], ['Laju di jari-jari ' + fnum(p.r, 0) + ' m', fnum(laju, 1) + ' m/s'],
+                ['Percepatan sentripetal', fnum(a, 2) + ' m/s² (' + fnum(a / G, 2) + ' g)']];
+      }});
     return {destroy: anim.stop};
   }
 
@@ -1900,6 +2179,13 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', reset);
     reset();
     anim.start();
+    fieldBox(ui, {label: 'Lama jatuh bebas hasil pengukuran', unit: 's', step: 0.05,
+      model: function () { return Math.sqrt(2 * h0() / G); }, modelLabel: 'Lama jatuh model',
+      hitung: function (v) {
+        return [['Tinggi jatuh dari data', fnum(0.5 * G * v * v, 1) + ' m'],
+                ['Kecepatan saat tiba di bawah', fnum(G * v, 1) + ' m/s (' + fnum(G * v * 3.6, 0) + ' km/jam)'],
+                ['Tinggi yang dipakai model', fnum(h0(), 0) + ' m']];
+      }});
     return {destroy: anim.stop};
   }
 
@@ -1937,6 +2223,15 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', reset);
     reset();
     anim.start();
+    fieldBox(ui, {label: 'Waktu mobil menempuh 5 m sebelum menabrak', unit: 's', step: 0.1,
+      model: function () { var v1 = parseFloat(s2.value); return v1 > 0 ? 5 / v1 : NaN; },
+      modelLabel: 'Waktu model pada kecepatan sekarang',
+      hitung: function (v) {
+        var laju = 5 / v, m1 = parseFloat(s1.value);
+        return [['Kecepatan sebelum tumbukan', fnum(laju, 2) + ' m/s'],
+                ['Momentum mobil A', fnum(m1 * laju, 0) + ' kg·m/s'],
+                ['Gaya rata-rata jika berhenti dalam 0,15 s', fnum(m1 * laju / 0.15 / 1000, 2) + ' kN']];
+      }});
     return {destroy: anim.stop};
   }
 
@@ -1965,6 +2260,15 @@ var DufanPhysics = (function () {
     var tb = 0;
     var anim = loop(function (dt) { tb += dt; boat.setAttribute('transform', 'translate(0,' + (Math.sin(tb * 1.9) * 1.7).toFixed(2) + ')'); });
     sl.addEventListener('input', draw); draw(); anim.start();
+    fieldBox(ui, {label: 'Kedalaman lambung yang tercelup', unit: 'cm', step: 1,
+      model: function () { var n = parseInt(sl.value, 10); return (p.boat + n * M) / (1000 * p.area) * 100; },
+      modelLabel: 'Kedalaman model pada jumlah penumpang sekarang',
+      hitung: function (v) {
+        var m = 1000 * p.area * (v / 100);
+        return [['Massa total dari data', fnum(m, 0) + ' kg'],
+                ['Setara jumlah penumpang 70 kg', fnum(Math.max(0, (m - p.boat) / M), 1) + ' orang'],
+                ['Gaya apung', fnum(m * G / 1000, 2) + ' kN']];
+      }});
     return {destroy: anim.stop};
   }
 
@@ -2006,10 +2310,146 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', reset);
     reset();
     anim.start();
+    fieldBox(ui, {label: 'Waktu meluncur dari atas sampai bawah', unit: 's', step: 0.1,
+      model: function () { var th = parseFloat(s1.value) * Math.PI / 180, mu = parseFloat(s2.value),
+        a = G * (Math.sin(th) - mu * Math.cos(th)); return a > 0 ? Math.sqrt(2 * L / a) : NaN; },
+      modelLabel: 'Waktu model pada sudut dan gesekan sekarang',
+      hitung: function (v) {
+        var a = 2 * L / (v * v), th = parseFloat(s1.value) * Math.PI / 180;
+        var mu = (Math.sin(th) - a / G) / Math.cos(th);
+        return [['Percepatan dari data', fnum(a, 2) + ' m/s²'],
+                ['Kecepatan di ujung', fnum(a * v, 1) + ' m/s'],
+                ['Koefisien gesek yang cocok', mu >= 0 ? fnum(mu, 2) : 'di bawah 0, periksa lagi sudut atau waktunya']];
+      }});
     return {destroy: anim.stop};
   }
 
-  var FN = {pendulum: labPendulum, coaster: labCoaster, circular: labCircular, drop: labDrop, collision: labCollision, buoy: labBuoy, incline: labIncline};
+  /* ---------- 8. aliran fluida pada saluran ---------- */
+  function labFlow(host, p) {
+    var ui = shell(host, 'flow', 'Saluran dilihat dari atas. Atur debit dan lebar saluran, lalu perhatikan kecepatan alirannya. '
+      + 'Debit yang sama lewat saluran yang lebih sempit berarti air mengalir lebih cepat.');
+    var sc = ui.scene, x0 = 10, x1 = 310, cy = 96, pxPerM = (x1 - x0) / 50;
+    add(sc, 'rect', {x: x0, y: 20, width: x1 - x0, height: 152, rx: 6, fill: '#8BAF6A', opacity: '.35'});
+    var air = add(sc, 'rect', {x: x0, y: 60, width: x1 - x0, height: 72, 'class': 'water'});
+    add(sc, 'line', {x1: x0, y1: 178, x2: x1, y2: 178, 'class': 'ln'});
+    var skala = add(sc, 'text', {x: x0 + 2, y: 192, 'class': 'sl'}); skala.textContent = 'panjang saluran 50 m';
+    var tepiA = add(sc, 'line', {'class': 'wline'}), tepiB = add(sc, 'line', {'class': 'wline'});
+    var perahu = add(sc, 'g');
+    perahu.innerHTML = '<ellipse class="hull" cx="0" cy="0" rx="17" ry="9"/><circle class="rider" cx="-5" cy="0" r="3"/><circle class="rider" cx="5" cy="0" r="3"/>';
+    var lbl = add(sc, 'text', {x: 160, y: 46, 'class': 'sl big', 'text-anchor': 'middle'});
+    var sQ = slider(ui.ctl, 'Debit air Q', 0.4, 3, 0.1, p.Q, ' m³/s'),
+        sW = slider(ui.ctl, 'Lebar saluran', 1.2, 4, 0.1, p.lebar, ' m'),
+        sN = slider(ui.ctl, 'Jumlah penumpang', 0, p.cap + 2, 1, Math.min(p.cap, 4), ' orang');
+    var setR = reads(ui.read, ['Luas penampang A', 'Kecepatan aliran v = Q/A', 'Waktu tempuh 50 m',
+                               'Massa perahu + penumpang', 'Kedalaman tercelup', 'Gaya apung']);
+    var x = x0 + 20;
+    function hitung() {
+      var Q = parseFloat(sQ.value), w = parseFloat(sW.value), n = parseInt(sN.value, 10);
+      var A = w * p.dalam, v = Q / A, m = p.boat + n * M, d = m / (1000 * p.area);
+      var ph = Math.max(26, Math.min(120, w * 26));
+      air.setAttribute('y', cy - ph / 2); air.setAttribute('height', ph);
+      [[tepiA, cy - ph / 2], [tepiB, cy + ph / 2]].forEach(function (t) {
+        t[0].setAttribute('x1', x0); t[0].setAttribute('x2', x1); t[0].setAttribute('y1', t[1]); t[0].setAttribute('y2', t[1]);
+      });
+      lbl.textContent = 'v = ' + fnum(v, 2) + ' m/s';
+      setR([fnum(A, 2) + ' m²', fnum(v, 2) + ' m/s', fnum(50 / v, 1) + ' s', fnum(m, 0) + ' kg',
+            fnum(d * 100, 0) + ' cm', fnum(m * G / 1000, 2) + ' kN']);
+      return v;
+    }
+    var anim = loop(function (dt) {
+      var v = hitung();
+      x += v * pxPerM * dt;
+      if (x > x1 + 20) x = x0 - 20;
+      perahu.setAttribute('transform', 'translate(' + x + ',' + cy + ')');
+    });
+    [sQ, sW, sN].forEach(function (e) { e.addEventListener('input', hitung); });
+    hitung(); anim.start();
+    fieldBox(ui, {label: 'Waktu perahu menempuh 10 m', unit: 's', step: 0.5,
+      model: function () { var Q = parseFloat(sQ.value), A = parseFloat(sW.value) * p.dalam; return 10 / (Q / A); },
+      modelLabel: 'Waktu model pada debit dan lebar sekarang',
+      hitung: function (t) {
+        var v = 10 / t, A = parseFloat(sW.value) * p.dalam;
+        return [['Kecepatan aliran dari data', fnum(v, 2) + ' m/s'],
+                ['Debit Q = A·v', fnum(A * v, 2) + ' m³/s'],
+                ['Air yang lewat tiap menit', fnum(A * v * 60, 0) + ' m³']];
+      }});
+    return {destroy: anim.stop};
+  }
+
+  /* ---------- 9. sensor cahaya dan logika ---------- */
+  function labLogika(host, p) {
+    var ui = shell(host, 'logika', 'Tembakan dihitung sah hanya bila ketiga syarat terpenuhi bersamaan. '
+      + 'Nyalakan dan matikan tiap masukan, lalu perhatikan keluaran gerbang AND dan skornya.');
+    var sc = ui.scene, gx = 26, gy = 150, tx = 268;
+    var n = p.sasaran || 3, sasaran = [];
+    add(sc, 'rect', {x: 6, y: 168, width: 308, height: 10, rx: 4, fill: 'var(--road)', opacity: '.5'});
+    var pistol = add(sc, 'g');
+    pistol.innerHTML = '<rect x="-14" y="-7" width="30" height="11" rx="3" fill="#2F3542"/>'
+      + '<rect x="-12" y="2" width="9" height="13" rx="2" fill="#57606F"/>';
+    pistol.setAttribute('transform', 'translate(' + gx + ',' + gy + ')');
+    for (var i = 0; i < n; i++) {
+      var y = 46 + i * (104 / Math.max(1, n - 1));
+      var g = add(sc, 'g', {transform: 'translate(' + tx + ',' + y + ')'});
+      add(g, 'circle', {r: 15, fill: '#fff', stroke: '#C0392B', 'stroke-width': 3});
+      add(g, 'circle', {r: 6, fill: '#C0392B'});
+      sasaran.push({g: g, y: y, kena: add(g, 'circle', {r: 20, fill: '#FFD93D', opacity: 0})});
+    }
+    var sinar = add(sc, 'line', {stroke: '#E63946', 'stroke-width': 2.5, 'stroke-linecap': 'round', opacity: 0});
+    var pulsa = add(sc, 'circle', {r: 4, fill: '#FF6B6B', opacity: 0});
+    var skorT = add(sc, 'text', {x: 12, y: 24, 'class': 'sl big'});
+    var ruleT = add(sc, 'text', {x: 12, y: 42, 'class': 'sl'});
+    var masuk = [{nama: 'Pelatuk ditekan', on: true}, {nama: 'Kode pistol cocok', on: true}, {nama: 'Sensor sasaran aktif', on: true}];
+    var tombol = masuk.map(function (m) {
+      var b = button(ui.ctl, m.nama + ': 1', !m.on);
+      b.addEventListener('click', function () { m.on = !m.on; b.textContent = m.nama + ': ' + (m.on ? 1 : 0); b.className = 'btn small' + (m.on ? '' : ' ghost'); gambar(); });
+      return b;
+    });
+    var sJ = slider(ui.ctl, 'Jarak sasaran', 1, 12, 0.5, p.jarak, ' m');
+    var setR = reads(ui.read, ['Keluaran gerbang AND', 'Waktu tempuh cahaya', 'Waktu reaksi manusia',
+                               'Perbandingan waktu', 'Tembakan sah', 'Tembakan dicoba']);
+    var skor = 0, coba = 0, t = 0, idx = 0;
+    function keluaran() { return masuk[0].on && masuk[1].on && masuk[2].on ? 1 : 0; }
+    function gambar() {
+      var d = parseFloat(sJ.value), tc = d / 3e8, tr = 0.2;
+      var k = keluaran();
+      skorT.textContent = 'Skor ' + skor + ' dari ' + coba + ' tembakan';
+      ruleT.textContent = 'sah = pelatuk DAN kode DAN sensor = ' + k;
+      setR([String(k), fnum(tc * 1e9, 1) + ' ns', fnum(tr, 2) + ' s',
+            'reaksi ' + fnum(tr / tc, 0) + '× lebih lama', String(skor), String(coba)]);
+    }
+    var anim = loop(function (dt) {
+      t += dt;
+      var siklus = 1.4, f = (t % siklus) / siklus, s = sasaran[idx];
+      sinar.setAttribute('x1', gx + 16); sinar.setAttribute('y1', gy - 2);
+      sinar.setAttribute('x2', tx); sinar.setAttribute('y2', s.y);
+      if (f < 0.45) {
+        var u = f / 0.45;
+        sinar.setAttribute('opacity', keluaran() ? 0.85 : 0.2);
+        pulsa.setAttribute('opacity', 1);
+        pulsa.setAttribute('cx', gx + 16 + (tx - gx - 16) * u);
+        pulsa.setAttribute('cy', gy - 2 + (s.y - gy + 2) * u);
+      } else {
+        pulsa.setAttribute('opacity', 0); sinar.setAttribute('opacity', 0);
+      }
+      s.kena.setAttribute('opacity', (f >= 0.45 && f < 0.75 && keluaran()) ? 0.55 : 0);
+      if (f >= 0.45 && !s.dihitung) {
+        s.dihitung = true; coba++; if (keluaran()) skor++; gambar();
+      }
+      if (f < 0.45 && s.dihitung) { s.dihitung = false; idx = (idx + 1) % sasaran.length; }
+    });
+    sJ.addEventListener('input', gambar);
+    gambar(); anim.start();
+    fieldBox(ui, {label: 'Tembakan yang kena dari 20 percobaan', unit: 'tembakan', step: 1,
+      hitung: function (v) {
+        var pc = Math.min(100, v / 20 * 100);
+        return [['Persentase kena', fnum(pc, 0) + ' persen'],
+                ['Perkiraan waktu bidik per tembakan', fnum(60 / 20, 1) + ' s jika satu putaran 60 detik'],
+                ['Catatan', pc > 60 ? 'bidikan stabil' : 'latih kestabilan tangan dan waktu reaksi']];
+      }});
+    return {destroy: anim.stop};
+  }
+
+  var FN = {pendulum: labPendulum, coaster: labCoaster, circular: labCircular, drop: labDrop, collision: labCollision, buoy: labBuoy, incline: labIncline, flow: labFlow, logika: labLogika};
   var active = null;
   function unmount() { if (active) { try { active.destroy(); } catch (e) {} active = null; } }
   function mount(root) {
@@ -2018,7 +2458,8 @@ var DufanPhysics = (function () {
     var p = PHYS[host.getAttribute('data-id')]; if (!p || !p.lab || !FN[p.lab.type]) return;
     try { active = FN[p.lab.type](host, p.lab); } catch (e) { host.innerHTML = '<p class="note">Lab mini tidak bisa dimuat di browser ini.</p>'; }
   }
-  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount};
+  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount,
+          bacaData: bacaData, hapusData: function () { tulisData([]); }};
 })();
 
 </script>
@@ -2195,6 +2636,22 @@ function isOpen(){return !sheet.classList.contains('peek');}
 function photoHTML(r,id){var src=PHOTOS[id]||r.photo;
   if(src)return '<figure class="shot"><img src="'+esc(src)+'" alt="Foto wahana '+esc(r.name)+' di Dufan"><figcaption>Wahana '+esc(r.name)+', kawasan '+esc(r.zone)+'.</figcaption></figure>';
   return '<div class="shot empty">Foto asli '+esc(r.name)+' belum dipasang di aplikasi ini.</div>';}
+/* Blok kurikulum pada panel wahana: fase, tujuan pembelajaran, praktikum sekolah, status data. */
+function kurikulumHTML(id){
+  var w=KURIKULUM.wahana[id];if(!w)return '';
+  var h='<div class="kur"><h3>Dalam kurikulum</h3>';
+  if(w.a)h+='<p class="meta">Nama pada dokumen kurikulum: '+esc(w.a)+'</p>';
+  h+='<div class="tags">';
+  w.fase.forEach(function(f){h+='<span class="tag fase">'+esc(KURIKULUM.fase[f].nama)+'</span>';});
+  h+='<span class="tag st-'+w.status+'">Data '+esc(w.status)+'</span></div>';
+  h+='<h4 class="ph">Tujuan pembelajaran yang didukung</h4><ul class="tplist">';
+  w.tpList.forEach(function(t){h+='<li><b>'+t+'</b> '+esc(KURIKULUM.tp[t])+'</li>';});
+  h+='</ul>';
+  if(w.p)h+='<h4 class="ph">Praktikum model di sekolah</h4><p class="desc">'+esc(w.p[0])
+    +'. Variabel utama: '+esc(w.p[1])+'.</p>';
+  if(w.x)h+='<p class="note">'+esc(w.x)+'</p>';
+  h+='<p class="note">Status data: '+esc(KURIKULUM.status[w.status])+' Angka pada lab mini adalah nilai model untuk belajar.</p></div>';
+  return h;}
 function detailHTML(r,id){var cat=CATS[r.cat];var dots='';
   if(r.thrill){dots='<span class="dots" aria-label="Adrenalin '+r.thrill+' dari 5">';for(var i=1;i<=5;i++)dots+=i<=r.thrill?'●':'○';dots+='</span>';}
   return '<div class="tags"><span class="tag">Kawasan '+esc(r.zone)+'</span>'+(cat?'<span class="tag '+r.cat+'">'+cat+'</span>':'')+(r.closed?'<span class="tag closed">Tutup sementara</span>':'')+'</div>'
@@ -2203,6 +2660,7 @@ function detailHTML(r,id){var cat=CATS[r.cat];var dots='';
     +'<p class="desc">'+esc(r.desc)+'</p>'
     +DufanPhysics.labHTML(id)
     +DufanPhysics.section(id,photoHTML(r,id))
+    +kurikulumHTML(id)
     +'<div class="actions"><button class="btn" data-act="focus">Lihat di peta</button><button class="btn ghost" data-act="list">Semua wahana</button></div>';}
 function listHTML(){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Keluarga, semua umur'],['anak','Anak-anak dan indoor']],h='<div class="list">';
   groups.forEach(function(gr){h+='<h3>'+gr[1]+'</h3><div class="cards">';
@@ -2219,14 +2677,197 @@ function listHTML(){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Kelu
     +'<p class="note">Logo Dufan dan Ancol milik PT Pembangunan Jaya Ancol Tbk. Peta ini proyek belajar mandiri, bukan aplikasi resmi.</p></div>';return h;}
 function select(id,move){var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return;var r=byId[id]||LANDMARKS[id];if(!r)return;
   var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;openSheet(detailHTML(r,id));DufanPhysics.mount(content);if(move)focusOn(p.x,p.y);}
+/* ---------- data lapangan dan lembar kerja ---------- */
+/* Besaran yang masuk akal diukur murid di lapangan, per jenis lab mini. */
+var UKUR={pendulum:'Periode satu ayunan penuh (s)',coaster:'Tinggi bukit pertama (m)',circular:'Waktu 5 putaran (s)',
+  drop:'Lama jatuh bebas (s)',collision:'Waktu menempuh 5 m sebelum menabrak (s)',buoy:'Kedalaman lambung tercelup (cm)',
+  incline:'Waktu meluncur dari atas ke bawah (s)',flow:'Waktu perahu menempuh 10 m (s)',logika:'Tembakan kena dari 20 percobaan'};
+function besaranUkur(id){
+  var p=(typeof PHYS!=='undefined')&&PHYS[id];
+  return (p&&p.lab&&UKUR[p.lab.type])||'Catatan pengamatan kualitatif';
+}
+function namaWahana(id){var r=byId[id]||LANDMARKS[id];return r?r.name:id;}
+function kawasanWahana(id){var r=byId[id]||LANDMARKS[id];return r?r.zone:'';}
+
+function dataLapanganHTML(){
+  var d=DufanPhysics.bacaData();
+  var h='<h4 class="ph">Data lapangan tersimpan</h4>';
+  if(!d.length)return h+'<p class="note">Belum ada data. Buka sebuah wahana, isi kotak Data lapangan di bawah lab mini, lalu tekan Simpan. Data disimpan di browser ini saja.</p>';
+  h+='<table class="data-tabel"><thead><tr><th>Wahana</th><th>Besaran</th><th>Nilai</th><th>Waktu</th></tr></thead><tbody>';
+  d.slice().reverse().slice(0,30).forEach(function(b){
+    h+='<tr><td>'+esc(namaWahana(b.id))+'</td><td>'+esc(b.besaran)+'</td><td><b>'+esc(String(b.nilai))+'</b> '+esc(b.satuan||'')+'</td><td>'+esc(b.waktu||'')+'</td></tr>';
+  });
+  h+='</tbody></table><div class="actions"><button class="btn small" data-act="csv">Unduh CSV ('+d.length+' baris)</button>'
+    +'<button class="btn small ghost" data-act="hapus-data">Hapus semua data</button></div>';
+  return h;
+}
+function unduhCSV(){
+  var d=DufanPhysics.bacaData();if(!d.length)return;
+  var baris=[['wahana','kawasan','besaran','nilai','satuan','hasil_turunan','waktu']];
+  d.forEach(function(b){baris.push([namaWahana(b.id),kawasanWahana(b.id),b.besaran,b.nilai,b.satuan||'',b.hasil||'',b.waktu||'']);});
+  var csv=baris.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download='data-lapangan-dufan.csv';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+}
+
+/* Lembar kerja per fase: pra-kunjungan, tabel pengamatan, praktikum sekolah, refleksi. */
+function buatLKPD(f){
+  var fa=KURIKULUM.fase[f],ids=KURIKULUM.wahanaFase(f),tps=KURIKULUM.tpFase(f);
+  var h='<div class="lk-bar"><button class="btn" data-act="cetak-sekarang">Cetak</button>'
+    +'<button class="btn ghost" data-act="tutup-lkpd">Tutup</button></div>'
+    +'<h1>Lembar Kerja — '+esc(fa.nama)+'</h1>'
+    +'<p class="lk-sub">'+esc(fa.jenjang)+' · Kurikulum Pembelajaran Sains dan Fisika Kontekstual Berbasis Wahana Dufan</p>'
+    +'<div class="lk-ident"><span>Nama:</span><span>Kelas:</span><span>Kelompok:</span><span>Tanggal:</span></div>'
+    +'<h2>Tujuan pembelajaran</h2><ol>';
+  tps.forEach(function(t){h+='<li><b>'+t+'</b> '+esc(KURIKULUM.tp[t])+'</li>';});
+  h+='</ol><h2>A. Sebelum kunjungan — prediksi</h2><p>Tulis dugaanmu sebelum mengamati. Prediksi yang meleset tetap berguna asal alasannya jelas.</p>'
+    +'<table><thead><tr><th style="width:52%">Pertanyaan</th><th>Prediksi dan alasan</th></tr></thead><tbody>';
+  tps.slice(0,4).forEach(function(t){
+    h+='<tr><td>Berdasarkan tujuan '+t+': apa yang kamu perkirakan akan teramati? ('+esc(KURIKULUM.tp[t])+')</td><td class="isi"></td></tr>';
+  });
+  h+='</tbody></table>'
+    +'<h2>B. Saat kunjungan — tabel pengamatan</h2>'
+    +'<p>Ukur dari posisi aman dan jangan mengubah apa pun pada wahana. Isi juga kolom catatan untuk hal yang kamu rasakan atau amati.</p>'
+    +'<table><thead><tr><th>No</th><th>Wahana</th><th>Kawasan</th><th>Besaran yang diukur</th><th>Hasil</th><th>Catatan</th></tr></thead><tbody>';
+  ids.forEach(function(id,i){
+    h+='<tr><td>'+(i+1)+'</td><td>'+esc(namaWahana(id))+'</td><td>'+esc(kawasanWahana(id))+'</td><td>'+esc(besaranUkur(id))+'</td><td class="isi"></td><td class="isi"></td></tr>';
+  });
+  h+='</tbody></table>';
+  var prak={};
+  ids.forEach(function(id){var w=KURIKULUM.wahana[id];if(w&&w.p)prak[w.p[0]]=w.p[1];});
+  var kunci=Object.keys(prak);
+  if(kunci.length){
+    h+='<h2>C. Setelah kunjungan — praktikum model di sekolah</h2>'
+      +'<p>Wahana dipakai untuk mengamati, sekolah untuk mengendalikan variabel. Uji model berikut lalu bandingkan dengan data lapanganmu.</p>'
+      +'<table><thead><tr><th>Model praktikum</th><th>Variabel utama</th><th>Hasil dan kesimpulan</th></tr></thead><tbody>';
+    kunci.forEach(function(k){h+='<tr><td>'+esc(k)+'</td><td>'+esc(prak[k])+'</td><td class="isi"></td></tr>';});
+    h+='</tbody></table>';
+  }
+  h+='<h2>D. Refleksi</h2><ol>'
+    +'<li>Bagian mana dari prediksimu yang tepat, dan bagian mana yang meleset? Apa sebabnya?</li>'
+    +'<li>Dari mana saja ketidakpastian pengukuranmu berasal? Sebutkan minimal dua sumber.</li>'
+    +'<li>Apa bedanya angka model dengan hasil ukur di lapangan, dan mengapa perbedaan itu wajar?</li>'
+    +'<li>Usulkan satu perbaikan cara pengukuran bila kegiatan ini diulang.</li></ol>'
+    +'<h2>Produk akhir</h2><p>'+esc(fa.produk)+'. Keterampilan proses yang dinilai: '+esc(fa.proses)+'.</p>'
+    +'<p class="lk-sub">Capaian Pembelajaran nasional tetap acuan utama. Wahana Dufan dipakai sebagai konteks autentik. '
+    +'Angka pada lab mini aplikasi adalah nilai model untuk belajar, bukan spesifikasi resmi wahana.</p>';
+  var el=document.getElementById('lkpd');
+  el.innerHTML=h;el.setAttribute('aria-hidden','false');
+  document.body.classList.add('cetak');
+}
+function tutupLKPD(){document.body.classList.remove('cetak');document.getElementById('lkpd').setAttribute('aria-hidden','true');}
+document.getElementById('lkpd').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  if(b.getAttribute('data-act')==='cetak-sekarang')window.print();
+  if(b.getAttribute('data-act')==='tutup-lkpd')tutupLKPD();
+});
+
+/* ---------- tampilan kurikulum ---------- */
+var kurAktif=null;   /* {jenis:'fase'|'tp', kode:'D'} */
+function saringanHTML(){
+  if(!kurAktif)return '';
+  var teks=kurAktif.jenis==='fase'?KURIKULUM.fase[kurAktif.kode].nama:('Tujuan '+kurAktif.kode);
+  var n=(kurAktif.jenis==='fase'?KURIKULUM.wahanaFase(kurAktif.kode):KURIKULUM.wahanaTP(kurAktif.kode)).length;
+  return '<div class="saring-bar"><b>Peta disaring: '+esc(teks)+'</b><span class="tag">'+n+' wahana</span>'
+    +'<button class="btn small ghost" data-act="hapus-saring">Hapus saringan</button></div>';
+}
+function kurikulumView(){
+  var h='<div class="list">'+saringanHTML()
+    +'<h3>Kurikulum fisika kontekstual</h3>'
+    +'<p class="desc">Kurikulum suplemen Fase B sampai F yang memakai wahana Dufan sebagai konteks. '
+    +'Pilih fase untuk menyaring peta, atau pilih satu tujuan pembelajaran untuk menyusun rute kunjungan.</p>';
+  ['B','C','D','E','F'].forEach(function(f){
+    var fa=KURIKULUM.fase[f],ids=KURIKULUM.wahanaFase(f);
+    var aktif=kurAktif&&kurAktif.jenis==='fase'&&kurAktif.kode===f;
+    h+='<div class="fase-kartu'+(aktif?' aktif':'')+'">'
+      +'<div class="fase-head"><b>'+esc(fa.nama)+'</b><span>'+esc(fa.jenjang)+'</span></div>'
+      +'<p class="desc">'+esc(fa.fokus)+'</p>'
+      +'<p class="note">Keterampilan proses: '+esc(fa.proses)+'. Produk akhir: '+esc(fa.produk)+'.</p>'
+      +'<div class="actions"><button class="btn small" data-fase="'+f+'">'+(aktif?'Saringan aktif':'Saring peta')+' ('+ids.length+')</button>'
+      +'<button class="btn small ghost" data-rute="'+f+'">Susun rute</button>'
+      +'<button class="btn small ghost" data-lkpd="'+f+'">Lembar kerja</button></div>'
+      +'<h4 class="ph">Tujuan pembelajaran</h4><ul class="tplist">';
+    KURIKULUM.tpFase(f).forEach(function(t){
+      var on=kurAktif&&kurAktif.jenis==='tp'&&kurAktif.kode===t;
+      h+='<li><button class="tp-btn'+(on?' aktif':'')+'" data-tp="'+t+'"><b>'+t+'</b>'+esc(KURIKULUM.tp[t])
+        +'<i>'+KURIKULUM.wahanaTP(t).length+' wahana konteks — ketuk untuk menyaring peta dan menyusun rute</i></button></li>';
+    });
+    h+='</ul></div>';
+  });
+  h+=dataLapanganHTML();
+  h+='<p class="note">Sumber: Kurikulum Pembelajaran Sains dan Fisika Kontekstual Berbasis Wahana Dunia Fantasi. '
+    +'Capaian Pembelajaran nasional tetap acuan utama; wahana hanya dipakai sebagai konteks.</p></div>';
+  return h;
+}
+
+/* ---------- rute kunjungan ---------- */
+var routeLayer=document.getElementById('route');
+function hapusRute(){while(routeLayer.firstChild)routeLayer.removeChild(routeLayer.firstChild);}
+function susunRute(ids){
+  hapusRute();
+  var sisa=[];
+  ids.forEach(function(id){var g=svg.querySelector('[data-id="'+id+'"]');if(g)sisa.push({id:id,p:posOf(g)});});
+  if(!sisa.length)return [];
+  /* mulai dari gerbang, lalu selalu ambil wahana terdekat berikutnya */
+  var gg=svg.querySelector('[data-id="gerbang"]'),kini=gg?posOf(gg):{x:196,y:872},urut=[];
+  while(sisa.length){
+    var bi=0,bd=Infinity;
+    sisa.forEach(function(t,i){var d=Math.hypot(t.p.x-kini.x,t.p.y-kini.y);if(d<bd){bd=d;bi=i;}});
+    var t=sisa.splice(bi,1)[0];urut.push(t);kini=t.p;
+  }
+  var NS='http://www.w3.org/2000/svg';
+  var d='M'+(gg?posOf(gg).x:196)+','+(gg?posOf(gg).y:872);
+  urut.forEach(function(t){d+=' L'+t.p.x+','+t.p.y;});
+  var line=document.createElementNS(NS,'path');line.setAttribute('class','rline');line.setAttribute('d',d);
+  routeLayer.appendChild(line);
+  urut.forEach(function(t,i){
+    var c=document.createElementNS(NS,'circle');c.setAttribute('class','rnum');
+    c.setAttribute('cx',t.p.x);c.setAttribute('cy',t.p.y-44);c.setAttribute('r',11);routeLayer.appendChild(c);
+    var tx=document.createElementNS(NS,'text');tx.setAttribute('x',t.p.x);tx.setAttribute('y',t.p.y-40);
+    tx.textContent=i+1;routeLayer.appendChild(tx);
+  });
+  return urut;
+}
+function ruteHTML(judul,urut){
+  var h='<div class="list"><h3>Rute: '+esc(judul)+'</h3>'
+    +'<p class="desc">Urutan disusun dari Gerbang Utama lalu selalu ke wahana terdekat berikutnya. '
+    +'Nomor yang sama muncul di peta. Kurikulum meminta rute disusun berdasarkan tujuan pembelajaran, '
+    +'jadi urutan ini boleh kamu ubah sesuai rencana kunjungan.</p><ol class="rute-list">';
+  urut.forEach(function(t,i){
+    var r=byId[t.id]||LANDMARKS[t.id];
+    h+='<li><span>'+(i+1)+'</span><button class="tp-btn" data-id="'+t.id+'"><b>'+esc(r?r.name:t.id)+'</b>'
+      +'<i>'+esc(r&&r.zone?('Kawasan '+r.zone):'')+'</i></button></li>';
+  });
+  h+='</ol><div class="actions"><button class="btn ghost" data-act="hapus-rute">Hapus rute</button>'
+    +'<button class="btn ghost" data-act="kurikulum">Kembali ke kurikulum</button></div></div>';
+  return h;
+}
+
 var viewBtns=Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
 function setViewBtn(v){viewBtns.forEach(function(b){var on=b.getAttribute('data-view')===v;
   b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');});}
 viewBtns.forEach(function(b){b.addEventListener('click',function(){
-  if(b.getAttribute('data-view')==='list')openSheet(listHTML());else closeSheet();});});
+  var v=b.getAttribute('data-view');
+  if(v==='list')openSheet(listHTML());
+  else if(v==='kurikulum')openSheet(kurikulumView());
+  else closeSheet();});});
 listBtn.addEventListener('click',function(){if(isOpen())closeSheet();else openSheet(listHTML());});
 document.getElementById('grab').addEventListener('click',function(){if(isOpen())closeSheet();else openSheet(listHTML());});
 content.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  var f=b.getAttribute('data-fase'),t=b.getAttribute('data-tp'),rt=b.getAttribute('data-rute'),a=b.getAttribute('data-act');
+  if(f){setKurFilter('fase',f);openSheet(kurikulumView());return;}
+  if(t){setKurFilter('tp',t);var u=susunRute(KURIKULUM.wahanaTP(t));openSheet(ruteHTML('Tujuan '+t,u));return;}
+  if(rt){kurAktif={jenis:'fase',kode:rt};terapkanSaringan();
+    var u2=susunRute(KURIKULUM.wahanaFase(rt));openSheet(ruteHTML(KURIKULUM.fase[rt].nama,u2));return;}
+  var lk=b.getAttribute('data-lkpd');
+  if(lk){buatLKPD(lk);return;}
+  if(a==='csv'){unduhCSV();return;}
+  if(a==='hapus-data'){DufanPhysics.hapusData();openSheet(kurikulumView());return;}
+  if(a==='hapus-saring'){kurAktif=null;terapkanSaringan();openSheet(kurikulumView());return;}
+  if(a==='hapus-rute'){hapusRute();openSheet(kurikulumView());return;}
+  if(a==='kurikulum'){openSheet(kurikulumView());return;}
   if(b.getAttribute('data-id'))select(b.getAttribute('data-id'),true);
   else if(b.getAttribute('data-act')==='focus'&&current){var g=svg.querySelector('[data-id="'+current+'"]');if(g){var p=posOf(g);focusOn(p.x,p.y);}}
   else if(b.getAttribute('data-act')==='list')openSheet(listHTML());});
@@ -2235,9 +2876,30 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen())cl
 /* filter */
 RIDES.forEach(function(r){var g=svg.querySelector('[data-id="'+r.id+'"]');if(g)g.setAttribute('data-cat',r.cat);});
 var chips=Array.prototype.slice.call(document.querySelectorAll('.chip[data-cat]'));
-chips.forEach(function(c){c.addEventListener('click',function(){chips.forEach(function(x){x.classList.toggle('active',x===c);});var cat=c.getAttribute('data-cat');
-  Array.prototype.forEach.call(svg.querySelectorAll('.ride'),function(g){g.classList.toggle('dim',cat!=='all'&&g.getAttribute('data-cat')!==cat);});
-  if(current&&cat!=='all'&&byId[current]&&byId[current].cat!==cat)closeSheet();});});
+var catAktif='all';
+/* Saringan kategori dan saringan kurikulum bekerja bersamaan. */
+function terapkanSaringan(){
+  var set=null;
+  if(kurAktif)set=kurAktif.jenis==='fase'?KURIKULUM.wahanaFase(kurAktif.kode):KURIKULUM.wahanaTP(kurAktif.kode);
+  Array.prototype.forEach.call(svg.querySelectorAll('.ride'),function(g){
+    var id=g.getAttribute('data-id');
+    var okCat=catAktif==='all'||g.getAttribute('data-cat')===catAktif;
+    var okKur=!set||set.indexOf(id)>=0;
+    g.classList.toggle('dim',!(okCat&&okKur));
+  });
+  Array.prototype.forEach.call(svg.querySelectorAll('.landmark'),function(g){
+    var id=g.getAttribute('data-id');
+    g.classList.toggle('dim',!!set&&id!=='gerbang'&&set.indexOf(id)<0);
+  });
+  if(current&&svg.querySelector('[data-id="'+current+'"]').classList.contains('dim'))closeSheet();
+}
+function setKurFilter(jenis,kode){
+  kurAktif=(kurAktif&&kurAktif.jenis===jenis&&kurAktif.kode===kode)?null:{jenis:jenis,kode:kode};
+  terapkanSaringan();
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.toggle('active',x===c);});
+  catAktif=c.getAttribute('data-cat');terapkanSaringan();});});
 
 /* animation toggle */
 var animBtn=document.getElementById('anim'),paused=false;
@@ -2248,12 +2910,12 @@ animBtn.addEventListener('click',function(){setPaused(!paused);});
 if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)setPaused(true);
 
 /* tema: ikut sistem, terang, atau gelap */
-var THEMES=[['auto','🌗 Auto','Tema mengikuti sistem'],['light','☀️ Terang','Tema terang'],['dark','🌙 Gelap','Tema gelap']];
+var THEMES=[['auto','🌗','Auto','Tema mengikuti sistem'],['light','☀️','Terang','Tema terang'],['dark','🌙','Gelap','Tema gelap']];
 var themeBtn=document.getElementById('theme'),themeIdx=0;
 function applyTheme(i){themeIdx=((i%THEMES.length)+THEMES.length)%THEMES.length;var t=THEMES[themeIdx];
   if(t[0]==='auto')document.documentElement.removeAttribute('data-theme');
   else document.documentElement.setAttribute('data-theme',t[0]);
-  themeBtn.textContent=t[1];themeBtn.title=t[2];themeBtn.setAttribute('aria-label',t[2]+', ketuk untuk mengganti');
+  themeBtn.innerHTML='<i>'+t[1]+'</i><b>'+t[2]+'</b>';themeBtn.title=t[3];themeBtn.setAttribute('aria-label',t[3]+', ketuk untuk mengganti');
   try{localStorage.setItem('dufan-tema',t[0]);}catch(err){}}
 (function(){var k=0;try{var saved=localStorage.getItem('dufan-tema');THEMES.forEach(function(t,i){if(t[0]===saved)k=i;});}catch(err){}applyTheme(k);})();
 themeBtn.addEventListener('click',function(){applyTheme(themeIdx+1);});

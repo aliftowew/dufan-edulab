@@ -4,7 +4,14 @@ Peta interaktif Dunia Fantasi (Dufan) Ancol yang sekaligus menjadi media belajar
 fisika. Seluruh aplikasi berada dalam satu berkas HTML statis tanpa proses build:
 buka `index.html` di browser, selesai.
 
-## Menjalankan
+## Menjalankan dan menerbitkan
+
+Versi daringnya dilayani GitHub Pages langsung dari akar repositori ini, jadi
+setiap dorongan ke branch yang dipakai Pages otomatis memperbarui situsnya.
+Berkas `.nojekyll` ada supaya GitHub menyajikan berkas apa adanya tanpa melewati
+Jekyll.
+
+## Menjalankan secara lokal
 
 Buka langsung:
 
@@ -78,13 +85,19 @@ yang bisa dicoba di lab), ditutup rumus-rumus yang dirender sebagai SVG MathJax
 (sudah di-pra-render dan disematkan, jadi tidak perlu memuat MathJax saat
 halaman dibuka).
 
-**30 lab mini interaktif** dalam tujuh jenis simulasi: bandul (`pendulum`),
+**Lab mini interaktif** dalam sembilan jenis simulasi: bandul (`pendulum`),
 kereta di lintasan (`coaster`), gerak melingkar (`circular`), jatuh bebas dari
-menara (`drop`), tabrakan bumper car (`collision`), gaya apung (`buoy`), dan
-bidang miring (`incline`). Tiap lab punya scene SVG, slider parameter, pembacaan
-besaran secara langsung, dan bar energi potensial/kinetik. Semua lab berjalan
-otomatis begitu panel dibuka dan mengulang sendiri; tombol ⏸ di panel
-menghentikan seluruh animasi, termasuk animasi di kartu.
+menara (`drop`), tabrakan bumper car (`collision`), gaya apung (`buoy`), bidang
+miring (`incline`), saluran air dan perahu model (`flow`), serta sensor cahaya
+dan logika (`logika`). Kesembilannya sengaja dibuat sepadan dengan tabel
+"Praktikum Model Pasangan Wahana" pada kurikulum.
+
+Tiap lab punya scene SVG, slider parameter, pembacaan besaran secara langsung,
+bar energi potensial/kinetik, dan kotak **data lapangan**: murid memasukkan hasil
+ukurnya di Dufan, lalu aplikasi menghitung besaran turunannya dan menampilkan
+selisih terhadap angka model. Semua lab berjalan otomatis begitu panel dibuka dan
+mengulang sendiri; tombol ⏸ di panel menghentikan seluruh animasi, termasuk
+animasi di kartu.
 
 ## Logo
 
@@ -98,6 +111,33 @@ apple-touch-icon, dipasang dari skrip saat halaman dimuat).
 Logo Dufan dan Ancol adalah milik PT Pembangunan Jaya Ancol Tbk. Proyek ini
 proyek belajar mandiri, bukan aplikasi resmi, dan hal itu dinyatakan di bagian
 kredit dalam aplikasinya.
+
+## Kurikulum
+
+Aplikasi ini dipetakan ke *Kurikulum Pembelajaran Sains dan Fisika Kontekstual
+Berbasis Wahana Dunia Fantasi*, kurikulum suplemen Fase B sampai F yang memakai
+wahana Dufan sebagai konteks dan tidak menggantikan Capaian Pembelajaran
+nasional. Pemetaannya ada di objek `KURIKULUM` dalam `index.html`: lima fase, 26
+tujuan pembelajaran, dan untuk tiap wahana daftar fase, daftar TP, pasangan
+praktikum di sekolah, serta status datanya.
+
+Tampilan **Kurikulum** di header menyediakan:
+
+- kartu tiap fase berisi fokus materi, keterampilan proses, dan produk akhirnya;
+- tombol **Saring peta**, yang meredupkan wahana di luar fase itu;
+- daftar tujuan pembelajaran yang bisa diketuk untuk menyaring peta sekaligus
+  menyusun rute;
+- **Susun rute**, yang mengurutkan kunjungan mulai dari Gerbang Utama lalu selalu
+  ke wahana terdekat berikutnya, dan menggambar nomor urutnya di peta;
+- **Lembar kerja**, yang menghasilkan LKPD siap cetak berisi tujuan pembelajaran,
+  tabel prediksi pra-kunjungan, tabel pengamatan per wahana lengkap dengan besaran
+  yang diukur, tabel praktikum model di sekolah, dan pertanyaan refleksi;
+- daftar **data lapangan** yang tersimpan di browser, dengan ekspor CSV.
+
+Panel tiap wahana juga menampilkan blok *Dalam kurikulum*: fase yang dilayani,
+tujuan pembelajaran yang didukung beserta bunyinya, pasangan praktikum di
+sekolah, dan status data (terverifikasi, observasional, atau bersyarat) sesuai
+klasifikasi yang diminta kurikulum.
 
 ## Menambahkan foto wahana
 
