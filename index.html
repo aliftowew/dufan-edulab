@@ -2701,15 +2701,29 @@ function dataLapanganHTML(){
     +'<button class="btn small ghost" data-act="hapus-data">Hapus semua data</button></div>';
   return h;
 }
+function lewatTautan(isi,nama){
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([isi],{type:'text/csv;charset=utf-8'}));
+  a.download=nama;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+}
 function unduhCSV(){
   var d=DufanPhysics.bacaData();if(!d.length)return;
   var baris=[['wahana','kawasan','besaran','nilai','satuan','hasil_turunan','waktu']];
   d.forEach(function(b){baris.push([namaWahana(b.id),kawasanWahana(b.id),b.besaran,b.nilai,b.satuan||'',b.hasil||'',b.waktu||'']);});
   var csv=baris.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
-  a.download='data-lapangan-dufan.csv';document.body.appendChild(a);a.click();
-  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+  var isi='\ufeff'+csv,nama='data-lapangan-dufan.csv';
+  /* Saat halaman dibuka lewat penampil artifact, berkas hanya bisa diserahkan
+     melalui kapabilitas downloads. Di GitHub Pages atau berkas lokal, tautan
+     unduh biasa sudah cukup. */
+  if(window.claude&&typeof window.claude.use==='function'){
+    window.claude.use('downloads').then(function(dl){
+      if(!dl){lewatTautan(isi,nama);return;}
+      dl.save({filename:nama,data:isi})['catch'](function(err){
+        if(!err||err.code!=='declined')lewatTautan(isi,nama);
+      });
+    })['catch'](function(){lewatTautan(isi,nama);});
+  }else lewatTautan(isi,nama);
 }
 
 /* Lembar kerja per fase: pra-kunjungan, tabel pengamatan, praktikum sekolah, refleksi. */
