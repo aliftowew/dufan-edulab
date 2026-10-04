@@ -100,8 +100,15 @@ balik wahana** dengan rumus disisipkan tepat setelah paragraf yang
 menjelaskannya, **Aktivitas murid** sesuai fase dan jenis wahananya, lalu blok
 kurikulum.
 
-Mengganti fase di Filter sementara halaman wahana terbuka langsung menggambar
-ulang halaman itu pada kedalaman yang baru, tidak perlu ditutup dulu.
+Mengganti saringan sementara halaman wahana terbuka tidak menutup atau memuat
+ulang halaman itu. Hanya kolom kanan yang digambar ulang pada kedalaman fase
+yang baru; posisi gulir tetap di tempatnya dan animasi di kolom kiri terus
+berjalan. Lab mini hanya dipasang ulang kalau perubahannya melintasi batas Fase
+B/C, karena di situ bentuk rumusnya memang berganti.
+
+Wahana yang sedang dibuka juga tidak lagi ditutup paksa ketika saringan baru
+tidak memuatnya. Halamannya tetap terbuka dengan satu keterangan singkat bahwa
+wahana itu di luar saringan yang aktif.
 
 **Bilah atas tetap.** Judul atau tombol kembali di kiri, Filter dan Menu di
 kanan, posisinya tidak bergeser saat halaman dibuka atau ditutup.

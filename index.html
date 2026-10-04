@@ -329,6 +329,9 @@ h4.ph{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;lett
 .rute-list li span{flex:none;width:21px;height:21px;border-radius:50%;background:var(--red);color:#fff;
   display:grid;place-items:center;font:700 11px 'Plus Jakarta Sans',sans-serif}
 .note{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.4}
+/* Keterangan kalau wahana yang dibuka berada di luar saringan yang aktif. */
+.note.luar{margin:10px 0 0;padding:8px 11px;border-radius:10px;background:var(--chip);
+  border-left:3px solid var(--line);color:var(--text)}
 
 /* MathJax SVG output */
 mjx-container[jax="SVG"] {
@@ -2752,7 +2755,27 @@ var DufanPhysics = (function () {
       if (kepala) kepala.insertAdjacentHTML('beforeend', '<span class="lab-fase">Fase ' + faseKini + '</span>');
     }
   }
-  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount};
+  /* Mengganti fase pada lab yang sedang berjalan. Yang berubah hanya penanda
+     fase dan baris bacaan yang disembunyikan CSS, jadi animasinya tidak perlu
+     diulang. Mengembalikan false kalau perubahannya melintasi batas Fase B/C,
+     karena di situ bentuk rumusnya ikut berganti dan labnya harus dipasang
+     ulang oleh pemanggil. */
+  function gantiFase(root, f) {
+    var host = root.querySelector('.lab'); if (!host) return true;
+    if (!active) return false;
+    var dasarLama = faseKini === 'B' || faseKini === 'C', dasarBaru = f === 'B' || f === 'C';
+    if (dasarLama !== dasarBaru) return false;
+    faseKini = f || null;
+    if (faseKini) host.setAttribute('data-fase', faseKini); else host.removeAttribute('data-fase');
+    var kepala = host.querySelector('.lab-head'); if (!kepala) return true;
+    var tanda = kepala.querySelector('.lab-fase');
+    if (faseKini) {
+      if (tanda) tanda.textContent = 'Fase ' + faseKini;
+      else kepala.insertAdjacentHTML('beforeend', '<span class="lab-fase">Fase ' + faseKini + '</span>');
+    } else if (tanda) kepala.removeChild(tanda);
+    return true;
+  }
+  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount, gantiFase: gantiFase};
 })();
 
 </script>
@@ -2969,8 +2992,25 @@ function photoHTML(r,id){var src=PHOTOS[id]||r.photo;
   return '<div class="shot empty">Foto asli '+esc(r.name)+' belum dipasang di aplikasi ini.</div>';}
 /* Fase yang sedang dipilih pada saringan, dipakai untuk menyesuaikan kedalaman isi halaman. */
 function faseSekarang(){return kurAktif&&kurAktif.jenis==='fase'?kurAktif.kode:null;}
-/* Fase yang dipakai saat halaman yang sedang terbuka digambar. */
-var faseTampil=null;
+/* Saringan kurikulum yang dipakai saat halaman yang terbuka terakhir digambar. */
+var saringTampil='';
+function kunciSaring(){return kurAktif?kurAktif.jenis+':'+kurAktif.kode:'';}
+/* Mengganti saringan sewaktu halaman wahana terbuka tidak menutup atau memuat
+   ulang halaman itu. Hanya kolom kanannya yang digambar ulang, posisi gulir
+   dipertahankan, dan lab mini di kiri dibiarkan berjalan kecuali bentuk
+   rumusnya memang berganti. */
+function segarkanHalaman(){
+  var k=kunciSaring(),r=current&&(byId[current]||LANDMARKS[current]);
+  var teks=isOpen()?content.querySelector('.d-teks'):null;
+  if(!r||!teks){saringTampil=k;return;}
+  if(k===saringTampil)return;
+  saringTampil=k;
+  var atas=content.scrollTop,fase=faseSekarang(),mulus=content.style.scrollBehavior;
+  teks.innerHTML=detailTeks(r,current);hydrateArt(teks);
+  if(!DufanPhysics.gantiFase(content,fase))DufanPhysics.mount(content,fase);
+  content.style.scrollBehavior='auto';content.scrollTop=atas;content.style.scrollBehavior=mulus;
+  aturLekat();
+}
 
 /* Kartu konsep dasar, isinya mengikuti tingkat fase. */
 function konsepHTML(id,fase){
@@ -3018,23 +3058,35 @@ function kurikulumHTML(id){
   if(w.x)h+='<p class="note">'+esc(w.x)+'</p>';
   h+='<p class="note">Status data: '+esc(KURIKULUM.status[w.status])+' Angka pada lab mini adalah nilai model untuk belajar.</p></div>';
   return h;}
-function detailHTML(r,id){var cat=CATS[r.cat];var dots='';
+/* Wahana yang sedang dibuka bisa saja berada di luar saringan kurikulum yang
+   baru dipilih. Halamannya tidak ditutup, cukup diberi keterangan. */
+function diLuarSaringan(id){
+  if(!kurAktif)return '';
+  var set=kurAktif.jenis==='fase'?KURIKULUM.wahanaFase(kurAktif.kode):KURIKULUM.wahanaTP(kurAktif.kode);
+  if(!set||set.indexOf(id)>=0)return '';
+  var nama=kurAktif.jenis==='fase'?KURIKULUM.fase[kurAktif.kode].nama:'tujuan '+kurAktif.kode;
+  return '<p class="note luar">Wahana ini di luar saringan '+esc(nama)+', jadi tidak ditandai di peta. '
+    +'Halamannya tetap terbuka dan penjelasannya ditulis pada kedalaman fase itu.</p>';}
+/* Kolom kanan dipisah karena isinya yang mengikuti fase. Saat saringan diganti
+   hanya bagian ini yang digambar ulang, kolom kiri dibiarkan berjalan. */
+function detailTeks(r,id){var cat=CATS[r.cat];var dots='',fase=faseSekarang();
   if(r.thrill){dots='<span class="dots" aria-label="Adrenalin '+r.thrill+' dari 5">';for(var i=1;i<=5;i++)dots+=i<=r.thrill?'●':'○';dots+='</span>';}
+  return '<div class="tags"><span class="tag">Kawasan '+esc(r.zone)+'</span>'+(cat?'<span class="tag '+r.cat+'">'+cat+'</span>':'')+(r.closed?'<span class="tag closed">Tutup sementara</span>':'')+'</div>'
+    +'<h2>'+esc(r.name)+'</h2><p class="meta">'+esc(r.type)+'</p>'+(dots?'<p class="meta">Adrenalin '+dots+'</p>':'')
+    +'<p class="desc">'+esc(r.desc)+'</p>'
+    +diLuarSaringan(id)
+    +konsepHTML(id,fase)
+    +DufanPhysics.section(id,photoHTML(r,id),fase)
+    +aktivitasHTML(id,fase)
+    +kurikulumHTML(id);}
+function detailHTML(r,id){
   return '<div class="detail">'
     +'<div class="d-visual">'
       +'<div class="hero"><span class="art" data-art="'+id+'"></span><p class="hero-cap">Animasi '+esc(r.name)+'</p></div>'
       +DufanPhysics.labHTML(id)
       +'<div class="actions"><button class="btn" data-act="focus">Lihat di peta</button><button class="btn ghost" data-act="list">Semua wahana</button></div>'
     +'</div>'
-    +'<div class="d-teks">'
-      +'<div class="tags"><span class="tag">Kawasan '+esc(r.zone)+'</span>'+(cat?'<span class="tag '+r.cat+'">'+cat+'</span>':'')+(r.closed?'<span class="tag closed">Tutup sementara</span>':'')+'</div>'
-      +'<h2>'+esc(r.name)+'</h2><p class="meta">'+esc(r.type)+'</p>'+(dots?'<p class="meta">Adrenalin '+dots+'</p>':'')
-      +'<p class="desc">'+esc(r.desc)+'</p>'
-      +konsepHTML(id,faseSekarang())
-      +DufanPhysics.section(id,photoHTML(r,id),faseSekarang())
-      +aktivitasHTML(id,faseSekarang())
-      +kurikulumHTML(id)
-    +'</div></div>';}
+    +'<div class="d-teks">'+detailTeks(r,id)+'</div></div>';}
 function listHTML(ringkas){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Keluarga, semua umur'],['anak','Anak-anak dan indoor']],h='<div class="list">';
   groups.forEach(function(gr){h+='<h3>'+gr[1]+'</h3><div class="cards">';
     RIDES.filter(function(r){return r.cat===gr[0];}).forEach(function(r){
@@ -3051,7 +3103,7 @@ function listHTML(ringkas){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga
     +'<p class="note">Logo Dufan dan Ancol milik PT Pembangunan Jaya Ancol Tbk. Peta ini proyek belajar mandiri, bukan aplikasi resmi.</p></div>';return h;}
 function select(id,move){var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return;var r=byId[id]||LANDMARKS[id];if(!r)return;
   var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;
-  faseTampil=faseSekarang();openSheet(detailHTML(r,id),r.name);
+  saringTampil=kunciSaring();openSheet(detailHTML(r,id),r.name);
   DufanPhysics.mount(content,kurAktif&&kurAktif.jenis==='fase'?kurAktif.kode:null);
   setViewBtn('map');if(move)focusOn(p.x,p.y);}
 /* ---------- data lapangan dan lembar kerja ---------- */
@@ -3298,12 +3350,7 @@ function terapkanSaringan(){
     var id=g.getAttribute('data-id');
     g.classList.toggle('dim',!!set&&id!=='gerbang'&&set.indexOf(id)<0);
   });
-  if(current&&svg.querySelector('[data-id="'+current+'"]').classList.contains('dim'))closeSheet();
-  /* Isi halaman wahana mengikuti fase, jadi kalau fasenya berganti sementara
-     halamannya terbuka, halaman itu digambar ulang pada kedalaman yang baru. */
-  var fs=faseSekarang();
-  if(current&&isOpen()&&fs!==faseTampil&&(byId[current]||LANDMARKS[current]))select(current,false);
-  faseTampil=fs;
+  segarkanHalaman();
   perbaruiInfoFilter();
   if(document.body.classList.contains('lebar'))isiRail();
 }
