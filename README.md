@@ -188,22 +188,25 @@ tujuan pembelajaran yang didukung beserta bunyinya, pasangan praktikum di
 sekolah, dan status data (terverifikasi, observasional, atau bersyarat) sesuai
 klasifikasi yang diminta kurikulum.
 
-## Menambahkan foto wahana
+## Foto wahana
 
-Panel fisika punya slot foto untuk tiap wahana. Selama slot masih kosong, yang
-tampil adalah kotak bergaris putus-putus. Untuk mengisinya, tambahkan entri ke
-objek `PHOTOS` di dalam `index.html` dengan kunci berupa id wahana:
+Halaman wahana memuat foto asli di bawah judul **Fisika di balik wahana**. Foto
+dikecilkan ke lebar maksimum 640 px, disimpan sebagai JPEG mutu 58, lalu disandi
+menjadi data URI pada objek `FOTO` di dalam `index.html`. Dengan begitu aplikasi
+tetap satu berkas dan tetap bisa dibuka tanpa jaringan di lokasi.
 
-```js
-var PHOTOS = {
-  halilintar: 'data:image/jpeg;base64,/9j/4AAQ...',
-  hysteria:   'foto/hysteria.jpg'
-};
-```
+33 dari 34 wahana sudah berfoto, ditambah Pentas Prestasi dan pertunjukan
+indoor. Rumah Riana belum ada fotonya, jadi di halamannya masih tampil kotak
+bergaris putus-putus.
 
-Nilainya boleh berupa data URI (halaman tetap utuh satu berkas dan bisa dibuka
-tanpa internet) atau path/URL gambar biasa. Id wahana bisa dilihat pada daftar
-`RIDES` di berkas yang sama.
+Hak cipta foto ada pada pemiliknya. `FOTO_KREDIT` menyimpan nama pemilik dan
+halaman sumber tiap foto, dan keduanya ditulis pada keterangan di bawah foto
+beserta tautan ke halaman asalnya. Sebagian besar berasal dari situs resmi
+Ancol, sisanya dokumentasi arsip yang tercantum sumbernya.
+
+Untuk mengganti atau menambah foto, sunting entri pada `FOTO` dengan kunci
+berupa id wahana (lihat daftar `RIDES` di berkas yang sama). Nilainya boleh data
+URI atau path/URL gambar biasa.
 
 ## Catatan
 
