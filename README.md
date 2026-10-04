@@ -4,12 +4,19 @@ Peta interaktif Dunia Fantasi (Dufan) Ancol yang sekaligus menjadi media belajar
 fisika. Seluruh aplikasi berada dalam satu berkas HTML statis tanpa proses build:
 buka `index.html` di browser, selesai.
 
-## Menjalankan dan menerbitkan
+## Menerbitkan lewat GitHub Pages
 
-Versi daringnya dilayani GitHub Pages langsung dari akar repositori ini, jadi
-setiap dorongan ke branch yang dipakai Pages otomatis memperbarui situsnya.
-Berkas `.nojekyll` ada supaya GitHub menyajikan berkas apa adanya tanpa melewati
-Jekyll.
+Repositori ini sudah siap disajikan apa adanya: `index.html` ada di akar dan
+berkas `.nojekyll` membuat GitHub menyajikan berkas tanpa melewati Jekyll.
+Tinggal satu setelan yang harus dinyalakan sekali oleh pemilik repositori:
+
+**Settings → Pages → Build and deployment → Source: Deploy from a branch**,
+pilih branch `claude/tender-allen-v2l7a3` dengan folder `/ (root)`, lalu Save.
+
+Setelah itu setiap dorongan ke branch tersebut otomatis memperbarui situsnya di
+`https://aliftowew.github.io/dufan-edulab/`. Setelan ini tidak bisa dinyalakan
+dari skrip maupun dari GitHub Actions, karena token bawaan Actions tidak
+berwenang membuat situs Pages.
 
 ## Menjalankan secara lokal
 
