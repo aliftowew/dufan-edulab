@@ -255,6 +255,58 @@ body.halaman .bar .title,body.halaman .backbtn{box-shadow:none;background:transp
 }
 @media (min-width:1280px){.detail{gap:40px}}
 
+/* ---------- kartu misi di lokasi dan kuis pasca-kunjungan ---------- */
+.misi,.kuis{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.misi h3,.kuis h3{font:600 17px 'Fraunces',Georgia,serif;margin:0 0 2px}
+.m-skor{font:700 12px 'Plus Jakarta Sans',sans-serif;color:var(--red);margin:8px 0 0}
+.m-item{border:1px solid var(--line);border-radius:12px;margin-top:8px;background:var(--panel)}
+.m-item>summary{list-style:none;cursor:pointer;padding:10px 12px;font-size:13.5px;line-height:1.4;
+  display:flex;gap:7px;align-items:baseline}
+.m-item>summary::-webkit-details-marker{display:none}
+.m-item>summary b{font-weight:700;color:var(--red);white-space:nowrap}
+.m-item .m-tanda{margin-left:auto;width:16px;height:16px;border-radius:999px;border:1.5px solid var(--line);flex:none;align-self:center}
+.m-item.terisi .m-tanda{background:var(--green);border-color:transparent}
+.m-item.terisi .m-tanda::after{content:'✓';color:#fff;font-size:10px;display:block;text-align:center;line-height:13px}
+.m-item[open]{box-shadow:var(--shadow)}
+.m-item>*:not(summary){margin-left:12px;margin-right:12px}
+.m-item>*:last-child{margin-bottom:12px}
+.m-item .desc{font-size:13px;margin:2px 0 8px}
+.m-lab{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:12px 0 6px}
+.m-baris{display:flex;gap:8px;align-items:center;margin:0 0 7px}
+.m-baris>span{font-size:12px;color:var(--muted);flex:none;max-width:45%}
+.m-isi{flex:1;min-width:0;border:0;border-bottom:1.5px dashed var(--line);background:transparent;color:var(--text);
+  font:400 13px 'Plus Jakarta Sans',sans-serif;padding:5px 2px}
+.m-isi:focus{outline:none;border-bottom-color:var(--red);border-bottom-style:solid}
+.m-pilih{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.m-opsi{display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer}
+.m-opsi input{width:17px;height:17px;flex:none;accent-color:var(--red)}
+.m-opsi .m-isi{margin-left:2px}
+.m-gulir{overflow-x:auto;margin-bottom:8px}
+.m-tabel{border-collapse:collapse;width:100%;font-size:12.5px}
+.m-tabel th,.m-tabel td{border:1px solid var(--line);padding:5px 8px;text-align:left}
+.m-tabel th{background:var(--chip);font-weight:700}
+.kuis>summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.kuis>summary::-webkit-details-marker{display:none}
+.kuis>summary h3{display:inline}
+.kuis>summary::after{content:'Ketuk untuk membuka';font-size:11.5px;color:var(--red);font-weight:700}
+.kuis[open]>summary::after{content:'Ketuk untuk menutup'}
+.k-misal{font-size:12.5px;background:var(--chip);border-radius:10px;padding:9px 11px}
+.k-pg,.k-ur{padding-left:20px;margin:0}
+.k-pg>li,.k-ur>li{margin-bottom:14px}
+.k-opsi{display:flex;flex-direction:column;gap:5px}
+.k-pil{text-align:left;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:10px;
+  padding:8px 11px;font:400 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;display:flex;gap:8px}
+.k-pil b{font-weight:700;color:var(--muted)}
+.k-pil.benar{border-color:var(--green);background:var(--green-soft)}
+.k-pil.benar b{color:var(--green)}
+.k-pil.salah{border-color:var(--red);background:var(--red-soft)}
+.k-pil.salah b{color:var(--red)}
+.k-balas{font-size:12.5px;color:var(--red);font-weight:600;margin:7px 0 0}
+.k-balas.ya{color:var(--green)}
+.k-kunci{margin-top:6px}
+.k-kunci>summary{cursor:pointer;font-size:12.5px;color:var(--red);font-weight:600}
+.k-kunci .desc{font-size:12.5px;background:var(--chip);border-radius:10px;padding:9px 11px;margin:6px 0 0}
+
 .btn{border:0;border-radius:999px;padding:9px 14px;font:600 13px 'Plus Jakarta Sans',sans-serif;background:var(--text);color:var(--panel);cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;line-height:1.2}
 .btn.small{padding:7px 12px;font-size:12px}
 .btn.ghost{background:var(--chip);color:var(--text)}
@@ -2791,6 +2843,16 @@ var FOTO={"alap":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgw
 var FOTO_KREDIT={"alap":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/alap-alap--16"},"arung":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/arung-jeram--62"},"bakutoki":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/baku-toki--21"},"baling":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/baling-baling--5"},"bianglala":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/bianglala--64"},"burung":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/burung-tempur--61"},"dream":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/dream-playground--66"},"gajah":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/gajah-beledug--60"},"galactica":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/galactica--67"},"halilintar":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/halilintar--13"},"hysteria":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/hysteria--12"},"iceage":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/ice-age-arctic-adventure--63"},"indoor":{"k":"Adriana Dian (2018)","s":"https://www.adrianadian.com/2018/04/Apa-yang-baru-di-DUFAN.html"},"istana":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/istana-boneka--19"},"karavel":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/karavel--10"},"kereta":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/kereta-misteri--1"},"kicir":{"k":"Ancol Jateng (2016)","s":"https://ancoljateng.blogspot.com/2016/02/kicir-kicir-dufan.html"},"kolibri":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/kolibri--9"},"kontiki":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/kontiki--68"},"kora":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/kora-kora--15"},"niagara":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/niagara-gara--56"},"ombang":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/ombang-ombang--17"},"ontang":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/ontang-anting--11"},"paralayang":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/paralayang--6"},"pentas":{"k":"Fitrian.net (2018)","s":"https://www.fitrian.net/2018/04/vivalova-wujudkan-liburan-seru-di-dufan-bareng-keluarga-blogger.html"},"poci":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/poci-poci--14"},"pontang":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/pontang-pontang--58"},"rajawali":{"k":"Adriana Dian (2018)","s":"https://www.adrianadian.com/2018/04/Apa-yang-baru-di-DUFAN.html"},"rango":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/rumah-miring--18"},"teater":{"k":"Dokumentasi Ancol / detikcom (2017)","s":"https://news.detik.com/adv-nhl-detikcom/d-3544171/yuk-nonton-aksi-kura-kura-ninja-di-dufan"},"tembak":{"k":"Desnantana Journey (2011)","s":"https://desnantana-journey.blogspot.com/2011/02/dunia-fantasi-dufan-fantasy-world.html"},"tornado":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/tornado--59"},"turangga":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/turangga-rangga--57"},"turbo":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/turbo-drop--7"},"zigzag":{"k":"Ancol / Dufan (situs resmi)","s":"https://www.ancol.com/wahana/zig-zag--8"}};
 </script>
 <script>
+/* Kartu misi siswa di lokasi dan kuis pasca-kunjungan, mengikuti rancangan guru.
+   MISI berisi 10 misi per fase per wahana. Jenis isian: teks, nomor (daftar
+   bernomor), isian (berlabel), pilih (kotak centang; pilihan berakhiran titik dua
+   mendapat kolom isian sendiri), dan tabel. KUIS memuat pilihan ganda berkunci
+   beserta uraian dan jawaban yang diharapkan. */
+var MISI={"halilintar":{"B":{"gelar":"Detektif Gerak Halilintar","m":[{"j":"Apa yang Bergerak?","p":"Amati wahana Halilintar dari area yang aman. Sebutkan 2 benda atau bagian yang bergerak.","b":[{"t":"nomor","n":2}]},{"j":"Ke Mana Arahnya?","p":"Perhatikan arah gerak kereta Halilintar. Kereta bergerak:","b":[{"t":"pilih","o":["Maju","Naik","Turun","Berbelok"]}]},{"j":"Naik atau Turun?","p":"Perhatikan perjalanan kereta. Apa yang kamu lihat ketika kereta berada di bagian yang tinggi?","b":[{"t":"teks"}]},{"j":"Cepat atau Lambat?","p":"Amati dua bagian perjalanan Halilintar.","b":[{"t":"isian","l":["Bagian yang tampak lebih cepat","Mengapa menurutmu demikian?"]}]},{"j":"Berbelok!","p":"Temukan bagian lintasan ketika kereta berubah arah. Apa yang terjadi?","b":[{"t":"teks"}]},{"j":"Dengarkan Halilintar","p":"Temukan 2 sumber bunyi yang kamu dengar.","b":[{"t":"nomor","n":2}]},{"j":"Cari Perubahan","p":"Bandingkan kereta ketika diam dan ketika bergerak.","b":[{"t":"isian","l":["Ketika diam","Ketika bergerak"]}]},{"j":"Naik dan Turun","p":"Amati perubahan posisi kereta.","b":[{"t":"isian","l":["Ketika kereta naik","Ketika kereta turun"]}]},{"j":"Temukan Energi","p":"Pilih salah satu perubahan yang kamu amati.","b":[{"t":"pilih","o":["Kereta mulai bergerak","Kereta naik","Kereta turun","Kereta berbelok"]},{"t":"teks","l":"Apa perubahan yang terjadi?"}]},{"j":"Temuan Terbaik","p":"Apa hal paling menarik yang kamu temukan tentang Halilintar?","b":[{"t":"teks"}]}]},"C":{"gelar":"Science Explorer – Halilintar","m":[{"j":"Detektif Gerak","p":"Temukan 3 gerakan berbeda pada Halilintar.","b":[{"t":"nomor","n":3}]},{"j":"Naik dan Turun","p":"Bandingkan gerakan ketika kereta naik dan turun.","b":[{"t":"isian","l":["Ketika naik","Ketika turun"]}]},{"j":"Perubahan Kecepatan","p":"Apakah kereta tampak mengalami perubahan kecepatan?","b":[{"t":"pilih","o":["Ya","Tidak"]},{"t":"teks","l":"Bukti pengamatanmu"}]},{"j":"Perubahan Arah","p":"Temukan bagian lintasan yang berbelok. Apa yang terjadi pada arah gerak kereta?","b":[{"t":"teks"}]},{"j":"Energi pada Halilintar","p":"Ketika kereta berada pada posisi tinggi, kereta memiliki energi potensial gravitasi. Apa yang terjadi ketika kereta bergerak menuju posisi yang lebih rendah?","b":[{"t":"teks"}]},{"j":"Pemburu Bunyi","p":"Temukan dua sumber bunyi pada Halilintar.","b":[{"t":"tabel","k":["Sumber bunyi","Bagaimana bunyi dihasilkan?"],"b":[[null,null],[null,null]]}]},{"j":"Bandingkan Gerakan","p":"Bandingkan bagian lintasan yang naik dan turun. Apa perbedaannya?","b":[{"t":"teks"}]},{"j":"Hubungkan dengan Kehidupan","p":"Temukan gerakan dalam kehidupan sehari-hari yang mirip dengan gerakan Halilintar.","b":[{"t":"teks"}]},{"j":"Prediksi","p":"Sebelum kereta melewati bagian lintasan berikutnya, menurutmu apa yang akan terjadi pada geraknya?","b":[{"t":"teks"},{"t":"teks","l":"Alasanmu"}]},{"j":"Tantangan Sains","p":"Jelaskan dengan kalimatmu sendiri mengapa Halilintar dapat bergerak dari tempat tinggi ke tempat yang lebih rendah.","b":[{"t":"teks"}]}]},"D":{"gelar":"Junior Physics Investigator – Halilintar","m":[{"j":"Prediksi Gerak","p":"Pilih satu bagian lintasan Halilintar, lalu prediksikan gerak kereta:","b":[{"t":"pilih","o":["Semakin cepat","Semakin lambat","Tetap","Berubah arah"]},{"t":"teks","l":"Alasan"}]},{"j":"Ukur Waktu","p":"Dari area yang aman, ukur waktu yang diperlukan kereta untuk melewati bagian lintasan tertentu.","b":[{"t":"isian","l":["Waktu (s)","Bagian yang diamati"]}]},{"j":"Jarak dan Waktu","p":"Jika jarak dapat diperkirakan dengan aman:","b":[{"t":"isian","l":["Jarak (m)","Waktu (s)","Kelajuan rata-rata (m/s)"]}]},{"j":"Perubahan Kecepatan","p":"Temukan bagian ketika kereta tampak mengalami perubahan kecepatan. Apa buktinya?","b":[{"t":"teks"}]},{"j":"Perubahan Arah","p":"Amati bagian lintasan yang berbelok. Mengapa kereta tidak terus bergerak lurus?","b":[{"t":"teks"}]},{"j":"Identifikasi Gaya","p":"Gaya apa yang mungkin berperan dalam gerak Halilintar?","b":[{"t":"pilih","o":["Gravitasi","Gaya normal","Gaya gesek","Gaya lainnya:"]},{"t":"teks","l":"Bukti pengamatan"}]},{"j":"Energi Mekanik","p":"Amati kereta ketika bergerak dari posisi tinggi menuju posisi lebih rendah.","b":[{"t":"isian","l":["Yang terjadi pada energi potensial gravitasi","Bagaimana dengan energi kinetiknya"]}]},{"j":"Bunyi dan Getaran","p":"Temukan satu bagian yang menghasilkan bunyi. Apa yang kemungkinan bergetar sehingga menghasilkan bunyi?","b":[{"t":"teks"}]},{"j":"Bandingkan Data","p":"Catat dua hasil pengamatan.","b":[{"t":"tabel","k":["Pengamatan","Waktu (s)"],"b":[["1",null],["2",null]]},{"t":"pilih","l":"Apakah hasilnya sama?","o":["Ya","Tidak"]},{"t":"teks","l":"Mengapa?"}]},{"j":"Pertanyaan Fisika","p":"Buat satu pertanyaan fisika tentang Halilintar yang ingin kamu selidiki lebih lanjut.","b":[{"t":"teks"}]}]},"E":{"gelar":"Data Scientist – Halilintar","m":[{"j":"Tentukan Fenomena","p":"Pilih satu fenomena gerak Halilintar.","b":[{"t":"isian","l":["Fenomena"]},{"t":"teks","l":"Pertanyaan investigasi"}]},{"j":"Tentukan Variabel","p":"Besaran yang dapat diamati atau diukur:","b":[{"t":"pilih","o":["Jarak","Waktu","Kelajuan","Ketinggian","Sudut","Lainnya:"]}]},{"j":"Buat Prediksi","p":"Saya memprediksi bahwa…","b":[{"t":"teks"},{"t":"teks","l":"Karena…"}]},{"j":"Kumpulkan Data","p":"Catat minimal tiga hasil pengamatan.","b":[{"t":"tabel","k":["Pengamatan","Jarak (m)","Waktu (s)"],"b":[["1",null,null],["2",null,null],["3",null,null]]}]},{"j":"Hitung Kelajuan","p":"Gunakan v = s / t.","b":[{"t":"teks","l":"Hasil perhitungan"}]},{"j":"Cari Pola","p":"Apa hubungan antara posisi atau ketinggian dan gerakan kereta?","b":[{"t":"teks"}]},{"j":"Buat Grafik","p":"Buat grafik berdasarkan data pengamatan.","b":[{"t":"isian","l":["Sumbu X","Sumbu Y"]}]},{"j":"Evaluasi Data","p":"Apakah hasil pengukuranmu konsisten?","b":[{"t":"pilih","o":["Ya","Tidak"]},{"t":"teks","l":"Kemungkinan penyebab perbedaan"}]},{"j":"Bandingkan Prediksi","p":"Bandingkan prediksi dengan hasil.","b":[{"t":"isian","l":["Prediksi","Hasil"]},{"t":"pilih","l":"Apakah sesuai?","o":["Ya","Tidak"]}]},{"j":"Kesimpulan","p":"Apa yang dapat kamu simpulkan berdasarkan data pengamatan Halilintar?","b":[{"t":"teks"}]}]},"F":{"gelar":"Physics Researcher – Halilintar","m":[{"j":"Identify the Phenomenon","p":"Pilih fenomena:","b":[{"t":"pilih","o":["Hukum Newton","Energi mekanik","Gerak melingkar","Perubahan kecepatan","Perubahan arah","Lainnya:"]}]},{"j":"Formulate the Problem","p":"Buat pertanyaan penelitian.","b":[{"t":"teks"}]},{"j":"Build Your Prediction","p":"Tuliskan prediksi beserta dasarnya.","b":[{"t":"isian","l":["Prediksi","Dasar teorinya"]}]},{"j":"Build the Model","p":"Tuliskan model atau persamaan fisika yang relevan.","b":[{"t":"teks"},{"t":"teks","l":"Variabel"}]},{"j":"Collect Evidence","p":"Catat besaran yang kamu peroleh.","b":[{"t":"tabel","k":["Besaran","Nilai","Satuan"],"b":[[null,null,null],[null,null,null],[null,null,null]]}]},{"j":"Test the Model","p":"Bandingkan hasil model dengan pengamatan.","b":[{"t":"isian","l":["Hasil perhitungan atau model","Hasil pengamatan"]}]},{"j":"Compare","p":"Seberapa sesuai model dengan pengamatan?","b":[{"t":"pilih","o":["Sangat sesuai","Cukup sesuai","Kurang sesuai"]},{"t":"teks","l":"Jelaskan"}]},{"j":"Identify Limitations","p":"Apa yang tidak dapat kamu ukur atau kendalikan secara langsung di Dufan?","b":[{"t":"teks"}]},{"j":"Improve the Investigation","p":"Jika fenomena Halilintar diteliti kembali di laboratorium sekolah, apa yang akan kamu ubah atau kendalikan?","b":[{"t":"teks"}]},{"j":"Final Challenge","p":"Mengapa hasil perhitungan berdasarkan model fisika dapat berbeda dengan kondisi nyata pada Halilintar?","b":[{"t":"teks"},{"t":"teks","l":"Kesimpulan ilmiah"}]}]}},"hysteria":{"B":{"gelar":"Detektif Gerak Hysteria","m":[{"j":"Apa yang Bergerak?","p":"Amati Hysteria dari area yang aman. Sebutkan 2 benda atau bagian yang bergerak.","b":[{"t":"nomor","n":2}]},{"j":"Naik atau Turun?","p":"Amati gerakan wahana. Hysteria bergerak:","b":[{"t":"pilih","o":["Naik","Turun","Naik dan turun","Berputar"]}]},{"j":"Tinggi atau Rendah?","p":"Bandingkan posisi wahana.","b":[{"t":"isian","l":["Ketika berada di atas","Ketika berada di bawah"]}]},{"j":"Cepat atau Lambat?","p":"Bagian mana yang tampak bergerak lebih cepat?","b":[{"t":"teks"}]},{"j":"Berubah Arah","p":"Apakah gerakan Hysteria berubah arah?","b":[{"t":"pilih","o":["Ya","Tidak"]}]},{"j":"Bunyi Hysteria","p":"Temukan dua sumber bunyi.","b":[{"t":"nomor","n":2}]},{"j":"Sebelum dan Sesudah Bergerak","p":"Amati Hysteria sebelum dan setelah bergerak. Apa yang berubah?","b":[{"t":"pilih","l":"Sebelum bergerak","o":["Diam","Berada di bawah","Lainnya:"]},{"t":"pilih","l":"Setelah bergerak","o":["Bergerak","Berada lebih tinggi","Berubah arah","Lainnya:"]}]},{"j":"Apa yang Kamu Rasakan?","p":"Jika kamu mengamati penumpang dari area yang aman, apa perubahan gerak yang dapat kamu lihat?","b":[{"t":"teks"}]},{"j":"Temukan Energinya","p":"Ketika Hysteria bergerak naik dan turun, apa yang berubah?","b":[{"t":"teks"}]},{"j":"Temuan Terbaik","p":"Apa hal paling menarik yang kamu temukan pada Hysteria?","b":[{"t":"teks"}]}]},"C":{"gelar":"Science Explorer – Hysteria","m":[{"j":"Amati Geraknya","p":"Sebutkan tiga bentuk gerakan yang kamu amati.","b":[{"t":"nomor","n":3}]},{"j":"Perubahan Ketinggian","p":"Apa yang terjadi ketika wahana bergerak dari bawah ke atas?","b":[{"t":"teks"}]},{"j":"Naik dan Turun","p":"Bandingkan gerakan saat naik dan turun.","b":[{"t":"teks"}]},{"j":"Perubahan Kecepatan","p":"Apakah kecepatan gerak tampak berubah?","b":[{"t":"pilih","o":["Ya","Tidak"]},{"t":"teks","l":"Bukti pengamatan"}]},{"j":"Perubahan Arah","p":"Kapan arah gerak Hysteria berubah?","b":[{"t":"teks"}]},{"j":"Energi","p":"Ketika Hysteria berada semakin tinggi, apa yang terjadi pada energi potensial gravitasi?","b":[{"t":"teks"}]},{"j":"Bunyi dan Getaran","p":"Temukan satu sumber bunyi. Apa yang mungkin menghasilkan bunyi tersebut?","b":[{"t":"teks"}]},{"j":"Bandingkan Posisi","p":"Bandingkan Hysteria ketika berada pada posisi rendah dan tinggi.","b":[{"t":"tabel","k":["Posisi","Pengamatan"],"b":[["Rendah",null],["Tinggi",null]]}]},{"j":"Hubungkan dengan Kehidupan","p":"Temukan gerakan sehari-hari yang mirip dengan gerakan naik-turun Hysteria.","b":[{"t":"teks"}]},{"j":"Tantangan Sains","p":"Mengapa Hysteria dapat bergerak naik dan turun?","b":[{"t":"teks"}]}]},"D":{"gelar":"Junior Physics Investigator – Hysteria","m":[{"j":"Prediksi Gerak","p":"Prediksikan bagian ketika Hysteria mengalami gerakan paling cepat.","b":[{"t":"isian","l":["Prediksi","Alasan"]}]},{"j":"Ukur Waktu","p":"Ukur waktu gerakan dari area yang aman.","b":[{"t":"isian","l":["Waktu (s)","Gerakan yang diamati"]}]},{"j":"Amati Ketinggian","p":"Bandingkan posisi rendah dan tinggi.","b":[{"t":"isian","l":["Posisi rendah","Posisi tinggi"]}]},{"j":"Perubahan Kecepatan","p":"Apakah gerakannya berubah?","b":[{"t":"pilih","o":["Ya","Tidak"]},{"t":"teks","l":"Bukti"}]},{"j":"Perubahan Arah","p":"Apa yang terjadi ketika arah gerak berubah?","b":[{"t":"teks"}]},{"j":"Identifikasi Gaya","p":"Gaya yang mungkin berperan:","b":[{"t":"pilih","o":["Gravitasi","Gaya normal","Gaya gesek","Gaya lainnya:"]},{"t":"teks","l":"Bukti pengamatan"}]},{"j":"Energi Potensial","p":"Ketika wahana bergerak ke posisi yang lebih tinggi, energi potensial gravitasi:","b":[{"t":"pilih","o":["Bertambah","Berkurang","Tetap"]},{"t":"teks","l":"Jelaskan"}]},{"j":"Energi Kinetik","p":"Ketika wahana bergerak lebih cepat, energi kinetik cenderung:","b":[{"t":"pilih","o":["Bertambah","Berkurang","Tetap"]},{"t":"teks","l":"Mengapa?"}]},{"j":"Data Pengamatan","p":"Catat dua hasil pengamatan.","b":[{"t":"tabel","k":["Pengamatan","Waktu (s)"],"b":[["1",null],["2",null]]},{"t":"pilih","l":"Apakah sama?","o":["Ya","Tidak"]},{"t":"teks","l":"Mengapa?"}]},{"j":"Pertanyaan Fisika","p":"Buat satu pertanyaan fisika tentang gerak Hysteria.","b":[{"t":"teks"}]}]},"E":{"gelar":"Data Scientist – Hysteria","m":[{"j":"Formulasikan Masalah","p":"Tentukan fenomena yang akan diselidiki.","b":[{"t":"isian","l":["Fenomena"]},{"t":"teks","l":"Pertanyaan investigasi"}]},{"j":"Tentukan Variabel","p":"Besaran yang dapat diamati:","b":[{"t":"pilih","o":["Waktu","Ketinggian","Jarak","Periode","Frekuensi","Lainnya:"]}]},{"j":"Buat Prediksi","p":"Saya memperkirakan bahwa…","b":[{"t":"teks"}]},{"j":"Kumpulkan Data","p":"Catat minimal tiga hasil pengamatan.","b":[{"t":"tabel","k":["Pengamatan","Waktu (s)","Posisi/kondisi"],"b":[["1",null,null],["2",null,null],["3",null,null]]}]},{"j":"Hitung","p":"Gunakan data untuk menghitung besaran fisika yang relevan.","b":[{"t":"isian","l":["Besaran","Persamaan","Hasil"]}]},{"j":"Cari Pola","p":"Apa hubungan antara posisi atau ketinggian dan gerakan Hysteria?","b":[{"t":"teks"}]},{"j":"Buat Grafik","p":"Tentukan sumbu grafik dari datamu.","b":[{"t":"isian","l":["Sumbu X","Sumbu Y"]}]},{"j":"Evaluasi Data","p":"Apakah data konsisten?","b":[{"t":"pilih","o":["Ya","Tidak"]},{"t":"teks","l":"Kemungkinan penyebab perbedaan"}]},{"j":"Bandingkan Prediksi","p":"Bandingkan prediksi dengan hasil.","b":[{"t":"isian","l":["Prediksi","Hasil"]},{"t":"pilih","l":"Sesuai?","o":["Ya","Tidak"]}]},{"j":"Kesimpulan","p":"Apa yang dapat kamu simpulkan berdasarkan data tentang gerak Hysteria?","b":[{"t":"teks"}]}]},"F":{"gelar":"Physics Researcher – Hysteria","m":[{"j":"Identify the Phenomenon","p":"Pilih konsep utama:","b":[{"t":"pilih","o":["Hukum Newton","Energi mekanik","Gerak periodik","Perubahan kecepatan","Gaya","Lainnya:"]}]},{"j":"Formulate the Problem","p":"Buat pertanyaan penelitian.","b":[{"t":"teks"}]},{"j":"Build Your Prediction","p":"Tuliskan prediksi beserta dasarnya.","b":[{"t":"isian","l":["Prediksi","Alasan berdasarkan teori"]}]},{"j":"Build the Model","p":"Tuliskan model atau persamaan fisika yang relevan.","b":[{"t":"teks"},{"t":"teks","l":"Variabel yang digunakan"}]},{"j":"Collect Evidence","p":"Catat besaran yang kamu peroleh.","b":[{"t":"tabel","k":["Besaran","Nilai","Satuan"],"b":[[null,null,null],[null,null,null],[null,null,null]]}]},{"j":"Test the Model","p":"Bandingkan model dengan kenyataan.","b":[{"t":"isian","l":["Prediksi atau model","Hasil pengamatan","Hasil perhitungan"]}]},{"j":"Compare","p":"Seberapa sesuai model dengan pengamatan?","b":[{"t":"pilih","o":["Sangat sesuai","Cukup sesuai","Kurang sesuai"]},{"t":"teks","l":"Jelaskan"}]},{"j":"Identify Limitations","p":"Apa yang tidak dapat kamu ukur atau kendalikan secara langsung di Dufan?","b":[{"t":"teks"}]},{"j":"Improve the Investigation","p":"Jika fenomena Hysteria diteliti di laboratorium sekolah:","b":[{"t":"isian","l":["Variabel yang dapat dikontrol","Yang akan kamu ukur"]}]},{"j":"Final Challenge","p":"Mengapa gerakan Hysteria yang diamati di dunia nyata tidak selalu sama persis dengan prediksi model fisika?","b":[{"t":"teks"},{"t":"teks","l":"Kesimpulan ilmiah"}]}]}}};
+var KUIS={"halilintar":{"B":{"pg":[{"s":"Apa yang menarik kereta Halilintar naik ke puncak tanjakan pertama?","o":["Angin","Rantai yang digerakkan mesin","Dorongan penumpang","Aliran air"],"k":1},{"s":"Di bagian mana kereta bergerak paling cepat?","o":["Di puncak tanjakan pertama","Setelah meluncur turun dari puncak","Saat berhenti di stasiun","Saat mulai ditarik naik"],"k":1},{"s":"Ketika kereta meluncur dari tempat tinggi ke tempat rendah, gerak kereta menjadi …","o":["makin lambat","makin cepat","berhenti","tidak berubah"],"k":1},{"s":"Apa yang membuat kereta berbelok mengikuti lintasan?","o":["Rel yang mendorong roda kereta","Teriakan penumpang","Angin dari samping","Kereta berbelok sendiri"],"k":0}],"ur":[{"s":"Ceritakan dengan kalimatmu sendiri perubahan energi pada Halilintar, mulai dari mesin penarik sampai kereta meluncur turun.","k":"Energi listrik menggerakkan mesin dan rantai, kereta naik ke tempat tinggi sehingga energi tersimpan karena ketinggian, lalu kereta meluncur dan bergerak cepat sebagai energi gerak."}]},"D":{"pg":[{"s":"Urutan kelajuan kereta dari yang paling cepat di titik A (puncak tanjakan pertama), B (dasar turunan pertama), dan C (puncak loop) adalah …","o":["A, B, C","B, C, A","C, B, A","A, C, B"],"k":1},{"s":"Setelah meluncur, kereta tidak dapat naik setinggi puncak tanjakan pertama karena …","o":["massa kereta bertambah","sebagian energi berubah menjadi panas dan bunyi akibat gesekan","gaya gravitasi hilang di puncak","penumpang menahan kereta"],"k":1},{"s":"Saat mesin menarik kereta ke puncak, mesin melakukan usaha. Usaha itu tersimpan sebagai …","o":["energi potensial gravitasi kereta","energi kinetik kereta","energi bunyi","energi kimia"],"k":0},{"s":"Gaya yang mengubah arah gerak kereta di tikungan berasal dari …","o":["udara","rel","penumpang","mesin penarik"],"k":1}],"ur":[{"s":"Bandingkan t₁ (tanjakan pertama) dan t₂ (turunan pertama) dari lembar data kelompokmu. Apa kesimpulanmu tentang kelajuan kereta pada kedua bagian? Hubungkan dengan perubahan ketinggian.","k":"t₂ lebih singkat daripada t₁, menunjukkan kereta lebih cepat saat turun. Ketika ketinggian berkurang, energi potensial berubah menjadi energi kinetik. Jawaban bernilai penuh juga mempertimbangkan bahwa panjang kedua bagian lintasan mungkin berbeda."}]},"E":{"pg":[{"s":"Panjang kereta 12 m. Kereta melewati titik masuk loop dalam 0,8 s. Kelajuan kereta di titik itu adalah …","o":["9,6 m/s","12,8 m/s","15 m/s","20 m/s"],"k":2},{"s":"Gerak kereta di dalam loop termasuk gerak dua dimensi karena …","o":["kelajuannya selalu tetap","posisinya berubah dalam arah mendatar dan tegak sekaligus","kereta bergerak di dua rel","kereta berhenti dua kali"],"k":1},{"s":"Di titik puncak loop, arah kecepatan kereta adalah …","o":["ke atas","ke bawah","mendatar, menyinggung lintasan","menuju pusat loop"],"k":2}],"ur":[{"s":"Waktu reaksi saat menekan stopwatch sekitar 0,2 s. Hitung ketidakpastian relatif pengukuran waktu 0,8 s pada soal 1. Usulkan satu cara untuk memperkecilnya.","k":"0,2 ÷ 0,8 = 25%. Cara memperkecil: analisis video per bingkai, mengukur rentang waktu yang lebih panjang, atau merata-ratakan banyak pengukuran."},{"s":"Kelompok A mendapat kelajuan 15 m/s dan kelompok B 12 m/s untuk titik yang sama. Sebutkan dua kemungkinan penyebab perbedaan itu.","k":"Perbedaan perkiraan panjang kereta, waktu reaksi pengukur, titik acuan yang tidak sama persis, atau kereta dengan muatan berbeda."}]},"F":{"catatan":"Misalkan: puncak tanjakan pertama 30 m, dasar turunan pertama 2 m, puncak loop 18 m di atas tanah, jari-jari loop di puncak 6 m, massa penumpang 60 kg. Kereta hampir diam di puncak tanjakan pertama. Gunakan g = 9,8 m/s².","pg":[{"s":"Jika gesekan diabaikan, kelajuan kereta di dasar turunan pertama adalah …","o":["16,6 m/s","23,4 m/s","24,2 m/s","28,0 m/s"],"k":1,"c":"√(2 × 9,8 × 28) ≈ 23,4 m/s"},{"s":"Kelajuan minimum di puncak loop agar kereta tetap menekan rel adalah …","o":["5,9 m/s","7,7 m/s","10,8 m/s","15,3 m/s"],"k":1,"c":"√(9,8 × 6) ≈ 7,7 m/s"},{"s":"Hasil pengukuran kelajuan di puncak loop 12 m/s. Gaya yang diberikan kursi pada penumpang di titik itu adalah …","o":["264 N","588 N","852 N","2028 N"],"k":2,"c":"N = 60 × (144 ÷ 6 − 9,8) = 852 N"}],"ur":[{"s":"Dengan data soal 3, hitung persentase energi mekanik yang hilang dari puncak tanjakan pertama sampai puncak loop. Jelaskan ke mana energi itu pergi.","k":"Energi per kg di puncak tanjakan = 9,8 × 30 = 294 J/kg. Di puncak loop = 9,8 × 18 + ½ × 12² = 248,4 J/kg. Hilang 45,6 J/kg atau sekitar 15,5%, berubah menjadi panas dan bunyi akibat gesekan roda dengan rel dan hambatan udara."},{"s":"Penumpang melaporkan tubuh terasa paling berat di dasar loop. Jelaskan dengan diagram gaya dan Hukum II Newton.","k":"Di dasar loop: N − mg = mv²/R, sehingga N = m(g + v²/R) lebih besar daripada mg. Diagram memuat N ke atas, mg ke bawah, dan resultan ke atas menuju pusat lingkaran."},{"s":"Hasil soal 3 menunjukkan penumpang tetap tertekan ke kursi di puncak loop, padahal sebagian penumpang melaporkan terasa ringan. Berikan dua penjelasan yang mungkin atas perbedaan data perhitungan dan laporan sensasi itu.","k":"Sensasi bersifat relatif: dibanding dasar loop, puncak terasa jauh lebih ringan. Kemungkinan lain: kelajuan terukur memiliki ketidakpastian, jari-jari di puncak berbeda dari perkiraan karena loop tidak berbentuk lingkaran sempurna, atau sensasi itu berlangsung sangat singkat."}]}},"hysteria":{"B":{"pg":[{"s":"Apa yang membuat kursi Hysteria melesat ke atas?","o":["Dorongan dari mesin peluncur","Tiupan angin","Lompatan penumpang","Tarikan bumi"],"k":0},{"s":"Saat kursi bergerak turun dari puncak, geraknya menjadi …","o":["makin lambat","makin cepat","tetap","berhenti"],"k":1},{"s":"Di puncak menara, kursi tampak …","o":["berhenti sesaat sebelum turun","terus naik tanpa henti","bergerak ke samping","berputar cepat"],"k":0},{"s":"Gaya yang menarik kursi turun ke bawah adalah …","o":["gaya dorong mesin","gaya tarik bumi (gravitasi)","gaya gesek angin","gaya dari penumpang"],"k":1}],"ur":[{"s":"Ceritakan perubahan gerak kursi dari bawah, ke puncak, sampai kembali ke bawah. Apa yang menyebabkan setiap perubahan itu?","k":"Kursi didorong mesin sehingga melesat naik, lalu makin lambat karena ditarik bumi, berhenti sesaat di puncak, turun makin cepat karena ditarik bumi, dan akhirnya diperlambat rem sampai berhenti."}]},"D":{"pg":[{"s":"Saat peluncuran, kursi dipercepat ke atas karena …","o":["gaya dorong ke atas lebih besar daripada berat kursi dan penumpang","gaya dorong ke atas sama dengan berat","berat kursi hilang","tidak ada gaya yang bekerja"],"k":0},{"s":"Setelah dorongan berhenti, kursi masih bergerak naik tetapi makin lambat karena …","o":["kehabisan bahan bakar","gaya gravitasi berlawanan arah dengan geraknya","penumpang terlalu berat","udara menariknya ke atas"],"k":1},{"s":"Saat kursi turun bebas dari puncak (hambatan udara diabaikan), gaya yang bekerja pada kursi adalah …","o":["gaya dorong mesin","gaya gravitasi saja","gaya rem","tidak ada gaya"],"k":1},{"s":"Saat pengereman di bawah, arah gaya rem adalah …","o":["ke bawah, searah gerak","ke atas, berlawanan dengan gerak","ke samping","tidak berarah"],"k":1}],"ur":[{"s":"Gunakan t₁ dan t₂ dari lembar data kelompokmu. Pada tahap mana kursi bergerak paling cepat? Jelaskan dengan gaya yang bekerja pada setiap tahap.","k":"Paling cepat di akhir peluncuran atau saat turun sebelum direm. Peluncuran: resultan gaya ke atas sehingga dipercepat. Naik setelah peluncuran: gravitasi memperlambat. Turun: gravitasi mempercepat. Pengereman: gaya rem ke atas memperlambat."}]},"E":{"catatan":"Misalkan data video saat kursi turun dari puncak, hambatan udara diabaikan.","data":{"k":["Waktu (s)","0","1","2","3"],"b":[["Ketinggian (m)","50,0","45,1","30,4","5,9"]]},"pg":[{"s":"Jarak yang ditempuh kursi dalam 2 s pertama adalah …","o":["4,9 m","14,7 m","19,6 m","30,4 m"],"k":2,"c":"50,0 − 30,4 = 19,6 m"},{"s":"Kelajuan rata-rata kursi antara t = 1 s dan t = 2 s adalah …","o":["4,9 m/s","9,8 m/s","14,7 m/s","19,6 m/s"],"k":2,"c":"45,1 − 30,4 = 14,7 m dalam 1 s"},{"s":"Bentuk grafik ketinggian terhadap waktu pada tahap ini adalah …","o":["garis lurus mendatar","garis lurus menurun","kurva yang makin curam ke bawah","kurva yang makin landai"],"k":2}],"ur":[{"s":"Hitung kelajuan rata-rata pada setiap selang 1 s dari tabel. Tunjukkan bahwa percepatan kursi mendekati 9,8 m/s².","k":"Kelajuan rata-rata per selang: 4,9; 14,7; dan 24,5 m/s. Bertambah 9,8 m/s setiap 1 s, sehingga percepatannya mendekati 9,8 m/s²."},{"s":"Sebutkan dua sumber ketidakpastian saat membaca posisi kursi dari video dan usulkan perbaikannya.","k":"Posisi kursi kabur pada bingkai cepat, skala tinggi menara tidak pasti, kamera tidak tegak lurus, dan laju bingkai rendah. Perbaikan: kamera pada tripod, laju bingkai tinggi, dan penanda skala yang jelas."}]},"F":{"catatan":"Misalkan: massa penumpang 60 kg; kursi dipercepat dari diam sampai 29,4 m/s dalam 1,0 s; setelah peluncuran kursi naik bebas; saat pengereman di bawah kursi diperlambat dari 15 m/s sampai diam dalam 1,0 s. Gunakan g = 9,8 m/s².","pg":[{"s":"Percepatan kursi saat peluncuran adalah …","o":["9,8 m/s²","19,6 m/s²","29,4 m/s²","39,2 m/s²"],"k":2,"c":"29,4 ÷ 1,0 = 29,4 m/s²"},{"s":"Gaya kursi pada penumpang saat peluncuran adalah …","o":["588 N","1764 N","2352 N","2940 N"],"k":2,"c":"N = 60 × (9,8 + 29,4) = 2352 N"},{"s":"Tinggi tambahan maksimum yang dicapai kursi setelah peluncuran berakhir adalah …","o":["22,1 m","29,4 m","44,1 m","88,2 m"],"k":2,"c":"29,4² ÷ (2 × 9,8) = 44,1 m"},{"s":"Saat kursi turun bebas, gaya kursi pada penumpang adalah …","o":["nol","sama dengan berat penumpang","dua kali berat penumpang","empat kali berat penumpang"],"k":0}],"ur":[{"s":"Data sekunder menyebut Hysteria memberi sensasi “4G”. Berdasarkan soal 1 dan 2, jelaskan mengapa sensasi 4 kali berat badan muncul padahal percepatan kursi 3g. Apa artinya bagi cara membaca data “4G”?","k":"N = m(g + a) = m(9,8 + 29,4) = 4mg. Sensasi “4G” adalah perbandingan gaya kursi terhadap berat badan, bukan percepatan kursi; percepatan kursinya 3g. Data “4G” harus dibaca dengan jelas besaran apa yang diukur."},{"s":"Hitung gaya kursi pada penumpang saat pengereman di bawah. Bandingkan dengan beratnya dan jelaskan dengan Hukum II Newton.","k":"a = 15 m/s² ke atas; N = 60 × (9,8 + 15) = 1488 N, sekitar 2,5 kali beratnya (588 N). Resultan gaya ke atas karena kursi diperlambat saat bergerak turun."}]}}};
+var KUIS_PEDOMAN="Pilihan ganda bernilai 1. Uraian bernilai 0–3: 0 kosong atau keliru; 1 sebagian konsep benar; 2 konsep benar tanpa dukungan data atau perhitungan lengkap; 3 konsep benar, didukung data atau perhitungan, dan alasannya jelas. Nilai akhir = skor diperoleh ÷ skor maksimum × 100.";
+</script>
+<script>
 (function(){
 'use strict';
 var RIDES=[
@@ -2962,7 +3024,7 @@ function hydrateArt(root){
 /* Halaman penuh: bilah atas tetap di tempatnya, hanya isi kirinya yang berganti
    antara judul aplikasi dan tombol kembali beserta nama halaman. */
 function openSheet(html,judul){
-  DufanPhysics.unmount();content.innerHTML=html;hydrateArt(content);fillLogos(content);
+  DufanPhysics.unmount();content.innerHTML=html;hydrateArt(content);fillLogos(content);misiPasang(content);
   sheet.hidden=false;content.scrollTop=0;
   document.body.classList.add('halaman');btnBack.hidden=false;
   barTitle.innerHTML='<h1>'+esc(judul||'Dufan EduLab')+'</h1>';
@@ -3021,7 +3083,7 @@ function segarkanHalaman(){
   if(k===saringTampil)return;
   saringTampil=k;
   var atas=content.scrollTop,fase=faseSekarang(),mulus=content.style.scrollBehavior;
-  teks.innerHTML=detailTeks(r,current);hydrateArt(teks);
+  teks.innerHTML=detailTeks(r,current);hydrateArt(teks);misiPasang(teks);
   if(!DufanPhysics.gantiFase(content,fase))DufanPhysics.mount(content,fase);
   content.style.scrollBehavior='auto';content.scrollTop=atas;content.style.scrollBehavior=mulus;
   aturLekat();
@@ -3055,6 +3117,101 @@ function aktivitasHTML(id,fase){
   if(w&&w.p)h+='<li>Lanjutannya di sekolah: '+esc(w.p[0])+', dengan variabel '+esc(w.p[1])+'.</li>';
   h+='</ol><p class="note">Produk akhir '+esc(f.nama)+': '+esc(f.produk)+'. Keselamatan didahulukan: ukur dari posisi aman dan patuhi seluruh ketentuan operator.</p></div>';
   return h;
+}
+
+/* ---------- kartu misi di lokasi ---------- */
+/* Jawaban murid disimpan di peramban masing-masing, bukan dikirim ke mana pun. */
+var MISI_SIMPAN='dufan-misi';
+function misiBaca(){try{return JSON.parse(localStorage.getItem(MISI_SIMPAN)||'{}');}catch(e){return {};}}
+function misiTulis(o){try{localStorage.setItem(MISI_SIMPAN,JSON.stringify(o));}catch(e){}}
+function misiBlok(b,kunci){
+  function isi(k,ph){return '<input class="m-isi" type="text" data-mk="'+k+'" placeholder="'+esc(ph||'')+'">';}
+  if(b.t==='teks')return '<label class="m-baris">'+(b.l?'<span>'+esc(b.l)+'</span>':'')+isi(kunci+':0','Tulis jawabanmu')+'</label>';
+  var h='',i;
+  if(b.t==='nomor'){for(i=0;i<b.n;i++)h+='<label class="m-baris"><span>'+(i+1)+'.</span>'+isi(kunci+':'+i)+'</label>';return h;}
+  if(b.t==='isian'){b.l.forEach(function(l,j){h+='<label class="m-baris"><span>'+esc(l)+'</span>'+isi(kunci+':'+j)+'</label>';});return h;}
+  if(b.t==='pilih'){
+    h=(b.l?'<p class="m-lab">'+esc(b.l)+'</p>':'')+'<div class="m-pilih">';
+    b.o.forEach(function(o,j){var lain=/:$/.test(o);
+      h+='<label class="m-opsi"><input type="checkbox" data-mk="'+kunci+':'+j+'"><span>'+esc(lain?o.slice(0,-1):o)+'</span>'
+        +(lain?isi(kunci+':'+j+':t','…'):'')+'</label>';});
+    return h+'</div>';
+  }
+  if(b.t==='tabel'){
+    h='<div class="m-gulir"><table class="m-tabel"><thead><tr>';
+    b.k.forEach(function(c){h+='<th>'+esc(c)+'</th>';});
+    h+='</tr></thead><tbody>';
+    b.b.forEach(function(r,ri){h+='<tr>';
+      b.k.forEach(function(c,ci){h+='<td>'+(r[ci]!=null?'<b>'+esc(r[ci])+'</b>':isi(kunci+':'+ri+':'+ci))+'</td>';});
+      h+='</tr>';});
+    return h+'</tbody></table></div>';
+  }
+  return '';
+}
+function misiHTML(id,fase){
+  var w=MISI[id];if(!w||!fase||!w[fase])return '';
+  var k=w[fase],h='<div class="misi" data-misi="'+id+':'+fase+'"><h3>Kartu misi di lokasi</h3>'
+    +'<p class="meta">Dufan Mission Hunt: '+esc(k.gelar)+'</p>'
+    +'<p class="m-skor">Belum ada misi yang diisi.</p>'
+    +'<p class="note">Kerjakan 10 misi ini sambil berada di dekat wahana, dari posisi yang aman. Jawaban tersimpan di peramban ini saja dan tidak dikirim ke mana pun.</p>';
+  k.m.forEach(function(m,i){
+    h+='<details class="m-item" data-no="'+i+'"><summary><b>Misi '+(i+1)+'</b> '+esc(m.j)+'<i class="m-tanda" aria-hidden="true"></i></summary>';
+    if(m.p)h+='<p class="desc">'+esc(m.p)+'</p>';
+    (m.b||[]).forEach(function(bl,bi){h+=misiBlok(bl,id+':'+fase+':'+i+':'+bi);});
+    h+='</details>';
+  });
+  return h+'<div class="actions"><button class="btn small ghost" data-act="misi-reset">Kosongkan jawaban kartu ini</button></div></div>';
+}
+/* Mengisi ulang jawaban yang tersimpan dan menghitung berapa misi yang sudah terisi. */
+function misiPasang(root){
+  var kartu=root.querySelector&&root.querySelector('.misi');if(!kartu)return;
+  var simpan=misiBaca();
+  Array.prototype.forEach.call(kartu.querySelectorAll('[data-mk]'),function(el){
+    var v=simpan[el.getAttribute('data-mk')];
+    if(el.type==='checkbox')el.checked=v===true;else if(v!=null)el.value=v;
+  });
+  misiHitung(kartu);
+}
+function misiTerisi(el){return el.type==='checkbox'?el.checked:el.value.trim()!=='';}
+function misiHitung(kartu){
+  var n=0;
+  Array.prototype.forEach.call(kartu.querySelectorAll('.m-item'),function(d){
+    var ada=Array.prototype.some.call(d.querySelectorAll('[data-mk]'),misiTerisi);
+    d.classList.toggle('terisi',ada);if(ada)n++;
+  });
+  var skor=kartu.querySelector('.m-skor');
+  if(skor)skor.textContent=n?(n+' dari 10 misi sudah diisi.'):'Belum ada misi yang diisi.';
+}
+
+/* ---------- kuis pasca-kunjungan ---------- */
+function kuisHTML(id,fase){
+  var w=KUIS[id];if(!w||!fase)return '';
+  var k=w[fase];
+  if(!k)return '<div class="kuis"><h3>Kuis pasca-kunjungan</h3>'
+    +'<p class="note">Rancangan kuis untuk '+esc(KURIKULUM.fase[fase]?KURIKULUM.fase[fase].nama:('Fase '+fase))
+    +' belum ada. Yang tersedia Fase B, D, E, dan F.</p></div>';
+  var h='<details class="kuis"><summary><h3>Kuis pasca-kunjungan</h3>'
+    +'<span class="meta">'+esc(KURIKULUM.fase[fase].nama)+' · '+k.pg.length+' pilihan ganda, '+k.ur.length+' uraian</span></summary>'
+    +'<p class="note">Kerjakan setelah kembali dari Dufan, dengan catatan dan kartu misimu.</p>';
+  if(k.catatan)h+='<p class="desc k-misal">'+esc(k.catatan)+'</p>';
+  if(k.data){
+    h+='<div class="m-gulir"><table class="m-tabel"><tbody>';
+    [k.data.k].concat(k.data.b).forEach(function(r){h+='<tr>';
+      r.forEach(function(c,i){h+=(i?'<td>':'<th>')+esc(c)+(i?'</td>':'</th>');});h+='</tr>';});
+    h+='</tbody></table></div>';
+  }
+  h+='<p class="m-lab">Pilihan ganda</p><ol class="k-pg">';
+  k.pg.forEach(function(q,i){
+    h+='<li><p class="desc">'+esc(q.s)+'</p><div class="k-opsi" data-k="'+q.k+'">';
+    q.o.forEach(function(o,j){h+='<button type="button" class="k-pil" data-j="'+j+'"><b>'+'ABCD'.charAt(j)+'</b>'+esc(o)+'</button>';});
+    h+='</div><p class="k-balas" data-c="'+(q.c?esc('Perhitungan: '+q.c):'')+'" hidden></p></li>';
+  });
+  h+='</ol><p class="m-lab">Uraian</p><ol class="k-ur">';
+  k.ur.forEach(function(q){
+    h+='<li><p class="desc">'+esc(q.s)+'</p>'
+      +'<details class="k-kunci"><summary>Lihat jawaban yang diharapkan</summary><p class="desc">'+esc(q.k)+'</p></details></li>';
+  });
+  return h+'</ol><p class="note">'+esc(KUIS_PEDOMAN)+'</p></details>';
 }
 
 /* Blok kurikulum pada panel wahana: fase, tujuan pembelajaran, praktikum sekolah, status data. */
@@ -3093,6 +3250,8 @@ function detailTeks(r,id){var cat=CATS[r.cat];var dots='',fase=faseSekarang();
     +konsepHTML(id,fase)
     +DufanPhysics.section(id,photoHTML(r,id),fase)
     +aktivitasHTML(id,fase)
+    +misiHTML(id,fase)
+    +kuisHTML(id,fase)
     +kurikulumHTML(id);}
 function detailHTML(r,id){
   return '<div class="detail">'
@@ -3186,7 +3345,14 @@ document.getElementById('lkpd').addEventListener('click',function(e){
 });
 
 /* ---------- tampilan kurikulum ---------- */
+/* Fase yang dipilih ikut disimpan supaya rombongan yang membuka aplikasi lagi
+   di lokasi tidak perlu memilih ulang jenjangnya. */
 var kurAktif=null;   /* {jenis:'fase'|'tp', kode:'D'} */
+(function(){try{var t=localStorage.getItem('dufan-fase');
+  if(t&&KURIKULUM.fase[t])kurAktif={jenis:'fase',kode:t};}catch(e){}})();
+function simpanFase(){try{
+  if(kurAktif&&kurAktif.jenis==='fase')localStorage.setItem('dufan-fase',kurAktif.kode);
+  else localStorage.removeItem('dufan-fase');}catch(e){}}
 function saringanHTML(){
   if(!kurAktif)return '';
   var teks=kurAktif.jenis==='fase'?KURIKULUM.fase[kurAktif.kode].nama:('Tujuan '+kurAktif.kode);
@@ -3353,6 +3519,7 @@ var catAktif='all';
 /* Saringan kategori dan saringan kurikulum bekerja bersamaan. */
 function terapkanSaringan(){
   if(typeof tandaiFaseChip==='function')tandaiFaseChip();
+  simpanFase();
   var set=null;
   if(kurAktif)set=kurAktif.jenis==='fase'?KURIKULUM.wahanaFase(kurAktif.kode):KURIKULUM.wahanaTP(kurAktif.kode);
   Array.prototype.forEach.call(svg.querySelectorAll('.ride'),function(g){
@@ -3427,8 +3594,46 @@ var waves=document.getElementById('waves');
 [[24,''],[42,'w2'],[60,'w3']].forEach(function(w){var d='M-96,'+w[0];for(var i=0;i<20;i++)d+=' q12,-5 24,0 t24,0';
   var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);p.setAttribute('class','a wave '+w[1]);waves.appendChild(p);});
 
+/* ---------- kartu misi dan kuis ---------- */
+content.addEventListener('input',function(e){
+  var el=e.target,k=el.getAttribute&&el.getAttribute('data-mk');if(!k)return;
+  var o=misiBaca();if(el.value.trim()==='')delete o[k];else o[k]=el.value;misiTulis(o);
+  var kartu=el.closest('.misi');if(kartu)misiHitung(kartu);
+});
+content.addEventListener('change',function(e){
+  var el=e.target,k=el.getAttribute&&el.getAttribute('data-mk');if(!k||el.type!=='checkbox')return;
+  var o=misiBaca();if(el.checked)o[k]=true;else delete o[k];misiTulis(o);
+  var kartu=el.closest('.misi');if(kartu)misiHitung(kartu);
+});
+content.addEventListener('click',function(e){
+  var pil=e.target.closest&&e.target.closest('.k-pil');
+  if(pil){
+    var grup=pil.parentNode,benar=parseInt(grup.getAttribute('data-k'),10),pilih=parseInt(pil.getAttribute('data-j'),10);
+    Array.prototype.forEach.call(grup.children,function(b,j){
+      b.classList.toggle('benar',j===benar);
+      b.classList.toggle('salah',j===pilih&&j!==benar);
+    });
+    var balas=grup.parentNode.querySelector('.k-balas'),ket=balas?balas.getAttribute('data-c'):'';
+    if(balas){
+      balas.textContent=(pilih===benar?'Benar.':'Belum tepat, jawabannya '+'ABCD'.charAt(benar)+'.')+(ket?' '+ket:'');
+      balas.classList.toggle('ya',pilih===benar);balas.hidden=false;
+    }
+    return;
+  }
+  var reset=e.target.closest&&e.target.closest('[data-act="misi-reset"]');
+  if(reset){
+    var kartu=reset.closest('.misi'),awalan=kartu.getAttribute('data-misi')+':',o=misiBaca();
+    Object.keys(o).forEach(function(k){if(k.indexOf(awalan)===0)delete o[k];});
+    misiTulis(o);
+    Array.prototype.forEach.call(kartu.querySelectorAll('[data-mk]'),function(el){
+      if(el.type==='checkbox')el.checked=false;else el.value='';});
+    misiHitung(kartu);
+  }
+});
 window.addEventListener('resize',function(){aturBarH();aturLebar();relayout();aturLekat();});
 aturBarH();aturLebar();
+/* Fase yang diingat dari kunjungan sebelumnya langsung diterapkan ke peta dan saringan. */
+terapkanSaringan();
 /* lebar panggung dianimasikan, jadi hitung ulang lagi setelah geserannya selesai */
 stage.addEventListener('transitionend',function(e){if(e.propertyName==='left')relayout();});
 fit();

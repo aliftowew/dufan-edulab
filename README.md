@@ -110,6 +110,30 @@ Wahana yang sedang dibuka juga tidak lagi ditutup paksa ketika saringan baru
 tidak memuatnya. Halamannya tetap terbuka dengan satu keterangan singkat bahwa
 wahana itu di luar saringan yang aktif.
 
+## Kartu misi dan kuis
+
+Halilintar dan Hysteria memuat dua bagian tambahan yang mengikuti rancangan
+guru: **Kartu misi di lokasi** dan **Kuis pasca-kunjungan**. Keduanya hanya
+muncul setelah fase dipilih pada tombol Filter, dan isinya berganti mengikuti
+fase itu.
+
+Kartu misi berisi 10 misi per fase per wahana, dari "Detektif Gerak" untuk Fase
+B sampai "Physics Researcher" untuk Fase F. Setiap misi bisa langsung diisi di
+aplikasi: kolom isian, daftar bernomor, kotak centang, dan tabel data. Jawaban
+disimpan di `localStorage` peramban murid sendiri, tidak dikirim ke mana pun,
+dan bertahan setelah halaman ditutup atau dimuat ulang. Penghitung di atas
+kartu menunjukkan berapa misi yang sudah terisi, tiap misi yang sudah diisi
+diberi tanda centang, dan satu tombol mengosongkan seluruh kartu itu.
+
+Kuis pasca-kunjungan tersedia untuk Fase B, D, E, dan F. Pilihan gandanya
+langsung memberi tahu benar atau salah beserta perhitungannya, sedangkan tiap
+uraian menyimpan jawaban yang diharapkan di balik satu tombol untuk dibuka guru.
+Pedoman skornya ikut dicantumkan. Fase C belum ada kuisnya dalam rancangan, dan
+aplikasi menyatakan itu apa adanya.
+
+Fase yang dipilih ikut diingat `localStorage`, jadi rombongan yang membuka
+aplikasi lagi di lokasi tidak perlu memilih jenjangnya berulang kali.
+
 **Bilah atas tetap.** Judul atau tombol kembali di kiri, Filter dan Menu di
 kanan, posisinya tidak bergeser saat halaman dibuka atau ditutup.
 
