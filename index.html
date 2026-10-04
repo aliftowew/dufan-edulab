@@ -171,9 +171,34 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 
 /* ---------- UI chrome ---------- */
 .bar{position:fixed;top:0;left:0;right:0;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 0;
-  display:flex;flex-direction:column;gap:8px;pointer-events:none;z-index:5}
+  display:flex;flex-direction:row;align-items:flex-start;justify-content:space-between;gap:10px;pointer-events:none;z-index:7}
 .bar>*{pointer-events:auto}
-.title{align-self:flex-start;background:var(--panel);border-radius:14px;padding:8px 14px 9px;box-shadow:var(--shadow);max-width:calc(100% - 64px)}
+.tools{display:flex;gap:7px;flex:none}
+.tbtn{position:relative;display:flex;align-items:center;gap:6px;border:0;border-radius:999px;cursor:pointer;
+  padding:9px 14px;font:600 13px 'Plus Jakarta Sans',sans-serif;background:var(--panel);color:var(--text);box-shadow:var(--shadow)}
+.tbtn i{font-style:normal;font-size:15px;line-height:1}
+.ticon{width:16px;height:16px;display:block;flex:none}
+.tbtn[aria-expanded="true"]{background:var(--text);color:var(--panel)}
+.tdot{position:absolute;top:6px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 2px var(--panel)}
+.pop{position:fixed;top:calc(58px + env(safe-area-inset-top,0px));right:12px;z-index:8;width:min(320px,calc(100vw - 24px));
+  background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:12px 14px 14px;max-height:72vh;overflow:auto}
+.pop[hidden]{display:none}
+.pop h4{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:0 0 7px}
+.pop h4~h4{margin-top:14px}
+.pop-chips{display:flex;gap:6px;flex-wrap:wrap}
+.pop-list{display:flex;flex-direction:column;gap:4px}
+.popbtn{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:0;border-radius:10px;cursor:pointer;
+  padding:9px 11px;font:600 13px 'Plus Jakarta Sans',sans-serif;background:var(--chip);color:var(--text)}
+.popbtn i{font-style:normal;font-size:15px;line-height:1}
+.popbtn:hover{background:var(--line)}
+.popbtn.active{background:var(--text);color:var(--panel)}
+.pop-info{font-size:11.5px;color:var(--muted);line-height:1.45;margin:12px 0 8px}
+.hintpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:4;
+  margin:0;max-width:min(94vw,440px);background:var(--panel);color:var(--muted);box-shadow:var(--shadow);
+  border-radius:999px;padding:9px 16px;font-size:12px;line-height:1.35;text-align:center;
+  transition:opacity .4s ease;pointer-events:none}
+.hintpill.sembunyi{opacity:0}
+.title{align-self:flex-start;background:var(--panel);border-radius:14px;padding:8px 14px 9px;box-shadow:var(--shadow);max-width:calc(100% - 180px)}
 .title h1{font:600 22px/1.05 'Fraunces',Georgia,serif;margin:0;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
 .t-logo{height:30px;width:auto;display:block}
 .credit{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line)}
@@ -188,19 +213,22 @@ body{height:100%;margin:0;position:relative;overflow:hidden;background:var(--gro
 .chip b{font-weight:600;margin-left:5px}
 .chip i{font-style:normal}
 .seg .chip.active{background:var(--text);color:var(--panel)}
-.ctrl{display:flex;gap:6px}
+.ctrl{position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:4;
+  display:flex;flex-direction:column;gap:5px;background:var(--panel);border-radius:14px;padding:5px;box-shadow:var(--shadow)}
 .ctrl button{width:36px;height:36px;border:0;border-radius:10px;background:var(--chip);color:var(--text);font:600 18px 'Plus Jakarta Sans',sans-serif;cursor:pointer;display:grid;place-items:center}
 .chip:focus-visible,.btn:focus-visible,.ctrl button:focus-visible,.card:focus-visible,.grab:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
-.sheet{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,560px);background:var(--panel);color:var(--text);
+.sheet{position:fixed;left:50%;bottom:0;width:min(100%,560px);background:var(--panel);color:var(--text);
   border-radius:20px 20px 0 0;box-shadow:0 -6px 30px rgba(0,0,0,.18);padding:6px 16px calc(14px + env(safe-area-inset-bottom,0px));
-  z-index:6;display:flex;flex-direction:column;max-height:62%}
-.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:4px auto 8px;flex:none;border:0;padding:0;display:block;cursor:pointer}
-.peek-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:none}
+  z-index:6;display:flex;flex-direction:column;max-height:84%;
+  transform:translateX(-50%) translateY(102%);visibility:hidden;transition:transform .26s ease,visibility .26s}
+.sheet.open{transform:translateX(-50%) translateY(0);visibility:visible}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0;flex:none;border:0;padding:0;display:block;cursor:pointer}
+.sheet-top{position:relative;flex:none;display:flex;align-items:center;justify-content:center;min-height:36px;margin-bottom:2px}
+.sheet-top .btn{position:absolute;right:0;top:50%;transform:translateY(-50%)}
 .hint{font-size:12px;color:var(--muted);line-height:1.35;margin:0 0 8px}
 .content{overflow:auto;-webkit-overflow-scrolling:touch;padding:8px 0 4px;touch-action:pan-y}
-.sheet.peek .content{display:none}
-.sheet:not(.peek) .hint{display:none}
+
 .btn{border:0;border-radius:999px;padding:9px 14px;font:600 13px 'Plus Jakarta Sans',sans-serif;background:var(--text);color:var(--panel);cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;line-height:1.2}
 .btn.small{padding:7px 12px;font-size:12px}
 .btn.ghost{background:var(--chip);color:var(--text)}
@@ -261,7 +289,7 @@ h4.ph{font:700 11px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase;lett
 .fase-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .fase-head b{font:600 17px 'Fraunces',Georgia,serif}
 .fase-head span{font-size:11px;color:var(--muted)}
-.saring-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+.saring-bar{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   background:var(--panel);padding:6px 0 8px;margin:-4px 0 6px;border-bottom:1px solid var(--line)}
 .saring-bar b{font-size:12px}
 .rute-list{list-style:none;margin:6px 0 0;padding:0;counter-reset:r}
@@ -388,7 +416,7 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
 }
 
 /* ---------- fisika & lab mini ---------- */
-.sheet:not(.peek){max-height:80%}
+.sheet .content{padding-top:2px}
 .photo{width:100%;border-radius:12px;margin:8px 0;display:block}
 .phys{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .phys h3{font:600 17px 'Fraunces',Georgia,serif;margin:0 0 2px}
@@ -438,25 +466,20 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
 .lab-scene .carA{fill:#E63946}.lab-scene .carB{fill:#2D6CDF}.lab-scene .carlbl{fill:#fff}
 .lab-scene .hull{fill:#A1735B;stroke:#6D4C41;stroke-width:2}
 .lab-scene .plane{fill:#FFEAA7;stroke:#FDCB6E;stroke-width:2}.lab-scene .ballc{fill:#E63946}
-.lab-field{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
-.lab-field h5{margin:0;font:700 12px 'Plus Jakarta Sans',sans-serif}
-.lab-field .fnote{margin:2px 0 8px;font-size:11px;color:var(--muted);line-height:1.4}
-.lab-field .frow{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
-.lab-field label{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted);flex:1 1 170px}
-.lab-field .fin{display:flex;align-items:center;gap:6px}
-.lab-field input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px;
-  background:var(--panel);color:var(--text);font:600 13px 'Plus Jakarta Sans',sans-serif}
-.lab-field input:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
-.lab-field .unit{font-size:12px;color:var(--muted)}
-.lab-field .fout{margin-top:8px;font-size:12px}
-.lab-field .fout div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding:4px 0}
-.lab-field .fout b{font-variant-numeric:tabular-nums;text-align:right}
-.lab-field .fbeda{margin-top:6px;font-size:12px;color:var(--muted);line-height:1.4}
-.lab-field .fbeda.jauh{color:var(--red)}
-.data-tabel{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
-.data-tabel th,.data-tabel td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line)}
-.data-tabel th{font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
-.data-tabel td b{font-variant-numeric:tabular-nums}
+.lab-rumus{margin:9px 0 2px;padding:10px 11px;border-radius:10px;background:var(--chip)}
+.r-sim{font:600 15px/1.6 'Plus Jakarta Sans',sans-serif}
+.r-sim b{display:inline-block;padding:1px 7px;margin:0 1px;border-radius:7px;background:var(--panel);
+  border:1.5px solid var(--line);font-weight:700;transition:background .18s,border-color .18s,color .18s}
+.r-sim b.aktif{background:var(--red);border-color:var(--red);color:#fff}
+.r-num{font:600 13px/1.55 'Plus Jakarta Sans',sans-serif;color:var(--muted);margin-top:5px;font-variant-numeric:tabular-nums}
+.r-num em{font-style:normal;color:var(--red);font-weight:700}
+.r-ket{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+.r-dasar{margin:0;font-size:13px;line-height:1.55}
+.lab-fase{display:inline-block;margin-left:7px;padding:2px 8px;border-radius:999px;background:var(--blue-soft);
+  color:var(--blue);font:700 10.5px 'Plus Jakarta Sans',sans-serif;vertical-align:middle}
+.lab[data-fase="B"] .lab-read div:nth-child(n+3),.lab[data-fase="C"] .lab-read div:nth-child(n+3){display:none}
+
+
 #lkpd{display:none}
 body.cetak #lkpd{display:block;position:fixed;inset:0;z-index:20;overflow:auto;background:#fff;color:#14181c;padding:18px 20px 60px}
 body.cetak #stage,body.cetak .bar,body.cetak .sheet{display:none}
@@ -479,27 +502,19 @@ body.cetak #stage,body.cetak .bar,body.cetak .sheet{display:none}
 }
 /* ---------- panel jadi sidebar di layar lanskap ---------- */
 @media (orientation:landscape) and (min-width:640px){
-  .bar{max-width:min(88vw,1000px);flex-direction:row;flex-wrap:wrap;align-items:center}
-  body.sidebar .bar{max-width:min(48vw,540px)}
-  .seg .chip{padding:6px 9px;font-size:12.5px}
-  #theme b{display:none}
   .title{padding:6px 12px 7px}
   .title h1{font-size:17px}
   .t-logo{height:21px}
-  .title .sub{display:none}
-  .chip[data-cat] b{display:none}
-  .chip[data-cat]{padding:7px 11px;font-size:14px}
   #stage{transition:right .28s ease}
   body.sidebar #stage{right:clamp(330px,38vw,430px)}
-  .sheet{left:auto;right:0;top:0;bottom:0;transform:none;height:100%;width:clamp(330px,38vw,430px);
+  .sheet{left:auto;right:0;top:0;bottom:0;height:100%;width:clamp(330px,38vw,430px);
     max-height:none;border-radius:18px 0 0 18px;box-shadow:-8px 0 30px rgba(0,0,0,.25);
+    transform:translateX(102%);
     padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(12px + env(safe-area-inset-bottom,0px))}
-  .sheet:not(.peek){max-height:none}
-  .sheet.peek{top:auto;height:auto;width:auto;max-width:min(360px,52vw);border-radius:16px 0 0 0}
+  .sheet.open{transform:translateX(0)}
   .grab{display:none}
-  .sheet .hint{margin:0 0 8px}
 }
-.sheet.peek #listBtn{display:none}
+
 </style>
 <script>
 /* Logo Dufan dan Ancol disematkan sebagai data URI agar halaman tetap satu berkas
@@ -1138,37 +1153,67 @@ ikon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAYFBM
 <header class="bar">
   <div class="title">
     <h1><span>Peta</span><img class="t-logo" data-logo="dufan" alt="Dufan"></h1>
-    <span class="sub">Peta ilustratif Dunia Fantasi Ancol, tidak berskala</span>
   </div>
-  <div class="chips">
-    <div class="seg" role="group" aria-label="Pilih tampilan">
-      <button class="chip active" data-view="map" aria-pressed="true">🗺️ Peta</button>
-      <button class="chip" data-view="list" aria-pressed="false">📋 Daftar</button>
-      <button class="chip" data-view="kurikulum" aria-pressed="false">🎓 Kurikulum</button>
-    </div>
-    <button class="chip" id="theme" aria-label="Ganti tema tampilan">🌗 Auto</button>
-  </div>
-  <div class="chips" role="group" aria-label="Saring wahana">
-    <button class="chip active" data-cat="all">Semua</button>
-    <button class="chip" data-cat="ekstrem" aria-label="Wahana ekstrem">⚡<b>Ekstrem</b></button>
-    <button class="chip" data-cat="keluarga" aria-label="Wahana keluarga">🎠<b>Keluarga</b></button>
-    <button class="chip" data-cat="anak" aria-label="Wahana anak">🧒<b>Anak</b></button>
+  <div class="tools">
+    <button class="tbtn" id="btnFilter" aria-expanded="false" aria-controls="popFilter">
+      <svg class="ticon" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3h13M4 8h8M6.5 13h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <b>Filter</b><span class="tdot" id="filterDot" hidden></span></button>
+    <button class="tbtn" id="btnMenu" aria-expanded="false" aria-controls="popMenu">
+      <svg class="ticon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <b>Menu</b></button>
   </div>
 </header>
 
+<div class="pop" id="popFilter" hidden role="dialog" aria-label="Saring wahana">
+  <h4>Kategori wahana</h4>
+  <div class="pop-chips" role="group">
+    <button class="chip active" data-cat="all">Semua</button>
+    <button class="chip" data-cat="ekstrem">⚡<b>Ekstrem</b></button>
+    <button class="chip" data-cat="keluarga">🎠<b>Keluarga</b></button>
+    <button class="chip" data-cat="anak">🧒<b>Anak</b></button>
+  </div>
+  <h4>Fase dan kelas</h4>
+  <div class="pop-chips" role="group" id="faseChips">
+    <button class="chip active" data-fase="all">Semua</button>
+    <button class="chip" data-fase="B">B<b>III–IV SD</b></button>
+    <button class="chip" data-fase="C">C<b>V–VI SD</b></button>
+    <button class="chip" data-fase="D">D<b>VII–IX SMP</b></button>
+    <button class="chip" data-fase="E">E<b>X SMA</b></button>
+    <button class="chip" data-fase="F">F<b>XI–XII SMA</b></button>
+  </div>
+  <p class="pop-info" id="filterInfo"></p>
+  <button class="btn small ghost" data-act="reset-filter">Hapus semua saringan</button>
+</div>
+
+<div class="pop" id="popMenu" hidden role="dialog" aria-label="Menu">
+  <h4>Tampilan</h4>
+  <div class="pop-list">
+    <button class="popbtn active" data-view="map" aria-pressed="true"><i aria-hidden="true">🗺️</i>Peta</button>
+    <button class="popbtn" data-view="list" aria-pressed="false"><i aria-hidden="true">📋</i>Daftar wahana</button>
+    <button class="popbtn" data-view="kurikulum" aria-pressed="false"><i aria-hidden="true">🎓</i>Kurikulum</button>
+  </div>
+  <h4>Tampilan layar</h4>
+  <div class="pop-list">
+    <button class="popbtn" id="theme" aria-label="Ganti tema tampilan"></button>
+    <button class="popbtn" id="anim" aria-label="Jeda animasi"><i aria-hidden="true">⏸</i>Jeda animasi</button>
+  </div>
+  <p class="pop-info">Peta ilustratif Dunia Fantasi Ancol, tidak berskala.</p>
+</div>
+
+<div class="ctrl" id="mapCtrl" role="group" aria-label="Kontrol peta">
+  <button id="zin" aria-label="Perbesar">+</button>
+  <button id="zout" aria-label="Perkecil">−</button>
+  <button id="zreset" aria-label="Tampilkan seluruh peta">⤢</button>
+</div>
+
+<p class="hintpill" id="hint">Ketuk wahana untuk melihat fisikanya. Geser untuk pindah, cubit untuk zoom.</p>
+
 <div id="lkpd" aria-hidden="true"></div>
 
-<section class="sheet peek" id="sheet" aria-live="polite">
-  <button class="grab" id="grab" aria-label="Buka atau tutup panel"></button>
-  <p class="hint" id="hint">Ketuk wahana untuk info. Geser untuk pindah, cubit untuk zoom.</p>
-  <div class="peek-row">
-    <div class="ctrl" role="group" aria-label="Kontrol peta">
-      <button id="zin" aria-label="Perbesar">+</button>
-      <button id="zout" aria-label="Perkecil">−</button>
-      <button id="zreset" aria-label="Tampilkan seluruh peta">⤢</button>
-      <button id="anim" aria-label="Jeda animasi">⏸</button>
-    </div>
-    <button class="btn small" id="listBtn">Daftar wahana</button>
+<section class="sheet" id="sheet" aria-live="polite">
+  <div class="sheet-top">
+    <button class="grab" id="grab" aria-label="Tutup panel"></button>
+    <button class="btn small ghost" id="listBtn">Tutup</button>
   </div>
   <div class="content" id="content"></div>
 </section>
@@ -1884,58 +1929,11 @@ var DufanPhysics = (function () {
   function shell(host, type, tip) {
     host.innerHTML = '<div class="lab-head">Lab mini: ' + LABEL[type] + '</div><p class="lab-tip">' + tip + '</p>'
       + '<svg class="lab-scene" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"></svg>'
-      + '<div class="lab-ctl"></div><div class="lab-read"></div><div class="ebars"></div><div class="lab-field"></div>';
+      + '<div class="lab-ctl"></div><div class="lab-read"></div><div class="ebars"></div>';
     return {scene: host.querySelector('svg'), ctl: host.querySelector('.lab-ctl'), read: host.querySelector('.lab-read'),
-            ebars: host.querySelector('.ebars'), field: host.querySelector('.lab-field'), id: host.getAttribute('data-id')};
+            ebars: host.querySelector('.ebars'), id: host.getAttribute('data-id')};
   }
 
-  /* ---------- mode data lapangan ----------
-     Kurikulum memisahkan Dufan sebagai tempat observasi dan sekolah sebagai tempat
-     pemodelan. Kotak ini tempat murid memasukkan hasil ukur di lapangan, lalu
-     membandingkannya dengan angka model di atasnya. */
-  var SIMPAN = 'dufan-data-lapangan';
-  function bacaData() { try { return JSON.parse(localStorage.getItem(SIMPAN) || '[]'); } catch (e) { return []; } }
-  function tulisData(arr) { try { localStorage.setItem(SIMPAN, JSON.stringify(arr.slice(-200))); } catch (e) {} }
-  function simpanBaris(baris) { var a = bacaData(); a.push(baris); tulisData(a); }
-
-  function fieldBox(ui, spec) {
-    /* spec: {label, unit, step, model, modelLabel, hitung(nilai) -> [[nama, teks], ...]} */
-    ui.field.innerHTML = '<h5>Data lapangan</h5>'
-      + '<p class="fnote">Ukur langsung di Dufan dari posisi aman, masukkan angkanya di sini, lalu bandingkan dengan model di atas. '
-      + 'Model dan hasil ukur tidak harus sama; selisihnya justru yang dibahas.</p>'
-      + '<div class="frow"><label><span>' + spec.label + '</span>'
-      + '<span class="fin"><input type="number" min="0" step="' + (spec.step || 0.01) + '" placeholder="0"><span class="unit">' + spec.unit + '</span></span>'
-      + '</label><button class="btn small" type="button">Simpan</button></div><div class="fout"></div>';
-    var inp = ui.field.querySelector('input'), out = ui.field.querySelector('.fout'), btn = ui.field.querySelector('button');
-    function hitung() {
-      var v = parseFloat(inp.value);
-      if (!isFinite(v) || v <= 0) { out.innerHTML = ''; return null; }
-      var baris = spec.hitung(v) || [];
-      var h = '';
-      baris.forEach(function (b) { h += '<div><span>' + b[0] + '</span><b>' + b[1] + '</b></div>'; });
-      var m = spec.model && spec.model();
-      if (isFinite(m) && m > 0) {
-        var beda = Math.abs(v - m) / m * 100;
-        h += '<p class="fbeda' + (beda > 20 ? ' jauh' : '') + '">' + (spec.modelLabel || 'Model') + ': ' + fnum(m, 2)
-          + ' ' + spec.unit + '. Selisih terhadap hasil ukurmu ' + fnum(beda, 1) + ' persen.'
-          + (beda > 20 ? ' Selisih sebesar ini biasanya berarti ada besaran model yang belum cocok dengan wahana aslinya, atau cara pengukurannya perlu diulang.' : '')
-          + '</p>';
-      }
-      out.innerHTML = h;
-      return {nilai: v, baris: baris};
-    }
-    inp.addEventListener('input', hitung);
-    btn.addEventListener('click', function () {
-      var r = hitung();
-      if (!r) { inp.focus(); return; }
-      simpanBaris({id: ui.id || '', besaran: spec.label, nilai: r.nilai, satuan: spec.unit,
-                   hasil: r.baris.map(function (b) { return b[0] + ': ' + b[1]; }).join('; '),
-                   waktu: new Date().toISOString().slice(0, 16).replace('T', ' ')});
-      btn.textContent = 'Tersimpan';
-      setTimeout(function () { btn.textContent = 'Simpan'; }, 1600);
-    });
-    return inp;
-  }
   function slider(ctl, label, min, max, step, val, unit) {
     var lab = document.createElement('label');
     lab.innerHTML = '<span>' + label + ' <b></b></span><input type="range" min="' + min + '" max="' + max + '" step="' + step + '" value="' + val + '">';
@@ -1945,6 +1943,44 @@ var DufanPhysics = (function () {
     inp.addEventListener('input', show); show();
     return inp;
   }
+  /* ---------- rumus hidup ----------
+     Menampilkan rumus utama lab di atas slider. Variabel yang sedang digeser
+     disorot, dan baris angkanya ikut berubah mengikuti nilai slider.
+     Pada Fase B dan C rumus diganti satu kalimat, sesuai kedalaman fasenya. */
+  var faseKini = null;
+  function rumus(ui, spec) {
+    var box = document.createElement('div');
+    box.className = 'lab-rumus';
+    var dasar = faseKini === 'B' || faseKini === 'C';
+    if (dasar) {
+      box.innerHTML = '<p class="r-dasar">' + spec.dasar + '</p>';
+    } else {
+      var sim = spec.kiri + ' = ' + spec.kanan.map(function (t) {
+        return typeof t === 'string' ? esc(t) : '<b data-v="' + t.v + '">' + t.s + '</b>';
+      }).join('');
+      box.innerHTML = '<div class="r-sim">' + sim + '</div><div class="r-num"></div>'
+        + (spec.ket ? '<div class="r-ket">' + spec.ket + '</div>' : '');
+    }
+    ui.ctl.parentNode.insertBefore(box, ui.ctl);
+    var num = box.querySelector('.r-num'), jeda = 0;
+    function padam() { Array.prototype.forEach.call(box.querySelectorAll('[data-v]'), function (e) { e.classList.remove('aktif'); }); }
+    return {
+      set: function (teks) { if (num) num.innerHTML = teks; },
+      sorot: function (k) {
+        if (dasar) return;
+        Array.prototype.forEach.call(box.querySelectorAll('[data-v]'), function (e) {
+          e.classList.toggle('aktif', e.getAttribute('data-v') === k);
+        });
+        clearTimeout(jeda); jeda = setTimeout(padam, 2400);
+      }
+    };
+  }
+  function ikat(r, inp, kunci) {
+    ['input', 'focus', 'pointerdown'].forEach(function (ev) {
+      inp.addEventListener(ev, function () { r.sorot(kunci); });
+    });
+  }
+
   function button(ctl, text, ghost) { var b = document.createElement('button'); b.className = 'btn small' + (ghost ? ' ghost' : ''); b.type = 'button'; b.textContent = text; ctl.appendChild(b); return b; }
   function reads(container, keys) {
     container.innerHTML = keys.map(function (k) { return '<div><span>' + k + '</span><b>–</b></div>'; }).join('');
@@ -1987,7 +2023,12 @@ var DufanPhysics = (function () {
     var boat = add(sc, 'g', {'class': 'grab'}); boat.innerHTML = '<circle r="22" fill="#fff" fill-opacity="0"/><path d="M-17,-2 Q0,17 17,-2 Z" class="boat"/><rect x="-2" y="-9" width="4" height="8" class="mast"/>';
     add(sc, 'circle', {cx: px, cy: py, r: 4, 'class': 'pivot'});
     var th = thMax * 0.75, om = 0, Emax = M * G * L * (1 - Math.cos(thMax)), syncing = false;
+    var R = rumus(ui, {
+      dasar: 'Makin jauh perahu ditarik ke atas, makin tinggi posisinya, dan makin kencang ia melewati titik terbawah.',
+      kiri: 'v di titik terbawah', kanan: ['\u221a(2 \u00b7 ', {v: 'g', s: 'g'}, ' \u00b7 ', {v: 'h', s: 'h'}, ')'],
+      ket: 'Tinggi h ditentukan sudut simpangan: h = L (1 \u2212 cos \u03b8). Geser slider sudut untuk mengubahnya.'});
     var sl = slider(ui.ctl, 'Sudut simpangan', 0, p.thetaMax, 1, Math.round(th * 180 / Math.PI), '°');
+    ikat(R, sl, 'h');
     var go = button(ui.ctl, 'Lepaskan'), stop = button(ui.ctl, 'Berhenti', true);
     var setR = reads(ui.read, ['Tinggi h', 'Kecepatan v', 'Periode T (sudut kecil)', 'Energi total']), setB = bars(ui.ebars);
     var anim = loop(function (dt) { for (var i = 0; i < 4; i++) { om += -(G / L) * Math.sin(th) * dt / 4; th += om * dt / 4; } draw(); });
@@ -2000,6 +2041,7 @@ var DufanPhysics = (function () {
       var h = L * (1 - Math.cos(th)), v = L * Math.abs(om), Ep = M * G * h, Ek = 0.5 * M * v * v;
       setR([fnum(h, 2) + ' m', fnum(v, 1) + ' m/s (' + fnum(v * 3.6, 0) + ' km/h)', fnum(2 * Math.PI * Math.sqrt(L / G), 1) + ' s', fnum((Ep + Ek) / 1000, 2) + ' kJ']);
       setB(Ep, Ek, Emax);
+      R.set('= \u221a(2 \u00b7 9,8 \u00b7 ' + fnum(h, 2) + ') = <em>' + fnum(Math.sqrt(2 * G * h), 1) + '</em> m/s');
       if (!anim.running()) { syncing = true; sl.value = Math.round(Math.abs(th) * 180 / Math.PI); sl.dispatchEvent(new Event('input')); syncing = false; }
     }
     sl.addEventListener('input', function () { if (syncing) return; anim.stop(); om = 0; th = parseFloat(sl.value) * Math.PI / 180; draw(); });
@@ -2012,13 +2054,6 @@ var DufanPhysics = (function () {
     function move(e) { var q = scenePt(sc, e); th = Math.max(-thMax, Math.min(thMax, Math.atan2(q.x - px, q.y - py))); draw(); }
     draw();
     anim.start();
-    fieldBox(ui, {label: 'Periode satu ayunan penuh', unit: 's', step: 0.01,
-      model: function () { return 2 * Math.PI * Math.sqrt(L / G); }, modelLabel: 'Periode model',
-      hitung: function (v) {
-        return [['Frekuensi ayunan', fnum(1 / v, 3) + ' Hz'],
-                ['Panjang lengan efektif dari data', fnum(G * Math.pow(v / (2 * Math.PI), 2), 2) + ' m'],
-                ['Panjang lengan yang dipakai model', fnum(L, 1) + ' m']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2042,7 +2077,12 @@ var DufanPhysics = (function () {
     if (p.profile === 'loop') { var R = 30 * mPerPx; var lr = add(sc, 'text', {x: 232, y: 96, 'class': 'sl'}); lr.textContent = 'R = ' + fnum(R, 1) + ' m'; }
     var cart = add(sc, 'g'); cart.innerHTML = '<rect x="-9" y="-7" width="18" height="8" rx="2" class="cart"/><circle cx="-5" cy="2" r="2.2" class="wheel"/><circle cx="5" cy="2" r="2.2" class="wheel"/>';
     var s = 0, splashT = -1, syncing = false;
+    var R = rumus(ui, {
+      dasar: 'Kereta paling lambat di puncak bukit dan paling cepat di lembah, tanpa mesin sama sekali.',
+      kiri: 'v', kanan: ['\u221a(2 \u00b7 ', {v: 'g', s: 'g'}, ' \u00b7 (', {v: 'h0', s: 'h\u2080'}, ' \u2212 ', {v: 'h', s: 'h'}, '))'],
+      ket: 'h\u2080 tinggi bukit pertama, h tinggi kereta sekarang. Geser posisi untuk mengubah h.'});
     var sl = slider(ui.ctl, 'Posisi di lintasan', 0, 1000, 1, 0, '‰');
+    ikat(R, sl, 'h');
     var go = button(ui.ctl, 'Jalankan'), stop = button(ui.ctl, 'Berhenti', true);
     var keys = ['Tinggi h', 'Kecepatan v', 'Energi total']; if (p.profile === 'loop') keys.push('v minimum di puncak loop');
     var setR = reads(ui.read, keys), setB = bars(ui.ebars);
@@ -2056,6 +2096,8 @@ var DufanPhysics = (function () {
       var vals = [fnum(h, 1) + ' m', fnum(v, 1) + ' m/s (' + fnum(v * 3.6, 0) + ' km/h)' + (lift ? ', ditarik rantai' : ''), fnum(M * G * hTop / 1000, 2) + ' kJ'];
       if (p.profile === 'loop') vals.push(fnum(Math.sqrt(G * 30 * mPerPx), 1) + ' m/s');
       setR(vals); setB(Ep, Ek, M * G * hTop);
+      R.set(lift ? 'Masih ditarik rantai, lajunya ditentukan motor: <em>' + fnum(v, 1) + '</em> m/s'
+        : '= \u221a(2 \u00b7 9,8 \u00b7 (' + fnum(hTop, 0) + ' \u2212 ' + fnum(h, 1) + ')) = <em>' + fnum(v, 1) + '</em> m/s');
       if (splash) { if (splashT >= 0) { splashT += 0.03; splash.setAttribute('opacity', Math.max(0, 1 - splashT)); splash.setAttribute('transform', 'translate(0,' + (-10 * splashT) + ') scale(' + (1 + splashT) + ')'); if (splashT > 1) splashT = -1; } }
       return {lift: lift, v: v, pt: pt};
     }
@@ -2072,13 +2114,6 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', function () { anim.stop(); });
     place();
     anim.start();
-    fieldBox(ui, {label: 'Tinggi bukit pertama hasil taksiran', unit: 'm', step: 0.5,
-      model: function () { return hTop; }, modelLabel: 'Tinggi model',
-      hitung: function (v) {
-        var vv = Math.sqrt(2 * G * v);
-        return [['Kecepatan di dasar tanpa gesekan', fnum(vv, 1) + ' m/s (' + fnum(vv * 3.6, 0) + ' km/jam)'],
-                ['Energi potensial penumpang 70 kg', fnum(M * G * v / 1000, 1) + ' kJ']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2102,7 +2137,12 @@ var DufanPhysics = (function () {
       for (var gI = 0; gI <= 5; gI++) { var yy = 170 - gI * 28; add(right, 'line', {x1: 262, y1: yy, x2: 268, y2: yy, 'class': 'ln'}); var t = add(right, 'text', {x: 272, y: yy + 4, 'class': 'sl'}); t.textContent = gI + ' g'; }
       var tl = add(right, 'text', {x: 250, y: 190, 'class': 'sl', 'text-anchor': 'middle'}); tl.textContent = 'berat semu';
     }
+    var R = rumus(ui, {
+      dasar: 'Makin cepat berputar, makin kuat tarikan ke arah pusat lingkaran yang dirasakan tubuh.',
+      kiri: 'a\u209b', kanan: [{v: 'w', s: '\u03c9'}, '\u00b2 \u00b7 ', {v: 'r', s: 'r'}],
+      ket: '\u03c9 kecepatan sudut, dihitung dari putaran per menit yang kamu geser; r jari-jari lintasan.'});
     var sl = slider(ui.ctl, 'Putaran', p.rpmMin, p.rpmMax, p.step || 0.5, p.rpm, ' rpm');
+    ikat(R, sl, 'w');
     var keys = ['Periode T', 'Laju v', 'Percepatan a', 'Berat semu']; if (p.chairs) keys.push('Sudut rantai θ');
     var setR = reads(ui.read, keys);
     var ang = 0;
@@ -2111,6 +2151,7 @@ var DufanPhysics = (function () {
       var vals = [rpm > 0 ? fnum(60 / rpm, 1) + ' s' : '∞', fnum(v, 1) + ' m/s (' + fnum(v * 3.6, 0) + ' km/h)', fnum(a, 2) + ' m/s² (' + fnum(a / G, 2) + ' g)', fnum(gf, 2) + ' g'];
       var th = Math.atan(a / G); if (p.chairs) vals.push(fnum(th * 180 / Math.PI, 1) + '°');
       setR(vals);
+      R.set('= (' + fnum(w, 2) + ')\u00b2 \u00b7 ' + fnum(p.r, 1) + ' = <em>' + fnum(a, 2) + '</em> m/s\u00b2');
       if (p.chairs) { var L = 110, x = 250 + L * Math.sin(th), y = 38 + L * Math.cos(th); chain.setAttribute('x2', x); chain.setAttribute('y2', y); chair.setAttribute('transform', 'translate(' + x + ',' + y + ') rotate(' + (-th * 180 / Math.PI) + ')'); tilt.textContent = 'θ = ' + fnum(th * 180 / Math.PI, 0) + '°'; }
       else { var hpx = Math.min(140, gf * 28); tilt.setAttribute('y', 170 - hpx); tilt.setAttribute('height', hpx); }
       return {w: w, v: v, a: a};
@@ -2125,15 +2166,6 @@ var DufanPhysics = (function () {
       if (c.v > 0.05) arrow(arrows, sx, sy, sx - lv * Math.sin(ang), sy + lv * Math.cos(ang), 'arrV');
     });
     sl.addEventListener('input', calc); calc(); anim.start();
-    fieldBox(ui, {label: 'Waktu untuk 5 putaran', unit: 's', step: 0.1,
-      model: function () { var r = parseFloat(sl.value); return r > 0 ? 5 * 60 / r : NaN; },
-      modelLabel: 'Waktu model pada putaran sekarang',
-      hitung: function (v) {
-        var T = v / 5, w = 2 * Math.PI / T, laju = w * p.r, a = w * w * p.r;
-        return [['Periode satu putaran', fnum(T, 2) + ' s'], ['Putaran per menit', fnum(60 / T, 1) + ' rpm'],
-                ['Kecepatan sudut', fnum(w, 2) + ' rad/s'], ['Laju di jari-jari ' + fnum(p.r, 0) + ' m', fnum(laju, 1) + ' m/s'],
-                ['Percepatan sentripetal', fnum(a, 2) + ' m/s² (' + fnum(a / G, 2) + ' g)']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2146,7 +2178,12 @@ var DufanPhysics = (function () {
     for (var mI = 0; mI <= p.hmax; mI += (p.hmax > 20 ? 10 : 2)) { var yy = botY - mI * pxPerM; add(sc, 'line', {x1: tx + 8, y1: yy, x2: tx + 14, y2: yy, 'class': 'ln'}); var t = add(sc, 'text', {x: tx + 18, y: yy + 4, 'class': 'sl'}); t.textContent = mI + ' m'; }
     var car = add(sc, 'g'); car.innerHTML = '<rect x="-24" y="-6" width="48" height="12" rx="4" class="car"/><circle cx="-14" cy="0" r="3" class="rider"/><circle cx="0" cy="0" r="3" class="rider"/><circle cx="14" cy="0" r="3" class="rider"/>';
     var gt = add(sc, 'text', {x: 165, y: 60, 'class': 'sl big'}); var gt2 = add(sc, 'text', {x: 165, y: 78, 'class': 'sl'});
+    var R = rumus(ui, {
+      dasar: 'Makin tinggi titik lepas, makin lama melayang dan makin kencang saat tiba di bawah.',
+      kiri: 't jatuh bebas', kanan: ['\u221a(2 \u00b7 ', {v: 'h', s: 'h'}, ' / ', {v: 'g', s: 'g'}, ')'],
+      ket: 'h tinggi jatuh yang kamu geser. Perhatikan waktunya tumbuh mengikuti akar, bukan sebanding lurus.'});
     var sl = slider(ui.ctl, p.launch ? 'Tinggi puncak' : 'Tinggi jatuh', 1, p.hmax, 1, p.h, ' m');
+    ikat(R, sl, 'h');
     var go = button(ui.ctl, p.launch ? 'Luncurkan' : 'Jatuhkan'), stop = button(ui.ctl, 'Ulang', true);
     var setR = reads(ui.read, ['Lama jatuh bebas', 'Kecepatan tiba di bawah', 'Waktu', 'Tinggi sekarang']), setB = bars(ui.ebars);
     var t = 0, phase = 'idle', h = 0, v = 0;
@@ -2157,6 +2194,7 @@ var DufanPhysics = (function () {
       var Ep = M * G * hh, Ek = 0.5 * M * v * v;
       setR([fnum(Math.sqrt(2 * h0() / G), 2) + ' s', fnum(Math.sqrt(2 * G * h0()), 1) + ' m/s (' + fnum(Math.sqrt(2 * G * h0()) * 3.6, 0) + ' km/h)', fnum(t, 2) + ' s', fnum(hh, 1) + ' m']);
       setB(Ep, Ek, M * G * h0());
+      R.set('= \u221a(2 \u00b7 ' + fnum(h0(), 0) + ' / 9,8) = <em>' + fnum(Math.sqrt(2 * h0() / G), 2) + '</em> s');
     }
     var hold = 0;
     function rearm() { t = 0; v = 0; phase = 'idle'; h = p.launch ? 0 : h0(); setCar(h, '1 g', 'diam'); }
@@ -2179,13 +2217,6 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', reset);
     reset();
     anim.start();
-    fieldBox(ui, {label: 'Lama jatuh bebas hasil pengukuran', unit: 's', step: 0.05,
-      model: function () { return Math.sqrt(2 * h0() / G); }, modelLabel: 'Lama jatuh model',
-      hitung: function (v) {
-        return [['Tinggi jatuh dari data', fnum(0.5 * G * v * v, 1) + ' m'],
-                ['Kecepatan saat tiba di bawah', fnum(G * v, 1) + ' m/s (' + fnum(G * v * 3.6, 0) + ' km/jam)'],
-                ['Tinggi yang dipakai model', fnum(h0(), 0) + ' m']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2197,7 +2228,12 @@ var DufanPhysics = (function () {
     function mkCar(cls, label) { var g = add(sc, 'g'); g.innerHTML = '<rect x="0" y="-26" width="48" height="24" rx="8" class="' + cls + '"/><circle cx="12" cy="0" r="5" class="wheel"/><circle cx="36" cy="0" r="5" class="wheel"/><text x="24" y="-10" class="sl carlbl" text-anchor="middle">' + label + '</text>'; return g; }
     var A = mkCar('carA', 'A'), B = mkCar('carB', 'B');
     var pa = add(sc, 'text', {x: 10, y: 178, 'class': 'sl'}), pb = add(sc, 'text', {x: 170, y: 178, 'class': 'sl'});
+    var R = rumus(ui, {
+      dasar: 'Mobil yang lebih berat dan lebih kencang mendorong lawannya lebih jauh.',
+      kiri: 'v\u2082 sesudah', kanan: ['2 ', {v: 'm1', s: 'm\u2081'}, ' / (', {v: 'm1', s: 'm\u2081'}, ' + ', {v: 'm2', s: 'm\u2082'}, ') \u00b7 ', {v: 'v1', s: 'v\u2081'}],
+      ket: 'Hasil tumbukan lenting mobil B yang semula diam. Geser massa atau kecepatan untuk melihat pengaruhnya.'});
     var s1 = slider(ui.ctl, 'Massa A (mobil + penumpang)', 100, 400, 10, p.m1, ' kg'), s2 = slider(ui.ctl, 'Kecepatan A', 0.5, 5, 0.5, p.v1, ' m/s'), s3 = slider(ui.ctl, 'Massa B', 100, 400, 10, p.m2, ' kg');
+    ikat(R, s1, 'm1'); ikat(R, s2, 'v1'); ikat(R, s3, 'm2');
     var go = button(ui.ctl, 'Tabrak'), stop = button(ui.ctl, 'Ulang', true);
     var setR = reads(ui.read, ['Momentum sebelum', 'Kecepatan A sesudah', 'Kecepatan B sesudah', 'Momentum sesudah', 'Gaya pada B, bemper karet (Δt = 0,15 s)', 'Gaya pada B, dinding beton (Δt = 0,02 s)']);
     var xA, xB, vA, vB, hit;
@@ -2205,6 +2241,8 @@ var DufanPhysics = (function () {
       var m1 = parseFloat(s1.value), v1 = parseFloat(s2.value), m2 = parseFloat(s3.value);
       var v1n = (m1 - m2) / (m1 + m2) * v1, v2n = 2 * m1 / (m1 + m2) * v1;
       setR([fnum(m1 * v1, 0) + ' kg·m/s', fnum(v1n, 2) + ' m/s', fnum(v2n, 2) + ' m/s', fnum(m1 * v1n + m2 * v2n, 0) + ' kg·m/s', fnum(m2 * v2n / 0.15 / 1000, 2) + ' kN', fnum(m2 * v2n / 0.02 / 1000, 1) + ' kN']);
+      R.set('= 2 \u00b7 ' + fnum(m1, 0) + ' / (' + fnum(m1, 0) + ' + ' + fnum(m2, 0) + ') \u00b7 ' + fnum(v1, 1)
+        + ' = <em>' + fnum(v2n, 2) + '</em> m/s');
       return {m1: m1, v1: v1, m2: m2, v1n: v1n, v2n: v2n};
     }
     function draw() { A.setAttribute('transform', 'translate(' + xA + ',' + floorY + ')'); B.setAttribute('transform', 'translate(' + xB + ',' + floorY + ')'); pa.textContent = 'v_A = ' + fnum(vA, 2) + ' m/s'; pb.textContent = 'v_B = ' + fnum(vB, 2) + ' m/s'; }
@@ -2223,15 +2261,6 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', reset);
     reset();
     anim.start();
-    fieldBox(ui, {label: 'Waktu mobil menempuh 5 m sebelum menabrak', unit: 's', step: 0.1,
-      model: function () { var v1 = parseFloat(s2.value); return v1 > 0 ? 5 / v1 : NaN; },
-      modelLabel: 'Waktu model pada kecepatan sekarang',
-      hitung: function (v) {
-        var laju = 5 / v, m1 = parseFloat(s1.value);
-        return [['Kecepatan sebelum tumbukan', fnum(laju, 2) + ' m/s'],
-                ['Momentum mobil A', fnum(m1 * laju, 0) + ' kg·m/s'],
-                ['Gaya rata-rata jika berhenti dalam 0,15 s', fnum(m1 * laju / 0.15 / 1000, 2) + ' kN']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2244,7 +2273,12 @@ var DufanPhysics = (function () {
     var wl = add(sc, 'line', {x1: 0, y1: waterY, x2: 320, y2: waterY, 'class': 'wline'});
     var dline = add(sc, 'line', {'class': 'hline'}); var dl = add(sc, 'text', {'class': 'sl'});
     var warn = add(sc, 'text', {x: 160, y: 60, 'class': 'sl big warn', 'text-anchor': 'middle'});
+    var R = rumus(ui, {
+      dasar: 'Makin banyak penumpang, makin dalam perahu tercelup ke dalam air.',
+      kiri: 'd', kanan: [{v: 'm', s: 'm'}, ' / (\u03c1 \u00b7 ', {v: 'A', s: 'A'}, ')'],
+      ket: 'm massa perahu beserta penumpang, \u03c1 massa jenis air 1000 kg/m\u00b3, A luas dasar perahu.'});
     var sl = slider(ui.ctl, 'Jumlah penumpang', 0, p.cap + 3, 1, Math.min(p.cap, 3), ' orang');
+    ikat(R, sl, 'm');
     var setR = reads(ui.read, ['Massa total', 'Kedalaman tercelup d', 'Volume air dipindahkan', 'Gaya apung F<sub>a</sub>', 'Sisa tinggi bebas']);
     function draw() {
       var n = parseInt(sl.value, 10), m = p.boat + n * M, d = m / (1000 * p.area), sunk = d > p.H;
@@ -2255,20 +2289,12 @@ var DufanPhysics = (function () {
       dline.setAttribute('x1', bx + bw + 14); dline.setAttribute('y1', waterY); dline.setAttribute('x2', bx + bw + 14); dline.setAttribute('y2', top + Hpx);
       dl.setAttribute('x', bx + bw + 20); dl.setAttribute('y', (waterY + top + Hpx) / 2 + 4); dl.textContent = 'd';
       warn.textContent = sunk ? 'Air masuk, ' + p.nama + ' tenggelam!' : (n > p.cap ? 'Melebihi kapasitas ' + p.cap + ' orang' : '');
+      R.set('= ' + fnum(m, 0) + ' / (1000 \u00b7 ' + fnum(p.area, 1) + ') = <em>' + fnum(d * 100, 0) + '</em> cm');
       setR([fnum(m, 0) + ' kg', fnum(d * 100, 0) + ' cm', fnum(d * p.area, 2) + ' m³', fnum(m * G / 1000, 2) + ' kN (= berat total)', sunk ? '0 cm' : fnum((p.H - d) * 100, 0) + ' cm']);
     }
     var tb = 0;
     var anim = loop(function (dt) { tb += dt; boat.setAttribute('transform', 'translate(0,' + (Math.sin(tb * 1.9) * 1.7).toFixed(2) + ')'); });
     sl.addEventListener('input', draw); draw(); anim.start();
-    fieldBox(ui, {label: 'Kedalaman lambung yang tercelup', unit: 'cm', step: 1,
-      model: function () { var n = parseInt(sl.value, 10); return (p.boat + n * M) / (1000 * p.area) * 100; },
-      modelLabel: 'Kedalaman model pada jumlah penumpang sekarang',
-      hitung: function (v) {
-        var m = 1000 * p.area * (v / 100);
-        return [['Massa total dari data', fnum(m, 0) + ' kg'],
-                ['Setara jumlah penumpang 70 kg', fnum(Math.max(0, (m - p.boat) / M), 1) + ' orang'],
-                ['Gaya apung', fnum(m * G / 1000, 2) + ' kN']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2279,13 +2305,20 @@ var DufanPhysics = (function () {
     add(sc, 'line', {x1: 6, y1: by, x2: 314, y2: by, 'class': 'ln'});
     var plane = add(sc, 'path', {'class': 'plane'}); var angT = add(sc, 'text', {'class': 'sl'});
     var ball = add(sc, 'g'); ball.innerHTML = p.benda === 'anak' ? '<circle cy="-7" r="7" class="rider"/><rect x="-5" y="-1" width="10" height="9" rx="3" class="car"/>' : '<circle r="8" class="ballc"/>';
+    var R = rumus(ui, {
+      dasar: 'Makin curam perosotan makin cepat meluncur, dan makin kasar permukaannya makin lambat.',
+      kiri: 'a', kanan: [{v: 'g', s: 'g'}, ' (sin ', {v: 'th', s: '\u03b8'}, ' \u2212 ', {v: 'mu', s: '\u03bc'}, ' cos ', {v: 'th', s: '\u03b8'}, ')'],
+      ket: '\u03b8 sudut kemiringan, \u03bc koefisien gesek. Luncuran berhenti ketika \u03bc mencapai tan \u03b8.'});
     var s1 = slider(ui.ctl, 'Sudut kemiringan', 0, 60, 1, p.angle, '°'), s2 = slider(ui.ctl, 'Koefisien gesek μ', 0, 0.6, 0.05, p.mu, '');
+    ikat(R, s1, 'th'); ikat(R, s2, 'mu');
     var go = button(ui.ctl, 'Luncurkan'), stop = button(ui.ctl, 'Ulang', true);
     var setR = reads(ui.read, ['Percepatan a', 'Waktu sampai bawah', 'Kecepatan di ujung']);
     var t = 0, sPos = 0;
     function geom() { var th = parseFloat(s1.value) * Math.PI / 180; return {th: th, tx: bx, ty: by - Lpx * Math.sin(th), ex: bx + Lpx * Math.cos(th), ey: by}; }
     function calc() {
       var th = parseFloat(s1.value) * Math.PI / 180, mu = parseFloat(s2.value), a = G * (Math.sin(th) - mu * Math.cos(th));
+      R.set('= 9,8 (sin ' + s1.value + '\u00b0 \u2212 ' + fnum(mu, 2) + ' cos ' + s1.value + '\u00b0) = <em>'
+        + fnum(Math.max(0, a), 2) + '</em> m/s\u00b2');
       if (a <= 0) { setR(['0 (gesekan menahan, diam)', '–', '–']); return 0; }
       setR([fnum(a, 2) + ' m/s²', fnum(Math.sqrt(2 * L / a), 2) + ' s', fnum(Math.sqrt(2 * a * L), 1) + ' m/s']); return a;
     }
@@ -2310,17 +2343,6 @@ var DufanPhysics = (function () {
     stop.addEventListener('click', reset);
     reset();
     anim.start();
-    fieldBox(ui, {label: 'Waktu meluncur dari atas sampai bawah', unit: 's', step: 0.1,
-      model: function () { var th = parseFloat(s1.value) * Math.PI / 180, mu = parseFloat(s2.value),
-        a = G * (Math.sin(th) - mu * Math.cos(th)); return a > 0 ? Math.sqrt(2 * L / a) : NaN; },
-      modelLabel: 'Waktu model pada sudut dan gesekan sekarang',
-      hitung: function (v) {
-        var a = 2 * L / (v * v), th = parseFloat(s1.value) * Math.PI / 180;
-        var mu = (Math.sin(th) - a / G) / Math.cos(th);
-        return [['Percepatan dari data', fnum(a, 2) + ' m/s²'],
-                ['Kecepatan di ujung', fnum(a * v, 1) + ' m/s'],
-                ['Koefisien gesek yang cocok', mu >= 0 ? fnum(mu, 2) : 'di bawah 0, periksa lagi sudut atau waktunya']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2337,6 +2359,10 @@ var DufanPhysics = (function () {
     var perahu = add(sc, 'g');
     perahu.innerHTML = '<ellipse class="hull" cx="0" cy="0" rx="17" ry="9"/><circle class="rider" cx="-5" cy="0" r="3"/><circle class="rider" cx="5" cy="0" r="3"/>';
     var lbl = add(sc, 'text', {x: 160, y: 46, 'class': 'sl big', 'text-anchor': 'middle'});
+    var R = rumus(ui, {
+      dasar: 'Air yang jumlahnya sama lewat saluran lebih sempit berarti mengalir lebih kencang.',
+      kiri: 'v', kanan: [{v: 'Q', s: 'Q'}, ' / ', {v: 'A', s: 'A'}],
+      ket: 'Q debit air, A luas penampang saluran yang berubah mengikuti lebarnya. Inilah persamaan kontinuitas.'});
     var sQ = slider(ui.ctl, 'Debit air Q', 0.4, 3, 0.1, p.Q, ' m³/s'),
         sW = slider(ui.ctl, 'Lebar saluran', 1.2, 4, 0.1, p.lebar, ' m'),
         sN = slider(ui.ctl, 'Jumlah penumpang', 0, p.cap + 2, 1, Math.min(p.cap, 4), ' orang');
@@ -2352,6 +2378,7 @@ var DufanPhysics = (function () {
         t[0].setAttribute('x1', x0); t[0].setAttribute('x2', x1); t[0].setAttribute('y1', t[1]); t[0].setAttribute('y2', t[1]);
       });
       lbl.textContent = 'v = ' + fnum(v, 2) + ' m/s';
+      R.set('= ' + fnum(Q, 2) + ' / ' + fnum(A, 2) + ' = <em>' + fnum(v, 2) + '</em> m/s');
       setR([fnum(A, 2) + ' m²', fnum(v, 2) + ' m/s', fnum(50 / v, 1) + ' s', fnum(m, 0) + ' kg',
             fnum(d * 100, 0) + ' cm', fnum(m * G / 1000, 2) + ' kN']);
       return v;
@@ -2363,16 +2390,8 @@ var DufanPhysics = (function () {
       perahu.setAttribute('transform', 'translate(' + x + ',' + cy + ')');
     });
     [sQ, sW, sN].forEach(function (e) { e.addEventListener('input', hitung); });
+    ikat(R, sQ, 'Q'); ikat(R, sW, 'A');
     hitung(); anim.start();
-    fieldBox(ui, {label: 'Waktu perahu menempuh 10 m', unit: 's', step: 0.5,
-      model: function () { var Q = parseFloat(sQ.value), A = parseFloat(sW.value) * p.dalam; return 10 / (Q / A); },
-      modelLabel: 'Waktu model pada debit dan lebar sekarang',
-      hitung: function (t) {
-        var v = 10 / t, A = parseFloat(sW.value) * p.dalam;
-        return [['Kecepatan aliran dari data', fnum(v, 2) + ' m/s'],
-                ['Debit Q = A·v', fnum(A * v, 2) + ' m³/s'],
-                ['Air yang lewat tiap menit', fnum(A * v * 60, 0) + ' m³']];
-      }});
     return {destroy: anim.stop};
   }
 
@@ -2401,9 +2420,14 @@ var DufanPhysics = (function () {
     var masuk = [{nama: 'Pelatuk ditekan', on: true}, {nama: 'Kode pistol cocok', on: true}, {nama: 'Sensor sasaran aktif', on: true}];
     var tombol = masuk.map(function (m) {
       var b = button(ui.ctl, m.nama + ': 1', !m.on);
-      b.addEventListener('click', function () { m.on = !m.on; b.textContent = m.nama + ': ' + (m.on ? 1 : 0); b.className = 'btn small' + (m.on ? '' : ' ghost'); gambar(); });
+      b.addEventListener('click', function () { m.on = !m.on; b.textContent = m.nama + ': ' + (m.on ? 1 : 0);
+        b.className = 'btn small' + (m.on ? '' : ' ghost'); R.sorot(['a', 'b', 'c'][masuk.indexOf(m)]); gambar(); });
       return b;
     });
+    var R = rumus(ui, {
+      dasar: 'Tembakan baru dihitung kalau ketiga syaratnya terpenuhi bersamaan.',
+      kiri: 'sah', kanan: [{v: 'a', s: 'A'}, ' \u00b7 ', {v: 'b', s: 'B'}, ' \u00b7 ', {v: 'c', s: 'C'}],
+      ket: 'A pelatuk ditekan, B kode pistol cocok, C sensor sasaran aktif. Perkalian logika ini disebut gerbang AND.'});
     var sJ = slider(ui.ctl, 'Jarak sasaran', 1, 12, 0.5, p.jarak, ' m');
     var setR = reads(ui.read, ['Keluaran gerbang AND', 'Waktu tempuh cahaya', 'Waktu reaksi manusia',
                                'Perbandingan waktu', 'Tembakan sah', 'Tembakan dicoba']);
@@ -2414,6 +2438,8 @@ var DufanPhysics = (function () {
       var k = keluaran();
       skorT.textContent = 'Skor ' + skor + ' dari ' + coba + ' tembakan';
       ruleT.textContent = 'sah = pelatuk DAN kode DAN sensor = ' + k;
+      R.set('= ' + (masuk[0].on ? 1 : 0) + ' \u00b7 ' + (masuk[1].on ? 1 : 0) + ' \u00b7 ' + (masuk[2].on ? 1 : 0)
+        + ' = <em>' + k + '</em>');
       setR([String(k), fnum(tc * 1e9, 1) + ' ns', fnum(tr, 2) + ' s',
             'reaksi ' + fnum(tr / tc, 0) + '× lebih lama', String(skor), String(coba)]);
     }
@@ -2439,27 +2465,25 @@ var DufanPhysics = (function () {
     });
     sJ.addEventListener('input', gambar);
     gambar(); anim.start();
-    fieldBox(ui, {label: 'Tembakan yang kena dari 20 percobaan', unit: 'tembakan', step: 1,
-      hitung: function (v) {
-        var pc = Math.min(100, v / 20 * 100);
-        return [['Persentase kena', fnum(pc, 0) + ' persen'],
-                ['Perkiraan waktu bidik per tembakan', fnum(60 / 20, 1) + ' s jika satu putaran 60 detik'],
-                ['Catatan', pc > 60 ? 'bidikan stabil' : 'latih kestabilan tangan dan waktu reaksi']];
-      }});
     return {destroy: anim.stop};
   }
 
   var FN = {pendulum: labPendulum, coaster: labCoaster, circular: labCircular, drop: labDrop, collision: labCollision, buoy: labBuoy, incline: labIncline, flow: labFlow, logika: labLogika};
   var active = null;
   function unmount() { if (active) { try { active.destroy(); } catch (e) {} active = null; } }
-  function mount(root) {
+  function mount(root, fase) {
     unmount();
     var host = root.querySelector('.lab'); if (!host) return;
     var p = PHYS[host.getAttribute('data-id')]; if (!p || !p.lab || !FN[p.lab.type]) return;
+    faseKini = fase || null;
+    if (faseKini) host.setAttribute('data-fase', faseKini); else host.removeAttribute('data-fase');
     try { active = FN[p.lab.type](host, p.lab); } catch (e) { host.innerHTML = '<p class="note">Lab mini tidak bisa dimuat di browser ini.</p>'; }
+    if (faseKini) {
+      var kepala = host.querySelector('.lab-head');
+      if (kepala) kepala.insertAdjacentHTML('beforeend', '<span class="lab-fase">Fase ' + faseKini + '</span>');
+    }
   }
-  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount,
-          bacaData: bacaData, hapusData: function () { tulisData([]); }};
+  return {section: section, labHTML: labHTML, mount: mount, unmount: unmount};
 })();
 
 </script>
@@ -2518,10 +2542,8 @@ function apply(){svg.setAttribute('viewBox',vb.x+' '+vb.y+' '+vb.w+' '+vb.h);}
    Ruang tambahan itu berisi laut, sehingga taman selalu jatuh di bawah header. */
 var curTop=0,curBot=0;
 function barPad(){var b=document.querySelector('.bar');return b?b.getBoundingClientRect().height+8:0;}
-/* Panel yang sedang mengintip di bawah juga menutupi peta; ruangnya ikut disisakan
-   selama panel memang menempel di bawah layar (bukan sedang jadi sidebar kanan). */
-function sheetPad(){var e=document.getElementById('sheet');if(!e||!e.classList.contains('peek'))return 0;
-  var r=e.getBoundingClientRect();return r.bottom>=window.innerHeight-2&&r.width>=window.innerWidth*0.6?r.height+8:0;}
+/* Pita bawah layar berisi kontrol peta dan pil petunjuk; ruangnya ikut disisakan. */
+function sheetPad(){return 62;}
 function clampVB(v){var o={x:v.x,y:v.y,w:v.w,h:v.h},y0=-curTop,hh=H+curTop+curBot;
   if(o.w>=W)o.x=(W-o.w)/2;else o.x=Math.min(Math.max(o.x,0),W-o.w);
   if(o.h>=hh)o.y=y0+(hh-o.h)/2;else o.y=Math.min(Math.max(o.y,y0),y0+hh-o.h);return o;}
@@ -2561,7 +2583,10 @@ function gesture(){var a=Array.from(pts.values());
   if(a.length===1)last={x:a[0].x,y:a[0].y};
   else if(a.length>=2)last={mx:(a[0].x+a[1].x)/2,my:(a[0].y+a[1].y)/2,d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)};
   else last=null;}
-stage.addEventListener('pointerdown',function(e){if(e.button&&e.button!==0)return;stage.setPointerCapture(e.pointerId);
+stage.addEventListener('pointerdown',function(e){if(e.button&&e.button!==0)return;
+  if(typeof sembunyikanHint==='function')sembunyikanHint();
+  if(typeof tutupPop==='function')tutupPop();
+  stage.setPointerCapture(e.pointerId);
   pts.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pts.size===1){down={x:e.clientX,y:e.clientY};dragged=false;}cancelAnimationFrame(animId);gesture();});
 stage.addEventListener('pointermove',function(e){if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
   var a=Array.from(pts.values());
@@ -2628,11 +2653,11 @@ function hydrateArt(root){
     if(paused){try{a.pauseAnimations();}catch(err){}}
   });
 }
-function openSheet(html){DufanPhysics.unmount();content.innerHTML=html;sheet.classList.remove('peek');hydrateArt(content);fillLogos(content);listBtn.textContent='Tutup';content.scrollTop=0;setViewBtn('list');
-  document.body.classList.add('sidebar');relayout();}
-function closeSheet(){DufanPhysics.unmount();sheet.classList.add('peek');listBtn.textContent='Daftar wahana';selWrap.style.display='none';current=null;setViewBtn('map');
+function openSheet(html){DufanPhysics.unmount();content.innerHTML=html;sheet.classList.add('open');hydrateArt(content);fillLogos(content);content.scrollTop=0;
+  document.body.classList.add('sidebar');tutupPop();relayout();}
+function closeSheet(){DufanPhysics.unmount();sheet.classList.remove('open');selWrap.style.display='none';current=null;setViewBtn('map');
   document.body.classList.remove('sidebar');relayout();}
-function isOpen(){return !sheet.classList.contains('peek');}
+function isOpen(){return sheet.classList.contains('open');}
 function photoHTML(r,id){var src=PHOTOS[id]||r.photo;
   if(src)return '<figure class="shot"><img src="'+esc(src)+'" alt="Foto wahana '+esc(r.name)+' di Dufan"><figcaption>Wahana '+esc(r.name)+', kawasan '+esc(r.zone)+'.</figcaption></figure>';
   return '<div class="shot empty">Foto asli '+esc(r.name)+' belum dipasang di aplikasi ini.</div>';}
@@ -2676,7 +2701,9 @@ function listHTML(){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Kelu
     +'<div class="credit"><img data-logo="dufan" alt="Dufan"><img class="c-ancol" data-logo="ancol" alt="Ancol"></div>'
     +'<p class="note">Logo Dufan dan Ancol milik PT Pembangunan Jaya Ancol Tbk. Peta ini proyek belajar mandiri, bukan aplikasi resmi.</p></div>';return h;}
 function select(id,move){var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return;var r=byId[id]||LANDMARKS[id];if(!r)return;
-  var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;openSheet(detailHTML(r,id));DufanPhysics.mount(content);if(move)focusOn(p.x,p.y);}
+  var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;openSheet(detailHTML(r,id));
+  DufanPhysics.mount(content,kurAktif&&kurAktif.jenis==='fase'?kurAktif.kode:null);
+  setViewBtn('map');if(move)focusOn(p.x,p.y);}
 /* ---------- data lapangan dan lembar kerja ---------- */
 /* Besaran yang masuk akal diukur murid di lapangan, per jenis lab mini. */
 var UKUR={pendulum:'Periode satu ayunan penuh (s)',coaster:'Tinggi bukit pertama (m)',circular:'Waktu 5 putaran (s)',
@@ -2688,43 +2715,6 @@ function besaranUkur(id){
 }
 function namaWahana(id){var r=byId[id]||LANDMARKS[id];return r?r.name:id;}
 function kawasanWahana(id){var r=byId[id]||LANDMARKS[id];return r?r.zone:'';}
-
-function dataLapanganHTML(){
-  var d=DufanPhysics.bacaData();
-  var h='<h4 class="ph">Data lapangan tersimpan</h4>';
-  if(!d.length)return h+'<p class="note">Belum ada data. Buka sebuah wahana, isi kotak Data lapangan di bawah lab mini, lalu tekan Simpan. Data disimpan di browser ini saja.</p>';
-  h+='<table class="data-tabel"><thead><tr><th>Wahana</th><th>Besaran</th><th>Nilai</th><th>Waktu</th></tr></thead><tbody>';
-  d.slice().reverse().slice(0,30).forEach(function(b){
-    h+='<tr><td>'+esc(namaWahana(b.id))+'</td><td>'+esc(b.besaran)+'</td><td><b>'+esc(String(b.nilai))+'</b> '+esc(b.satuan||'')+'</td><td>'+esc(b.waktu||'')+'</td></tr>';
-  });
-  h+='</tbody></table><div class="actions"><button class="btn small" data-act="csv">Unduh CSV ('+d.length+' baris)</button>'
-    +'<button class="btn small ghost" data-act="hapus-data">Hapus semua data</button></div>';
-  return h;
-}
-function lewatTautan(isi,nama){
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([isi],{type:'text/csv;charset=utf-8'}));
-  a.download=nama;document.body.appendChild(a);a.click();
-  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
-}
-function unduhCSV(){
-  var d=DufanPhysics.bacaData();if(!d.length)return;
-  var baris=[['wahana','kawasan','besaran','nilai','satuan','hasil_turunan','waktu']];
-  d.forEach(function(b){baris.push([namaWahana(b.id),kawasanWahana(b.id),b.besaran,b.nilai,b.satuan||'',b.hasil||'',b.waktu||'']);});
-  var csv=baris.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
-  var isi='\ufeff'+csv,nama='data-lapangan-dufan.csv';
-  /* Saat halaman dibuka lewat penampil artifact, berkas hanya bisa diserahkan
-     melalui kapabilitas downloads. Di GitHub Pages atau berkas lokal, tautan
-     unduh biasa sudah cukup. */
-  if(window.claude&&typeof window.claude.use==='function'){
-    window.claude.use('downloads').then(function(dl){
-      if(!dl){lewatTautan(isi,nama);return;}
-      dl.save({filename:nama,data:isi})['catch'](function(err){
-        if(!err||err.code!=='declined')lewatTautan(isi,nama);
-      });
-    })['catch'](function(){lewatTautan(isi,nama);});
-  }else lewatTautan(isi,nama);
-}
 
 /* Lembar kerja per fase: pra-kunjungan, tabel pengamatan, praktikum sekolah, refleksi. */
 function buatLKPD(f){
@@ -2810,7 +2800,6 @@ function kurikulumView(){
     });
     h+='</ul></div>';
   });
-  h+=dataLapanganHTML();
   h+='<p class="note">Sumber: Kurikulum Pembelajaran Sains dan Fisika Kontekstual Berbasis Wahana Dunia Fantasi. '
     +'Capaian Pembelajaran nasional tetap acuan utama; wahana hanya dipakai sebagai konteks.</p></div>';
   return h;
@@ -2862,13 +2851,54 @@ function ruteHTML(judul,urut){
 var viewBtns=Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
 function setViewBtn(v){viewBtns.forEach(function(b){var on=b.getAttribute('data-view')===v;
   b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');});}
+/* Ringkasan saringan yang sedang aktif, ditampilkan di dalam popover Filter. */
+function perbaruiInfoFilter(){
+  var info=document.getElementById('filterInfo'),dot=document.getElementById('filterDot');
+  if(!info)return;
+  var total=svg.querySelectorAll('.ride').length,redup=svg.querySelectorAll('.ride.dim').length;
+  var pesan=[];
+  if(catAktif!=='all')pesan.push('kategori '+(CATS[catAktif]||catAktif).replace(/^\S+\s/,''));
+  if(kurAktif)pesan.push(kurAktif.jenis==='fase'?('Fase '+kurAktif.kode):('tujuan '+kurAktif.kode));
+  info.textContent=pesan.length
+    ? 'Menampilkan '+(total-redup)+' dari '+total+' wahana. Saringan aktif: '+pesan.join(' dan ')+'.'
+    : 'Semua '+total+' wahana ditampilkan. Pilih kategori atau fase untuk menyaring peta dan daftar.';
+  if(dot)dot.hidden=!pesan.length;
+}
 viewBtns.forEach(function(b){b.addEventListener('click',function(){
-  var v=b.getAttribute('data-view');
+  var v=b.getAttribute('data-view');setViewBtn(v);
   if(v==='list')openSheet(listHTML());
   else if(v==='kurikulum')openSheet(kurikulumView());
   else closeSheet();});});
-listBtn.addEventListener('click',function(){if(isOpen())closeSheet();else openSheet(listHTML());});
-document.getElementById('grab').addEventListener('click',function(){if(isOpen())closeSheet();else openSheet(listHTML());});
+listBtn.addEventListener('click',closeSheet);
+document.getElementById('grab').addEventListener('click',closeSheet);
+
+/* ---------- popover Menu dan Filter ---------- */
+var popMenu=document.getElementById('popMenu'),popFilter=document.getElementById('popFilter'),
+    btnMenu=document.getElementById('btnMenu'),btnFilter=document.getElementById('btnFilter');
+function tutupPop(){[[popMenu,btnMenu],[popFilter,btnFilter]].forEach(function(x){
+  x[0].hidden=true;x[1].setAttribute('aria-expanded','false');});}
+function bukaPop(pop,btn){
+  var sedangBuka=!pop.hidden;tutupPop();
+  if(!sedangBuka){pop.hidden=false;btn.setAttribute('aria-expanded','true');}
+}
+btnMenu.addEventListener('click',function(e){e.stopPropagation();bukaPop(popMenu,btnMenu);});
+btnFilter.addEventListener('click',function(e){e.stopPropagation();bukaPop(popFilter,btnFilter);perbaruiInfoFilter();});
+[popMenu,popFilter].forEach(function(p){p.addEventListener('click',function(e){e.stopPropagation();});});
+popFilter.addEventListener('click',function(e){
+  var b=e.target.closest('[data-act="reset-filter"]');if(!b)return;
+  catAktif='all';kurAktif=null;
+  Array.prototype.forEach.call(popFilter.querySelectorAll('.chip[data-cat]'),function(x){
+    x.classList.toggle('active',x.getAttribute('data-cat')==='all');});
+  terapkanSaringan();});
+document.addEventListener('click',tutupPop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')tutupPop();});
+popMenu.addEventListener('click',function(e){if(e.target.closest('[data-view]'))tutupPop();});
+
+/* ---------- pil petunjuk, hilang setelah peta disentuh ---------- */
+var hintPill=document.getElementById('hint'),hintHilang=false;
+function sembunyikanHint(){if(hintHilang)return;hintHilang=true;hintPill.classList.add('sembunyi');
+  setTimeout(function(){hintPill.style.display='none';},500);}
+setTimeout(sembunyikanHint,9000);
 content.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
   var f=b.getAttribute('data-fase'),t=b.getAttribute('data-tp'),rt=b.getAttribute('data-rute'),a=b.getAttribute('data-act');
   if(f){setKurFilter('fase',f);openSheet(kurikulumView());return;}
@@ -2877,8 +2907,6 @@ content.addEventListener('click',function(e){var b=e.target.closest('button');if
     var u2=susunRute(KURIKULUM.wahanaFase(rt));openSheet(ruteHTML(KURIKULUM.fase[rt].nama,u2));return;}
   var lk=b.getAttribute('data-lkpd');
   if(lk){buatLKPD(lk);return;}
-  if(a==='csv'){unduhCSV();return;}
-  if(a==='hapus-data'){DufanPhysics.hapusData();openSheet(kurikulumView());return;}
   if(a==='hapus-saring'){kurAktif=null;terapkanSaringan();openSheet(kurikulumView());return;}
   if(a==='hapus-rute'){hapusRute();openSheet(kurikulumView());return;}
   if(a==='kurikulum'){openSheet(kurikulumView());return;}
@@ -2893,6 +2921,7 @@ var chips=Array.prototype.slice.call(document.querySelectorAll('.chip[data-cat]'
 var catAktif='all';
 /* Saringan kategori dan saringan kurikulum bekerja bersamaan. */
 function terapkanSaringan(){
+  if(typeof tandaiFaseChip==='function')tandaiFaseChip();
   var set=null;
   if(kurAktif)set=kurAktif.jenis==='fase'?KURIKULUM.wahanaFase(kurAktif.kode):KURIKULUM.wahanaTP(kurAktif.kode);
   Array.prototype.forEach.call(svg.querySelectorAll('.ride'),function(g){
@@ -2906,6 +2935,7 @@ function terapkanSaringan(){
     g.classList.toggle('dim',!!set&&id!=='gerbang'&&set.indexOf(id)<0);
   });
   if(current&&svg.querySelector('[data-id="'+current+'"]').classList.contains('dim'))closeSheet();
+  perbaruiInfoFilter();
 }
 function setKurFilter(jenis,kode){
   kurAktif=(kurAktif&&kurAktif.jenis===jenis&&kurAktif.kode===kode)?null:{jenis:jenis,kode:kode};
@@ -2914,12 +2944,21 @@ function setKurFilter(jenis,kode){
 chips.forEach(function(c){c.addEventListener('click',function(){
   chips.forEach(function(x){x.classList.toggle('active',x===c);});
   catAktif=c.getAttribute('data-cat');terapkanSaringan();});});
+var faseChips=Array.prototype.slice.call(document.querySelectorAll('.chip[data-fase]'));
+function tandaiFaseChip(){faseChips.forEach(function(x){
+  var k=x.getAttribute('data-fase');
+  x.classList.toggle('active',!kurAktif?k==='all':(kurAktif.jenis==='fase'&&k===kurAktif.kode));});}
+faseChips.forEach(function(c){c.addEventListener('click',function(){
+  var k=c.getAttribute('data-fase');
+  kurAktif=(k==='all')?null:{jenis:'fase',kode:k};
+  terapkanSaringan();});});
 
 /* animation toggle */
 var animBtn=document.getElementById('anim'),paused=false;
 function setPaused(p){paused=p;document.body.classList.toggle('paused',p);
   Array.prototype.slice.call(document.querySelectorAll('svg')).forEach(function(s){try{if(p)s.pauseAnimations();else s.unpauseAnimations();}catch(err){}});
-  animBtn.textContent=p?'▶':'⏸';animBtn.setAttribute('aria-label',p?'Jalankan animasi':'Jeda animasi');}
+  animBtn.innerHTML='<i aria-hidden="true">'+(p?'▶':'⏸')+'</i>'+(p?'Jalankan animasi':'Jeda animasi');
+  animBtn.setAttribute('aria-label',p?'Jalankan animasi':'Jeda animasi');}
 animBtn.addEventListener('click',function(){setPaused(!paused);});
 if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)setPaused(true);
 
@@ -2929,7 +2968,7 @@ var themeBtn=document.getElementById('theme'),themeIdx=0;
 function applyTheme(i){themeIdx=((i%THEMES.length)+THEMES.length)%THEMES.length;var t=THEMES[themeIdx];
   if(t[0]==='auto')document.documentElement.removeAttribute('data-theme');
   else document.documentElement.setAttribute('data-theme',t[0]);
-  themeBtn.innerHTML='<i>'+t[1]+'</i><b>'+t[2]+'</b>';themeBtn.title=t[3];themeBtn.setAttribute('aria-label',t[3]+', ketuk untuk mengganti');
+  themeBtn.innerHTML='<i aria-hidden="true">'+t[1]+'</i>Tema: '+t[2];themeBtn.title=t[3];themeBtn.setAttribute('aria-label',t[3]+', ketuk untuk mengganti');
   try{localStorage.setItem('dufan-tema',t[0]);}catch(err){}}
 (function(){var k=0;try{var saved=localStorage.getItem('dufan-tema');THEMES.forEach(function(t,i){if(t[0]===saved)k=i;});}catch(err){}applyTheme(k);})();
 themeBtn.addEventListener('click',function(){applyTheme(themeIdx+1);});

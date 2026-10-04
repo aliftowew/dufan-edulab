@@ -70,10 +70,14 @@ masih tercetak di peta tetapi tidak ada dalam daftar wahana beroperasi sehingga
 diberi label "tidak beroperasi" di peta. Dua live show diwakili Pentas Prestasi
 di Kawasan Yunani dan Pertunjukan Indoor Dufan di gedung Kidz Fantasy.
 
-**Dua tampilan.** Tombol Peta / Daftar di bagian atas halaman memilih antara
-peta dan grid kartu wahana; tidak ada lagi daftar yang tersembunyi di balik
-panel. Di sebelahnya ada tombol tema dengan tiga keadaan: Auto (ikut sistem),
-Terang, dan Gelap. Pilihan tema disimpan di browser.
+**Chrome yang ringkas.** Bagian atas layar hanya berisi judul dan dua tombol,
+**Filter** dan **Menu**, yang masing-masing membuka popover. Filter memuat
+saringan kategori wahana serta saringan fase dan kelas, lengkap dengan hitungan
+wahana yang sedang ditampilkan; tombolnya diberi titik merah saat ada saringan
+aktif. Menu memuat pilihan tampilan (Peta, Daftar wahana, Kurikulum), tombol tema
+tiga keadaan (Auto, Terang, Gelap) yang pilihannya disimpan di browser, dan
+tombol jeda animasi. Kontrol zoom peta mengambang di pojok kiri bawah, terpisah
+dari panel, sehingga tidak ada kontrol yang muncul dua kali.
 
 **Daftar wahana** berupa grid kartu, bukan deretan teks. Tiap kartu menampilkan
 animasi wahana itu sendiri — gambarnya disalin langsung dari peta, lengkap
@@ -100,11 +104,17 @@ dan logika (`logika`). Kesembilannya sengaja dibuat sepadan dengan tabel
 "Praktikum Model Pasangan Wahana" pada kurikulum.
 
 Tiap lab punya scene SVG, slider parameter, pembacaan besaran secara langsung,
-bar energi potensial/kinetik, dan kotak **data lapangan**: murid memasukkan hasil
-ukurnya di Dufan, lalu aplikasi menghitung besaran turunannya dan menampilkan
-selisih terhadap angka model. Semua lab berjalan otomatis begitu panel dibuka dan
-mengulang sendiri; tombol ⏸ di panel menghentikan seluruh animasi, termasuk
-animasi di kartu.
+bar energi potensial/kinetik, dan **rumus hidup** di atas slidernya: rumus utama
+lab ditampilkan dengan tiap variabel sebagai kotak tersendiri, kotak variabel
+yang sedang digeser menyala, dan baris di bawahnya memperlihatkan angka yang
+disubstitusikan beserta hasilnya. Semua lab berjalan otomatis begitu panel dibuka
+dan mengulang sendiri; tombol jeda animasi ada di Menu.
+
+**Kedalaman lab mengikuti fase.** Saat saringan fase aktif, lab menyesuaikan
+diri: pada Fase B dan C rumus diganti satu kalimat penjelas dan pembacaan
+besarannya dipangkas menjadi dua yang terpenting, sedangkan pada Fase D ke atas
+rumus dan seluruh pembacaan ditampilkan. Fase yang sedang dipakai muncul sebagai
+label kecil di kepala lab.
 
 ## Logo
 
@@ -131,15 +141,15 @@ praktikum di sekolah, serta status datanya.
 Tampilan **Kurikulum** di header menyediakan:
 
 - kartu tiap fase berisi fokus materi, keterampilan proses, dan produk akhirnya;
-- tombol **Saring peta**, yang meredupkan wahana di luar fase itu;
+- tombol **Saring peta**, yang meredupkan wahana di luar fase itu (saringan yang
+  sama juga tersedia lewat tombol Filter di header, dengan label kelasnya);
 - daftar tujuan pembelajaran yang bisa diketuk untuk menyaring peta sekaligus
   menyusun rute;
 - **Susun rute**, yang mengurutkan kunjungan mulai dari Gerbang Utama lalu selalu
   ke wahana terdekat berikutnya, dan menggambar nomor urutnya di peta;
 - **Lembar kerja**, yang menghasilkan LKPD siap cetak berisi tujuan pembelajaran,
   tabel prediksi pra-kunjungan, tabel pengamatan per wahana lengkap dengan besaran
-  yang diukur, tabel praktikum model di sekolah, dan pertanyaan refleksi;
-- daftar **data lapangan** yang tersimpan di browser, dengan ekspor CSV.
+  yang diukur, tabel praktikum model di sekolah, dan pertanyaan refleksi.
 
 Panel tiap wahana juga menampilkan blok *Dalam kurikulum*: fase yang dilayani,
 tujuan pembelajaran yang didukung beserta bunyinya, pasangan praktikum di
