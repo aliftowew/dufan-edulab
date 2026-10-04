@@ -88,11 +88,20 @@ sepotong. Mulai lebar 900 px halaman itu terbagi dua kolom: kolom kiri yang
 menempel saat digulir berisi animasi wahana dan lab mini, kolom kanan berisi
 bacaannya. Di bawah 900 px keduanya menumpuk menjadi satu kolom.
 
+Kolom kiri hanya menempel di pinggir atas kalau isinya muat satu layar. Kalau
+lab mininya lebih tinggi dari layar, titik tempelnya dihitung ulang supaya kolom
+itu ikut bergulir dulu sampai baris terbawahnya terlihat, baru menempel — jadi
+tidak ada bagian lab yang terpotong dan tak bisa dicapai. Perhitungan ini
+diperbarui saat ukuran jendela berubah dan saat tinggi lab berubah.
+
 Isi kolom kanan berurutan: identitas wahana, **Dasar yang dipakai** (kartu konsep
 seperti energi kinetik dan gaya sentripetal, teksnya mengikuti fase), **Fisika di
 balik wahana** dengan rumus disisipkan tepat setelah paragraf yang
 menjelaskannya, **Aktivitas murid** sesuai fase dan jenis wahananya, lalu blok
 kurikulum.
+
+Mengganti fase di Filter sementara halaman wahana terbuka langsung menggambar
+ulang halaman itu pada kedalaman yang baru, tidak perlu ditutup dulu.
 
 **Bilah atas tetap.** Judul atau tombol kembali di kiri, Filter dan Menu di
 kanan, posisinya tidak bergeser saat halaman dibuka atau ditutup.

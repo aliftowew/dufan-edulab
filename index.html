@@ -244,7 +244,9 @@ body.halaman .bar .title,body.halaman .backbtn{box-shadow:none;background:transp
 .d-visual>.hero{margin-top:4px}
 @media (min-width:900px){
   .detail{grid-template-columns:minmax(320px,0.95fr) minmax(380px,1.15fr);gap:30px;align-items:start}
-  .d-visual{position:sticky;top:0}
+  /* Titik tempelnya diatur skrip: 0 kalau isinya muat satu layar, minus kalau
+     lebih tinggi, supaya bagian bawah kolom ini tetap bisa discroll sampai habis. */
+  .d-visual{position:sticky;top:var(--lekat,0px)}
   .content{padding:18px 26px 40px}
 }
 @media (min-width:1280px){.detail{gap:40px}}
@@ -2195,12 +2197,18 @@ var DufanPhysics = (function () {
             ebars: host.querySelector('.ebars'), id: host.getAttribute('data-id')};
   }
 
-  function slider(ctl, label, min, max, step, val, unit) {
+  function slider(ctl, label, min, max, step, val, unit, bagi) {
     var lab = document.createElement('label');
     lab.innerHTML = '<span>' + label + ' <b></b></span><input type="range" min="' + min + '" max="' + max + '" step="' + step + '" value="' + val + '">';
     ctl.appendChild(lab);
     var inp = lab.querySelector('input'), out = lab.querySelector('b');
-    function show() { out.textContent = fnum(parseFloat(inp.value), step < 1 ? (step < 0.1 ? 2 : 1) : 0) + (unit || ''); }
+    /* bagi: slider boleh beresolusi halus di dalam, tapi angkanya tetap
+       ditulis dalam satuan yang akrab untuk murid. */
+    function show() {
+      var nilai = parseFloat(inp.value) / (bagi || 1);
+      var desimal = bagi ? 1 : (step < 1 ? (step < 0.1 ? 2 : 1) : 0);
+      out.textContent = fnum(nilai, desimal) + (unit || '');
+    }
     inp.addEventListener('input', show); show();
     return inp;
   }
@@ -2342,7 +2350,7 @@ var DufanPhysics = (function () {
       dasar: 'Kereta paling lambat di puncak bukit dan paling cepat di lembah, tanpa mesin sama sekali.',
       kiri: 'v', kanan: ['\u221a(2 \u00b7 ', {v: 'g', s: 'g'}, ' \u00b7 (', {v: 'h0', s: 'h\u2080'}, ' \u2212 ', {v: 'h', s: 'h'}, '))'],
       ket: 'h\u2080 tinggi bukit pertama, h tinggi kereta sekarang. Geser posisi untuk mengubah h.'});
-    var sl = slider(ui.ctl, 'Posisi di lintasan', 0, 1000, 1, 0, '‰');
+    var sl = slider(ui.ctl, 'Posisi di lintasan', 0, 1000, 1, 0, '%', 10);
     ikat(R, sl, 'h');
     var go = button(ui.ctl, 'Jalankan'), stop = button(ui.ctl, 'Berhenti', true);
     var keys = ['Tinggi h', 'Kecepatan v', 'Energi total']; if (p.profile === 'loop') keys.push('v minimum di puncak loop');
@@ -2924,10 +2932,11 @@ function openSheet(html,judul){
   sheet.hidden=false;content.scrollTop=0;
   document.body.classList.add('halaman');btnBack.hidden=false;
   barTitle.innerHTML='<h1>'+esc(judul||'Dufan EduLab')+'</h1>';
-  tutupPop();aturBarH();}
+  tutupPop();aturBarH();pantauLekat();}
 function closeSheet(){
   DufanPhysics.unmount();sheet.hidden=true;selWrap.style.display='none';current=null;setViewBtn('map');
   document.body.classList.remove('halaman');btnBack.hidden=true;barTitle.innerHTML=JUDUL_AWAL;fillLogos(barTitle);
+  if(lekatPantau){lekatPantau.disconnect();lekatPantau=null;}
   aturBarH();relayout();}
 function isOpen(){return !sheet.hidden;}
 /* Tinggi bilah dipakai halaman dan rel sebagai jarak atas. */
@@ -2935,11 +2944,33 @@ function aturBarH(){
   var b=document.querySelector('.bar');
   if(b)document.documentElement.style.setProperty('--barh',Math.round(b.getBoundingClientRect().height)+'px');
 }
+/* Kolom kiri halaman wahana hanya aman menempel kalau isinya muat satu layar.
+   Kalau lebih tinggi, titik tempelnya digeser ke atas sebanyak kelebihannya:
+   kolom ikut bergulir dulu sampai dasarnya kelihatan, baru menempel. */
+var lekatPantau=null;
+function aturLekat(){
+  var vis=content.querySelector('.d-visual');
+  if(!vis)return;
+  if(window.innerWidth<900){vis.style.setProperty('--lekat','0px');return;}
+  var ruang=content.clientHeight-26,tinggi=Math.ceil(vis.getBoundingClientRect().height);
+  vis.style.setProperty('--lekat',(tinggi>ruang?Math.round(ruang-tinggi):0)+'px');
+}
+/* Tinggi lab mini berubah saat fase atau jenis labnya berganti, jadi diamati. */
+function pantauLekat(){
+  var vis=content.querySelector('.d-visual');
+  if(lekatPantau){lekatPantau.disconnect();lekatPantau=null;}
+  if(!vis)return;
+  aturLekat();
+  if(window.ResizeObserver){lekatPantau=new ResizeObserver(aturLekat);lekatPantau.observe(vis);}
+  else setTimeout(aturLekat,300);
+}
 function photoHTML(r,id){var src=PHOTOS[id]||r.photo;
   if(src)return '<figure class="shot"><img src="'+esc(src)+'" alt="Foto wahana '+esc(r.name)+' di Dufan"><figcaption>Wahana '+esc(r.name)+', kawasan '+esc(r.zone)+'.</figcaption></figure>';
   return '<div class="shot empty">Foto asli '+esc(r.name)+' belum dipasang di aplikasi ini.</div>';}
 /* Fase yang sedang dipilih pada saringan, dipakai untuk menyesuaikan kedalaman isi halaman. */
 function faseSekarang(){return kurAktif&&kurAktif.jenis==='fase'?kurAktif.kode:null;}
+/* Fase yang dipakai saat halaman yang sedang terbuka digambar. */
+var faseTampil=null;
 
 /* Kartu konsep dasar, isinya mengikuti tingkat fase. */
 function konsepHTML(id,fase){
@@ -3019,7 +3050,8 @@ function listHTML(ringkas){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga
     +'<div class="credit"><img data-logo="dufan" alt="Dufan"><img class="c-ancol" data-logo="ancol" alt="Ancol"></div>'
     +'<p class="note">Logo Dufan dan Ancol milik PT Pembangunan Jaya Ancol Tbk. Peta ini proyek belajar mandiri, bukan aplikasi resmi.</p></div>';return h;}
 function select(id,move){var g=svg.querySelector('[data-id="'+id+'"]');if(!g)return;var r=byId[id]||LANDMARKS[id];if(!r)return;
-  var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;openSheet(detailHTML(r,id),r.name);
+  var p=posOf(g);selWrap.setAttribute('transform','translate('+p.x+','+p.y+')');selWrap.style.display='';current=id;
+  faseTampil=faseSekarang();openSheet(detailHTML(r,id),r.name);
   DufanPhysics.mount(content,kurAktif&&kurAktif.jenis==='fase'?kurAktif.kode:null);
   setViewBtn('map');if(move)focusOn(p.x,p.y);}
 /* ---------- data lapangan dan lembar kerja ---------- */
@@ -3267,6 +3299,11 @@ function terapkanSaringan(){
     g.classList.toggle('dim',!!set&&id!=='gerbang'&&set.indexOf(id)<0);
   });
   if(current&&svg.querySelector('[data-id="'+current+'"]').classList.contains('dim'))closeSheet();
+  /* Isi halaman wahana mengikuti fase, jadi kalau fasenya berganti sementara
+     halamannya terbuka, halaman itu digambar ulang pada kedalaman yang baru. */
+  var fs=faseSekarang();
+  if(current&&isOpen()&&fs!==faseTampil&&(byId[current]||LANDMARKS[current]))select(current,false);
+  faseTampil=fs;
   perbaruiInfoFilter();
   if(document.body.classList.contains('lebar'))isiRail();
 }
@@ -3328,7 +3365,7 @@ var waves=document.getElementById('waves');
 [[24,''],[42,'w2'],[60,'w3']].forEach(function(w){var d='M-96,'+w[0];for(var i=0;i<20;i++)d+=' q12,-5 24,0 t24,0';
   var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);p.setAttribute('class','a wave '+w[1]);waves.appendChild(p);});
 
-window.addEventListener('resize',function(){aturBarH();aturLebar();relayout();});
+window.addEventListener('resize',function(){aturBarH();aturLebar();relayout();aturLekat();});
 aturBarH();aturLebar();
 /* lebar panggung dianimasikan, jadi hitung ulang lagi setelah geserannya selesai */
 stage.addEventListener('transitionend',function(e){if(e.propertyName==='left')relayout();});
