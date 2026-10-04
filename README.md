@@ -83,12 +83,23 @@ dari panel, sehingga tidak ada kontrol yang muncul dua kali.
 animasi wahana itu sendiri — gambarnya disalin langsung dari peta, lengkap
 dengan animasinya — plus nama, kawasan, dan garis warna sesuai kategori.
 
-**Panel wahana.** Mengetuk sebuah wahana membuka panel dengan urutan: animasi
-wahana di paling atas, lalu lab mini interaktif, lalu penjelasan fisika beserta
-fotonya, dan tombol aksi di bagian bawah. Pada layar potret panel muncul sebagai
-bottom sheet; pada layar lanskap yang cukup lebar (mulai 640 px) panel berpindah
-ke sisi kanan sebagai sidebar setinggi layar, dan area peta ikut menyusut supaya
-tidak ada bagian peta yang tertutup panel.
+**Halaman wahana.** Mengetuk sebuah wahana membuka halaman penuh, bukan panel
+sepotong. Mulai lebar 900 px halaman itu terbagi dua kolom: kolom kiri yang
+menempel saat digulir berisi animasi wahana dan lab mini, kolom kanan berisi
+bacaannya. Di bawah 900 px keduanya menumpuk menjadi satu kolom.
+
+Isi kolom kanan berurutan: identitas wahana, **Dasar yang dipakai** (kartu konsep
+seperti energi kinetik dan gaya sentripetal, teksnya mengikuti fase), **Fisika di
+balik wahana** dengan rumus disisipkan tepat setelah paragraf yang
+menjelaskannya, **Aktivitas murid** sesuai fase dan jenis wahananya, lalu blok
+kurikulum.
+
+**Bilah atas tetap.** Judul atau tombol kembali di kiri, Filter dan Menu di
+kanan, posisinya tidak bergeser saat halaman dibuka atau ditutup.
+
+**Rel daftar wahana.** Mulai lebar 1024 px, sisi kiri yang tadinya kosong diisi
+rel berisi kartu wahana yang ikut mengikuti saringan, sehingga lebar layar laptop
+terpakai dan daftar selalu terlihat.
 
 **Bagian fisika.** Tiap wahana dijelaskan dalam empat sampai lima bagian
 bersubjudul (cara kerjanya, fisika yang bekerja, apa yang tubuh rasakan, dan apa
@@ -110,11 +121,14 @@ yang sedang digeser menyala, dan baris di bawahnya memperlihatkan angka yang
 disubstitusikan beserta hasilnya. Semua lab berjalan otomatis begitu panel dibuka
 dan mengulang sendiri; tombol jeda animasi ada di Menu.
 
-**Kedalaman lab mengikuti fase.** Saat saringan fase aktif, lab menyesuaikan
-diri: pada Fase B dan C rumus diganti satu kalimat penjelas dan pembacaan
-besarannya dipangkas menjadi dua yang terpenting, sedangkan pada Fase D ke atas
-rumus dan seluruh pembacaan ditampilkan. Fase yang sedang dipakai muncul sebagai
-label kecil di kepala lab.
+**Kedalaman isi mengikuti fase.** Saat saringan fase aktif, seluruh halaman
+wahana menyesuaikan diri. Pada Fase B dan C, kartu konsep memakai bahasa
+sehari-hari tanpa lambang, narasinya memakai versi sederhana dua bagian, rumus
+tidak ditampilkan, lab mengganti rumus dengan satu kalimat penjelas, dan
+pembacaan besarannya dipangkas menjadi dua yang terpenting. Fase D dan E memakai
+penjelasan menengah dengan dua rumus utama, sedangkan Fase F memakai penjelasan
+lanjut dengan seluruh rumusnya. Fase yang sedang dipakai muncul sebagai label
+kecil di kepala lab.
 
 ## Logo
 
@@ -141,6 +155,8 @@ praktikum di sekolah, serta status datanya.
 Tampilan **Kurikulum** di header menyediakan:
 
 - kartu tiap fase berisi fokus materi, keterampilan proses, dan produk akhirnya;
+- aktivitas murid per fase dan per jenis wahana, yang muncul langsung di halaman
+  wahana saat fasenya dipilih;
 - tombol **Saring peta**, yang meredupkan wahana di luar fase itu (saringan yang
   sama juga tersedia lewat tombol Filter di header, dengan label kelasnya);
 - daftar tujuan pembelajaran yang bisa diketuk untuk menyaring peta sekaligus
