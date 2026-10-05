@@ -134,6 +134,10 @@ aplikasi menyatakan itu apa adanya.
 Fase yang dipilih ikut diingat `localStorage`, jadi rombongan yang membuka
 aplikasi lagi di lokasi tidak perlu memilih jenjangnya berulang kali.
 
+Halaman wahana tidak memuat tombol navigasinya sendiri. Peta, daftar wahana,
+dan kurikulum semuanya satu tempat saja, yaitu tombol Menu. Menutup halaman
+lewat tombol kembali sekaligus membawa peta ke wahana yang barusan dibaca.
+
 **Bilah atas tetap.** Judul atau tombol kembali di kiri, Filter dan Menu di
 kanan, posisinya tidak bergeser saat halaman dibuka atau ditutup.
 

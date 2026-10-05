@@ -3029,11 +3029,15 @@ function openSheet(html,judul){
   document.body.classList.add('halaman');btnBack.hidden=false;
   barTitle.innerHTML='<h1>'+esc(judul||'Dufan EduLab')+'</h1>';
   tutupPop();aturBarH();pantauLekat();}
+/* Menutup halaman wahana sekaligus membawa peta ke wahana yang barusan dibaca,
+   peran yang dulu dipegang tombol Lihat di peta di dalam halaman. */
 function closeSheet(){
+  var terakhir=current;
   DufanPhysics.unmount();sheet.hidden=true;selWrap.style.display='none';current=null;setViewBtn('map');
   document.body.classList.remove('halaman');btnBack.hidden=true;barTitle.innerHTML=JUDUL_AWAL;fillLogos(barTitle);
   if(lekatPantau){lekatPantau.disconnect();lekatPantau=null;}
-  aturBarH();relayout();}
+  aturBarH();relayout();
+  if(terakhir){var g=svg.querySelector('[data-id="'+terakhir+'"]');if(g){var p=posOf(g);focusOn(p.x,p.y);}}}
 function isOpen(){return !sheet.hidden;}
 /* Tinggi bilah dipakai halaman dan rel sebagai jarak atas. */
 function aturBarH(){
@@ -3258,7 +3262,6 @@ function detailHTML(r,id){
     +'<div class="d-visual">'
       +'<div class="hero"><span class="art" data-art="'+id+'"></span><p class="hero-cap">Animasi '+esc(r.name)+'</p></div>'
       +DufanPhysics.labHTML(id)
-      +'<div class="actions"><button class="btn" data-act="focus">Lihat di peta</button><button class="btn ghost" data-act="list">Semua wahana</button></div>'
     +'</div>'
     +'<div class="d-teks">'+detailTeks(r,id)+'</div></div>';}
 function listHTML(ringkas){var groups=[['ekstrem','Pemacu adrenalin'],['keluarga','Keluarga, semua umur'],['anak','Anak-anak dan indoor']],h='<div class="list">';
@@ -3507,9 +3510,7 @@ content.addEventListener('click',function(e){var b=e.target.closest('button');if
   if(a==='hapus-saring'){kurAktif=null;terapkanSaringan();openSheet(kurikulumView(),'Kurikulum');return;}
   if(a==='hapus-rute'){hapusRute();openSheet(kurikulumView(),'Kurikulum');return;}
   if(a==='kurikulum'){openSheet(kurikulumView(),'Kurikulum');return;}
-  if(b.getAttribute('data-id'))select(b.getAttribute('data-id'),true);
-  else if(b.getAttribute('data-act')==='focus'&&current){var g=svg.querySelector('[data-id="'+current+'"]');if(g){var p=posOf(g);focusOn(p.x,p.y);}}
-  else if(b.getAttribute('data-act')==='list')openSheet(listHTML(),'Daftar wahana');});
+  if(b.getAttribute('data-id'))select(b.getAttribute('data-id'),true);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen())closeSheet();});
 
 /* filter */
