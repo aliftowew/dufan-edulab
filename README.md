@@ -246,3 +246,41 @@ URI atau path/URL gambar biasa.
 - Tata letak aman untuk ponsel berlayar berlekuk (`env(safe-area-inset-*)`).
 - Satu-satunya sumber daya eksternal adalah Google Fonts (Fraunces dan Plus
   Jakarta Sans); tanpa jaringan, halaman tetap berfungsi dengan font sistem.
+
+## Pembaruan November 2026: data engineering, analisis khas, dan 3D
+
+**Data teknis.** Tiap halaman wahana kini memuat kartu *Data teknis* yang diisi
+dari berkas "Data Wahana Dufan" Bidang Engineering: jenis, tahun operasi,
+pabrikan, tinggi, durasi, kapasitas sekali jalan dan per jam, batas tinggi badan,
+pengaman, dan sertifikat. Datanya ada di objek `SPEK`. Keterangan singkat wahana
+(`RIDE_FIX`) dan angka di narasi lama yang bertentangan dengan berkas itu sudah
+dikoreksi, misalnya Hysteria 58 m, Bianglala 24 m, Halilintar 21 m, Rajawali
+17,9 m, dan Niagara-Gara 16 m. Tembak Jitu dan Pentas Prestasi tidak ada di
+berkas, dan halamannya menyatakan itu.
+
+**Analisis khas.** Bagian baru *Analisis khas wahana ini* memberi satu pertanyaan
+fisika yang berbeda untuk tiap wahana (36 analisis, 108 rumus), lengkap dengan
+langkah hitung, kesimpulan, dan satu tugas ukur di lokasi. Semua angkanya
+dihitung skrip dari `SPEK` dan `MODEL`, bukan diketik tangan. Rumus umum yang
+dulu berulang di banyak wahana dibuang dari narasi lama. Pada Fase B dan C yang
+tampil hanya versi ringkasnya.
+
+**Model 3D.** Animasi di kepala halaman diganti model 3D berskala meter yang bisa
+diputar dan diperbesar, dengan tombol *Ikut penumpang*, pengatur kecepatan waktu,
+dan slider khas beberapa wahana. Telemetri di bawahnya (laju, tinggi, gaya-g, dan
+grafik gaya-g 20 detik terakhir) dihitung dari gerak kursi pada model itu
+sendiri, jadi tiap wahana punya "sidik jari" gaya-g yang berbeda. Tinggi dan
+jumlah kursi mengikuti data; jari-jari, panjang lengan, dan periode putar adalah
+taksiran model dan ditandai begitu di keterangan tiap model.
+
+**Peta 2D dan 3D.** Tombol 2D | 3D selalu terlihat di atas peta, tidak lagi di
+dalam Menu, dan pilihan terakhir diingat peramban. Peta 3D memakai posisi wahana,
+bentuk kawasan, dan jalan setapak yang sama persis dengan peta 2D, lalu diisi
+pohon, palem pantai, lampu jalan, bangku, kios, pengunjung yang berjalan dan
+mengantre, awan, dan perahu. Halaman tiap wahana juga diberi pagar, pohon, lampu,
+loket, dan pengunjung di sekeliling modelnya. Ketuk wahana untuk membuka
+halamannya; saat kembali, kamera menuju wahana yang baru dibaca.
+
+three.js r160 disematkan di dalam `index.html`, jadi aplikasi tetap satu berkas
+dan tetap jalan tanpa jaringan. Kalau WebGL tidak tersedia, halaman otomatis
+kembali ke animasi 2D yang lama.
