@@ -292,22 +292,30 @@ model dibatasi tapak ~34 satuan dan tinggi 14, pengisi kecil, dan di HP kamera
 terlalu jauh sehingga taman hanya mengisi 39% layar. Sekarang:
 
 - Skala tiap model dihitung dari jarak ke tetangga terdekatnya: tapak boleh
-  memakai separuh jarak itu dikurangi celah 8 satuan, dengan batas pengali 3,4
+  memakai separuh jarak itu dikurangi celah 8 satuan, dengan batas pengali 4,2
   dan tinggi 110, lalu dikoreksi berpasangan untuk semua pasangan sehingga tidak
-  ada yang bertumpuk (celah terkecil 8 satuan, Halilintar–Pontang-Pontang).
-  Model yang masih pendek diregangkan tegak paling banyak 1,5 kali, kecuali
-  wahana beroda atau berayun di sumbu mendatar yang bentuknya harus tetap bulat.
-  Median tapak naik dari 40 ke 58 satuan (ikon 2D 71) dan median tinggi dari 14
-  ke 30.
+  ada yang bertumpuk (celah terkecil 8 satuan). Model yang masih pendek
+  diregangkan tegak paling banyak 1,5 kali; wahana berlintasan (coaster, flume)
+  hanya 1,2 kali, dan wahana beroda atau berayun di sumbu mendatar tidak
+  diregangkan sama sekali supaya bentuknya tetap bulat. Median tapak naik dari
+  40 ke 66 satuan (ikon 2D 71) dan median tinggi dari 14 ke 30.
 - Tiap wahana berdiri di atas cakram plaza yang juga menjadi sasaran ketuk, jadi
   menyentuh pelatarannya pun membuka halaman wahana.
-- Kamera dibingkai per rasio layar: potret (HP) lebih tegak dan lebih dekat,
-  taman boleh meluap sedikit ke samping karena bisa digeser; lanskap memuat
-  seluruh taman. Taman mengisi 56% layar HP (dari 39%) dan tinggi model median
-  di layar HP 12 px (dari 7), laptop 25 px (dari 13).
+- Kamera dibingkai dari proyeksi sudut lahan dengan kamera sungguhan, bukan
+  konstanta per rasio layar: lanskap memuat seluruh taman termasuk area parkir
+  dengan ruang untuk saklar 2D | 3D di atasnya; potret (HP) lebih tegak, lebar
+  taman boleh meluap 10% karena bisa digeser, lalu taman ditaruh di tengah pita
+  yang tersisa. Taman mengisi 51% layar HP (dari 39%), tinggi model median di
+  layar HP 11 px (dari 7), tablet 18 px (dari 11), laptop 25 px (dari 13).
+  Kabut dihitung tiap frame dari sudut taman terjauh, jadi taman selalu jernih
+  berapa pun jarak, geseran, atau putarannya.
 - Label wahana berukuran piksel tetap (13 px di HP, 16 px di laptop) dengan nama
-  pendek seperti di peta 2D, selalu lebih kecil daripada modelnya; nama kawasan
-  ditulis di tanah pada titik yang lega.
+  pendek seperti di peta 2D, selalu lebih kecil daripada modelnya; pil yang
+  menyentuh tepi layar digeser ke dalam lewat titik tambatnya, dan wahana yang
+  tutup diberi pil abu-abu bertanda TUTUP serta tidak dianimasikan. Nama
+  kawasan menjadi sprite berukuran piksel tetap yang titiknya dipilih di ruang
+  layar, lalu digeser naik-turun sampai tidak beririsan dengan label wahana.
+  Ketukan mengutamakan label, lalu model, baru cakram plaza.
 - Pengisi: pohon lebih besar dan lebih rapat di dalam taman, dua baris pohon di
   tepi taman, pohon dan lampu di tepi jalan, kios lebih besar, area parkir
   berisi mobil, aula Kidz Fantasy, dan rumah Kota Tua.

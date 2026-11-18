@@ -3159,7 +3159,7 @@ var Dufan3D = (function () {
     el.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   }
   /* geser 1:1 dengan jari: satu piksel layar = lebar pandang pada jarak kamera dibagi tinggi kanvas */
-  Viewer.prototype.pan = function (dx, dy) { var k = this.dist * 2 * Math.tan(this.camera.fov * PI / 360) / (this.host.clientHeight || 600), c = Math.cos(this.az), s = Math.sin(this.az); this.target.x += (-dx * c - dy * s) * k; this.target.z += (dx * s - dy * c) * k; if (this.bound) { this.target.x = clamp(this.target.x, -this.bound[0], this.bound[0]); this.target.z = clamp(this.target.z, -this.bound[1], this.bound[1]); } };
+  Viewer.prototype.pan = function (dx, dy) { var k = this.dist * 2 * Math.tan(this.camera.fov * PI / 360) / (this.host.clientHeight || 600), c = Math.cos(this.az), s = Math.sin(this.az); dy /= Math.max(0.3, Math.sin(this.el)); this.target.x += (-dx * c - dy * s) * k; this.target.z += (dx * s - dy * c) * k; if (this.bound) { this.target.x = clamp(this.target.x, -this.bound[0], this.bound[0]); this.target.z = clamp(this.target.z, -this.bound[1], this.bound[1]); } };
   Viewer.prototype.place = function () { var ce = Math.cos(this.el); this.camera.up.set(0, 1, 0); this.camera.position.set(this.target.x + this.dist * ce * Math.sin(this.az), this.target.y + this.dist * Math.sin(this.el), this.target.z + this.dist * ce * Math.cos(this.az)); this.camera.lookAt(this.target); };
   Viewer.prototype.render = function () { this.renderer.render(this.scene, this.camera); };
   Viewer.prototype.dispose = function () {
@@ -3211,7 +3211,7 @@ var Dufan3D = (function () {
     var g = grp(), R = rng(77), jal = [], i, j, u = 2.3;
     try { Array.prototype.forEach.call(svg.querySelectorAll('#walk path'), function (p) { var L = p.getTotalLength(), pts = []; for (var s = 0; s <= L; s += 6) { var q = p.getPointAtLength(s); pts.push([q.x - W / 2, q.y - Hh / 2]); } if (pts.length > 2) jal.push(pts); }); } catch (e) {}
     function dJalan(x, z) { var b = 1e9; for (var a = 0; a < jal.length; a++) for (var c = 0; c < jal[a].length; c += 1) { var dx = jal[a][c][0] - x, dz = jal[a][c][1] - z, d = dx * dx + dz * dz; if (d < b) b = d; } return Math.sqrt(b); }
-    function dWahana(x, z) { var b = 1e9; for (var a = 0; a < sibuk.length; a++) { var d = Math.hypot(sibuk[a].x - x, sibuk[a].z - z) - sibuk[a].r; if (d < b) b = d; } if (hindari) for (a = 0; a < hindari.length; a++) { var e = Math.hypot(hindari[a].x - x, (hindari[a].z - z) * 2.2) - hindari[a].r; if (e < b) b = e; } return b; }
+    function dWahana(x, z) { var b = 1e9; for (var a = 0; a < sibuk.length; a++) { var d = Math.hypot(sibuk[a].x - x, sibuk[a].z - z) - sibuk[a].r; if (d < b) b = d; } if (hindari) for (a = 0; a < hindari.length; a++) { var hd = hindari[a], e = hd.r !== undefined ? Math.hypot(hd.x - x, (hd.z - z) * 2.2) - hd.r : Math.max(hd.x0 - x, x - hd.x1, hd.z0 - z, z - hd.z1); if (e < b) b = e; } return b; }
     var pohon = [], palem = [], lp = [], bangku = [], bunga = [], nT = lite ? 240 : 420;
     /* pohon dalam taman: menjauhi jalan dan plaza wahana; percobaan dilipatkan karena plaza memperluas daerah terlarang */
     for (i = 0; i < nT * 8 && pohon.length < nT; i++) { var x = (R() - 0.5) * (W - 14), z = -Hh / 2 + 128 + R() * (Hh - 140 - 75); if (dJalan(x, z) < 12 || dWahana(x, z) < 6) continue; pohon.push({x: x, z: z, s: 0.8 + R() * 0.8, j: R() < 0.28}); }
@@ -3233,7 +3233,7 @@ var Dufan3D = (function () {
     var mobil = []; for (i = 0; i < 24; i++) { if (R() < 0.35) continue; mobil.push({m: mat4(-W / 2 + 64 + i * 24 + (R() - 0.5) * 2, 2.2, Hh / 2 - 28 + (R() - 0.5) * 3, 1), c: [0xffffff, 0xd7d7d7, 0x2e86ab, 0xe4572e, 0x333333, 0xf2b134][i % 6]}); }
     g.add(instC(new T.BoxGeometry(9, 4.4, 16), mobil));
     g.add(awan(lite ? 5 : 8, 900, 360, 2.4));
-    var perahu = []; for (i = 0; i < 5; i++) { var pr = grp(box(7, 2, 16, [0xffffff, 0xe4572e, 0x2e86ab][i % 3], 0, 1, 0), cone(4.5, 12, 0xffffff, 0, 9, 0, 3)); pr.position.set((R() - 0.5) * W * 1.3, 0, -Hh / 2 + 20 - R() * 260); pr.userData.v = (R() - 0.5) * 8; g.add(pr); perahu.push(pr); }
+    var perahu = []; for (i = 0; i < 5; i++) { var pr = grp(box(7, 2, 16, [0xffffff, 0xe4572e, 0x2e86ab][i % 3], 0, 1, 0), cone(4.5, 12, 0xffffff, 0, 9, 0, 3)); pr.position.set((R() - 0.5) * (W - 60), 0, -Hh / 2 - 130 - R() * 130); pr.userData.v = (R() - 0.5) * 8; g.add(pr); perahu.push(pr); }
     /* pengunjung berjalan mengikuti jalan setapak */
     var nO = jal.length ? (lite ? 90 : 210) : 0, nA = Math.min(sibuk.length * 4, 150), kr = new Kerumunan(nO + nA, u * 1.5), org = [], tot = 0; g.add(kr.g); jal.forEach(function (p) { tot += p.length; });
     for (i = 0; i < nO; i++) { var pick = R() * tot, a2 = 0; while (a2 < jal.length - 1 && pick > jal[a2].length) { pick -= jal[a2].length; a2++; } org.push({a: a2, s: R() * 1000, v: (1.6 + R() * 1.8) * (R() < 0.5 ? 1 : -1), o: (R() - 0.5) * 7}); }
@@ -3241,7 +3241,7 @@ var Dufan3D = (function () {
     function tick(t) {
       for (var i = 0; i < nO; i++) { var o = org[i], pts = jal[o.a], L = (pts.length - 1) * 6, s = (o.s + o.v * t) % (2 * L); if (s < 0) s += 2 * L; if (s > L) s = 2 * L - s; var c = Math.min(pts.length - 2, Math.floor(s / 6)), f = s / 6 - c, dx = pts[c + 1][0] - pts[c][0], dz = pts[c + 1][1] - pts[c][1], l = Math.hypot(dx, dz) || 1; kr.set(i, pts[c][0] + dx * f - dz / l * o.o, pts[c][1] + dz * f + dx / l * o.o, t); }
       for (i = 0; i < nA; i++) kr.set(nO + i, antre[i][0], antre[i][1], i % 3 ? 0 : t * 0.25); kr.kirim();
-      for (i = 0; i < perahu.length; i++) { var p = perahu[i]; p.position.x += p.userData.v * 0.016; if (Math.abs(p.position.x) > W) p.userData.v *= -1; p.rotation.z = 0.05 * Math.sin(t * 0.8 + i); p.rotation.y = p.userData.v > 0 ? PI / 2 : -PI / 2; }
+      for (i = 0; i < perahu.length; i++) { var p = perahu[i]; p.position.x += p.userData.v * 0.016; if (Math.abs(p.position.x) > W / 2 - 20) p.userData.v *= -1; p.rotation.z = 0.05 * Math.sin(t * 0.8 + i); p.rotation.y = p.userData.v > 0 ? PI / 2 : -PI / 2; }
     }
     return {g: g, tick: tick};
   }
@@ -3347,12 +3347,22 @@ var Dufan3D = (function () {
      karena pada fov 40 satu satuan skala sprite setara 1/(2 tan 20 derajat) tinggi layar. Dengan begitu
      label tidak ikut membesar saat diperbesar dan tidak pernah lebih mencolok daripada modelnya.
      gaya 'zona': nama kawasan tanpa pil, huruf bergaris tepi. */
-  function label(text, dk, lh) {
-    var c = document.createElement('canvas'), x = c.getContext('2d'), font = '600 40px "Plus Jakarta Sans",system-ui,sans-serif';
-    x.font = font; var w = Math.ceil(x.measureText(text).width) + 36; c.width = w; c.height = 60; x.font = font; x.textBaseline = 'middle';
-    x.fillStyle = dk ? 'rgba(16,26,22,.86)' : 'rgba(255,255,255,.9)';
+  function namaKawasan(text, dk, lh) {
+    var c = document.createElement('canvas'), x = c.getContext('2d'), font = '800 44px "Plus Jakarta Sans",system-ui,sans-serif';
+    x.font = font; var w = Math.ceil(x.measureText(text).width) + 40; c.width = w; c.height = 60; x.font = font; x.textBaseline = 'middle'; x.textAlign = 'center'; x.lineJoin = 'round';
+    x.lineWidth = 10; x.strokeStyle = dk ? 'rgba(8,16,12,.92)' : 'rgba(255,255,255,.92)'; x.strokeText(text, w / 2, 32); x.fillStyle = dk ? '#e6efe9' : '#3f5146'; x.fillText(text, w / 2, 32);
+    var tx = new T.CanvasTexture(c); tx.colorSpace = T.SRGBColorSpace || tx.colorSpace;
+    var sp = new T.Sprite(new T.SpriteMaterial({map: tx, depthTest: false, transparent: true, sizeAttenuation: false, opacity: 0.95}));
+    sp.userData.w60 = w / 60; sp.scale.set(w / 60 * lh, lh, 1); sp.center.set(0.5, 0.5); sp.renderOrder = 8; return sp;
+  }
+  function label(text, dk, lh, tutup) {
+    var c = document.createElement('canvas'), x = c.getContext('2d'), font = '600 40px "Plus Jakarta Sans",system-ui,sans-serif', fontT = '800 30px "Plus Jakarta Sans",system-ui,sans-serif';
+    x.font = font; var wn = Math.ceil(x.measureText(text).width), wt = 0; if (tutup) { x.font = fontT; wt = Math.ceil(x.measureText('TUTUP').width) + 14; }
+    var w = wn + wt + 36; c.width = w; c.height = 60; x.font = font; x.textBaseline = 'middle';
+    x.fillStyle = tutup ? (dk ? 'rgba(44,50,48,.9)' : 'rgba(228,228,224,.92)') : (dk ? 'rgba(16,26,22,.86)' : 'rgba(255,255,255,.9)');
     var r = 22; x.beginPath(); x.moveTo(r, 2); x.arcTo(w - 2, 2, w - 2, 58, r); x.arcTo(w - 2, 58, 2, 58, r); x.arcTo(2, 58, 2, 2, r); x.arcTo(2, 2, w - 2, 2, r); x.fill();
-    x.fillStyle = dk ? '#eef3f2' : '#1e2a32'; x.fillText(text, 18, 32);
+    x.fillStyle = tutup ? (dk ? '#b7c0bc' : '#5a6460') : (dk ? '#eef3f2' : '#1e2a32'); x.fillText(text, 18, 32);
+    if (tutup) { x.font = fontT; x.fillStyle = dk ? '#ff7b7b' : '#d7263d'; x.fillText('TUTUP', 18 + wn + 14, 33); }
     var tx = new T.CanvasTexture(c); tx.colorSpace = T.SRGBColorSpace || tx.colorSpace;
     var sp = new T.Sprite(new T.SpriteMaterial({map: tx, depthTest: false, transparent: true, sizeAttenuation: false}));
     sp.userData.w60 = w / 60; sp.scale.set(w / 60 * lh, lh, 1); sp.center.set(0.5, 0); sp.renderOrder = 9; return sp;
@@ -3367,7 +3377,7 @@ var Dufan3D = (function () {
     var laut = x.createLinearGradient(0, 0, 0, 120); laut.addColorStop(0, dk ? '#0e3550' : '#4aa8d8'); laut.addColorStop(1, dk ? '#17506e' : '#8fd0ee'); x.fillStyle = laut; x.fillRect(0, 0, W, 104);
     x.fillStyle = dk ? '#3a4a3a' : '#f1e2b8'; x.fillRect(0, 100, W, 14);
     try {
-      Array.prototype.forEach.call(svg.querySelectorAll('path.zone'), function (p) { var d = p.getAttribute('d'); if (!d) return; x.globalAlpha = dk ? 0.42 : 0.92; x.fillStyle = p.getAttribute('fill') || '#ddd'; x.fill(new Path2D(d)); });
+      Array.prototype.forEach.call(svg.querySelectorAll('path.zone'), function (p) { var d = p.getAttribute('d'); if (!d) return; x.globalAlpha = dk ? 0.55 : 0.92; x.fillStyle = p.getAttribute('fill') || '#ddd'; x.fill(new Path2D(d)); });
       x.globalAlpha = 1; x.lineCap = 'round'; x.lineJoin = 'round';
       /* aula Kidz Fantasy: empat wahana dalam ruangan diberi lantai supaya tidak mengambang di rumput */
       x.globalAlpha = dk ? 0.5 : 0.75; x.fillStyle = dk ? '#2b3b45' : '#dfe9f3'; x.beginPath(); if (x.roundRect) x.roundRect(412, 572, 206, 174, 18); else x.rect(412, 572, 206, 174); x.fill(); x.globalAlpha = 1;
@@ -3384,88 +3394,133 @@ var Dufan3D = (function () {
     var gm = new T.Mesh(new T.PlaneGeometry(W, Hh), new T.MeshLambertMaterial({map: tx})); gm.rotation.x = -PI / 2; sc.add(gm);
     /* hamparan luar berhenti di garis pantai supaya tidak bertumpuk dengan bidang laut (bertumpuk = z-fighting pada jarak kamera ribuan satuan) */
     var luar = mk(new T.PlaneGeometry(6000, 3600), dk ? 0x13221a : 0x7fb36b, 0, -0.6, -Hh / 2 + 114 + 1800); luar.rotation.x = -PI / 2; sc.add(luar);
-    var lautM = mk(new T.PlaneGeometry(6000, 2600), dk ? 0x0e3550 : 0x4aa8d8, 0, -0.4, -Hh / 2 - 1196, 'water'); lautM.rotation.x = -PI / 2; sc.add(lautM);
+    var lautM = mk(new T.PlaneGeometry(6000, 2600), dk ? 0x0e3550 : 0x4aa8d8, 0, -0.4, -Hh / 2 - 1186, 'water'); lautM.rotation.x = -PI / 2; sc.add(lautM);
     var rg = rng(5); x.globalAlpha = 0.18; for (var sp = 0; sp < 2600; sp++) { x.fillStyle = sp % 2 ? '#ffffff' : '#2f6b3a'; x.fillRect(rg() * W, 116 + rg() * (Hh - 116), 1.6, 1.6); } x.globalAlpha = 1; tx.needsUpdate = true;
     /* Pembingkaian dihitung dulu karena dipakai label. Potret (HP): kamera lebih tegak dan lebih dekat, taman
        boleh meluap sedikit ke samping karena bisa digeser; lanskap: seluruh taman muat. 0.728 = 2 tan 20 derajat. */
-    var asp = viewer.camera.aspect || 1, potret = asp < 0.7, el0 = potret ? 0.95 : 0.78, dist0 = Math.max(1040, (potret ? 615 : 640) / (0.728 * asp));
-    var tinggiHost = host.clientHeight || 600, LH = 0.728 * (potret ? 13 : 16) / tinggiHost, lite = (host.clientWidth || window.innerWidth || 800) < 700;
+    var asp = viewer.camera.aspect || 1, potret = asp < 0.7, el0 = potret ? 0.95 : 0.78, dist0 = 1200;
+    var tinggiHost = host.clientHeight || 600, LH = 0.728 * (potret ? 13 : 16) / tinggiHost, LZ = 0.728 * (potret ? 15 : 19) / tinggiHost, lite = (host.clientWidth || window.innerWidth || 800) < 700;
     var rides = [], pick = [], sibuk = [], letak = {}, labels = [], antri = [];
     Array.prototype.forEach.call(svg.querySelectorAll('.ride,.landmark'), function (g) {
       var id = g.getAttribute('data-id'), b = BUILD[id]; if (!b) return; var m = g.transform.baseVal.consolidate(); if (!m) return;
       var ride; try { ride = b({lite: true, id: id}); } catch (e) { if (window.console) console.error('Dufan3D park', id, e); return; }
       ride.g.position.set(m.matrix.e - W / 2, 0, m.matrix.f - Hh / 2);
       var t = g.querySelector('text.lbl');
-      antri.push({id: id, ride: ride, r: ride.r || 8, h: ride.h || 6, nama: t && t.textContent.trim() ? t.textContent.trim() : names(id)});
+      ride.tutup = /\bclosed\b/.test(g.getAttribute('class') || '');
+      antri.push({id: id, ride: ride, r: ride.r || 8, h: ride.h || 6, tutup: ride.tutup, nama: t && t.textContent.trim() ? t.textContent.trim() : names(id)});
     });
     /* Skala sadar-tetangga. Posisi tetap persis seperti peta 2D; yang berubah ukurannya: tapak boleh memakai
        separuh jarak ke tetangga terdekat dikurangi celah, dengan batas pengali KMAX dan tinggi HMAX, lalu
        koreksi berpasangan untuk semua pasangan. Model yang masih pendek diregangkan tegak paling banyak SYMAX,
        kecuali wahana beroda atau berayun di sumbu mendatar (TEGAK) yang bentuknya harus tetap bundar. */
-    var KMAX = 3.4, RCAP = 50, HMIN = 30, HMAX = 110, CELAH = 8, SYMAX = 1.5, TEGAK = {bianglala: 1, kora: 1, kicir: 1, rajawali: 1, tornado: 1, ombang: 1, hysteria: 1, kontiki: 1, karavel: 1, halilintar: 1};
+    var KMAX = 4.2, RCAP = 50, HMIN = 30, HMAX = 110, CELAH = 8, SYMAX = 1.5, TEGAK = {bianglala: 1, kora: 1, kicir: 1, rajawali: 1, tornado: 1, ombang: 1, hysteria: 1, kontiki: 1, karavel: 1, baling: 1};
+    /* wahana berlintasan (coaster, flume): regangan tegak dibatasi 1,2 supaya kereta dan lintasannya tetap serasi */
+    var JALUR = {halilintar: 1, alap: 1, kereta: 1, niagara: 1, iceage: 1, dream: 1};
     function jarak(a, b) { return Math.hypot(a.ride.g.position.x - b.ride.g.position.x, a.ride.g.position.z - b.ride.g.position.z); }
-    function ukurA(a) { a.sy = TEGAK[a.id] ? 1 : clamp(HMIN / (a.h * a.k), 1, SYMAX); a.R = a.r * a.k; a.H = a.h * a.k * a.sy; }
+    function ukurA(a) { a.sy = TEGAK[a.id] ? 1 : clamp(HMIN / (a.h * a.k), 1, JALUR[a.id] ? 1.2 : SYMAX); a.R = a.r * a.k; a.H = a.h * a.k * a.sy; }
     antri.forEach(function (a) { var dn = 1e9; antri.forEach(function (b) { if (b !== a) dn = Math.min(dn, jarak(a, b)); }); a.dn = dn; a.k = Math.max(1, Math.min(KMAX, Math.min(RCAP, dn / 2 - CELAH / 2) / a.r, HMAX / a.h)); ukurA(a); });
     for (var it = 0; it < 6; it++) antri.forEach(function (a) { antri.forEach(function (b) { if (a === b) return; var lebih = a.R + b.R + CELAH - jarak(a, b); if (lebih > 0.01) { var v = a.k > b.k ? a : b; v.k = Math.max(0.6, v.k * (v.R - lebih) / v.R); ukurA(v); } }); });
     antri.forEach(function (a) { var ride = a.ride, p = ride.g.position, celahMin = 1e9; antri.forEach(function (b) { if (b !== a) celahMin = Math.min(celahMin, jarak(a, b) - a.R - b.R); }); a.plaza = celahMin < 12 ? 3 : 6;
       ride.g.scale.set(a.k, a.k * a.sy, a.k); ride.g.traverse(function (o) { o.castShadow = false; o.userData.rid = a.id; });
       sc.add(ride.g); rides.push(ride); pick.push(ride.g); sibuk.push({x: p.x, z: p.z, r: a.R + a.plaza}); letak[a.id] = p;
-      var lb = label(a.nama, dk, LH); lb.position.set(p.x, Math.min(a.H, 40) + 6, p.z); lb.userData.rid = a.id; lb.userData.kecil = a.R < 20; labels.push(lb); sc.add(lb); pick.push(lb);
+      var lb = label(a.nama, dk, LH, a.tutup); a.w60 = lb.userData.w60; lb.position.set(p.x, Math.min(a.H, 40) + 6, p.z); lb.userData.rid = a.id; lb.userData.kecil = a.R < 20; labels.push(lb); sc.add(lb); pick.push(lb);
       try { ride.tick(0, 1 / 60); } catch (e) {}
     });
     /* plaza: dua cakram instanced di bawah tiap wahana, tepi gelap dan isi pasir; ikut jadi sasaran ketuk */
     function cakram(tambah, warna, y) { var geo = new T.CircleGeometry(1, 28); geo.rotateX(-PI / 2); var m = instC(geo, antri.map(function (a) { var p = a.ride.g.position, rr = a.R + a.plaza - tambah; return {m: mat4(p.x, y, p.z, rr, 1, rr), c: warna}; })); m.castShadow = false; m.userData.rids = antri.map(function (a) { return a.id; }); return m; }
-    var pTepi = cakram(0, dk ? 0x2f3a36 : 0xcdbfa1, 0.3), pIsi = cakram(1.5, dk ? 0x3b4642 : 0xeadfc6, 0.5); sc.add(pTepi, pIsi); pick.push(pTepi, pIsi);
+    var pTepi = cakram(0, dk ? 0x263029 : 0xb9a684, 0.3), pIsi = cakram(4, dk ? 0x3d4844 : 0xf2ede2, 0.5); sc.add(pTepi, pIsi); pick.push(pTepi, pIsi);
     /* rumah-rumah Kota Tua di Kawasan Jakarta, seperti di peta 2D */
     var rumah = []; [[158, 682, 1], [300, 672, 0.85]].forEach(function (k) { var sx = k[0] - W / 2, sz = k[1] - Hh / 2, f = k[2] * 0.75; var atap = cone(19 * f, 11 * f, 0xc0603c, sx, 21 * f, sz, 4); atap.rotation.y = PI / 4; sc.add(box(26 * f, 16 * f, 26 * f, dk ? 0x6b5a4a : 0xf3e3c3, sx, 8 * f, sz), atap); rumah.push({x: sx, z: sz, r: 20 * f}); });
-    /* Nama kawasan ditulis di tanah seperti peta 2D, pada titik yang lega: beberapa geseran dari posisi 2D-nya
-       dicoba, dipilih yang paling jauh dari label wahana yang melayang (di layar label itu jatuh di sisi jauh
-       modelnya) dan dari plaza. Pohon dan kios kemudian menjauhi tulisan ini supaya tetap terbaca. */
-    var hindari = []; x.textAlign = 'center'; x.textBaseline = 'middle'; x.lineJoin = 'round';
-    Array.prototype.forEach.call(svg.querySelectorAll('text.zlbl'), function (t) {
-      var teks = t.textContent.trim(); if (!teks) return; var kecil = /small/.test(t.getAttribute('class') || ''), ax = parseFloat(t.getAttribute('x')) - W / 2, az = parseFloat(t.getAttribute('y')) - Hh / 2, setengah = teks.length * (kecil ? 4.5 : 7), terbaik = null, skorB = -1e9;
-      [-90, -60, -36, 0, 36, 60, 90].forEach(function (ox) { [-20, 0, 26, 50, 76].forEach(function (oz) {
-        var cx = ax + ox, cz = az + oz; if (Math.abs(cx) + setengah > W / 2 - 6 || cz < -Hh / 2 + 124 || cz > Hh / 2 - 90) return;
-        var skor = 1e9; antri.forEach(function (a) { var p = a.ride.g.position, lz = p.z - Math.min(a.H, 40) * 0.85, dl = Math.hypot(Math.max(0, Math.abs(p.x - cx) - setengah - a.nama.length * 3.8), (lz - cz) * 1.6) - 10, dp = Math.hypot(p.x - cx, p.z - cz) - a.R - a.plaza - setengah * 0.5; skor = Math.min(skor, dl, dp + 8); });
-        rumah.forEach(function (h) { skor = Math.min(skor, Math.hypot(h.x - cx, h.z - cz) - h.r - setengah * 0.5 + 8); });
-        skor -= (Math.abs(ox) + Math.abs(oz)) * 0.06; if (skor > skorB) { skorB = skor; terbaik = [cx, cz]; }
-      }); });
-      if (!terbaik) terbaik = [ax, az];
-      x.font = (kecil ? '800 15px' : '800 23px') + ' "Plus Jakarta Sans",system-ui,sans-serif'; x.lineWidth = kecil ? 4 : 6; x.strokeStyle = dk ? 'rgba(10,20,16,.8)' : 'rgba(255,255,255,.85)';
-      x.strokeText(teks, terbaik[0] + W / 2, terbaik[1] + Hh / 2); x.fillStyle = dk ? '#cfdcd5' : '#415349'; x.fillText(teks, terbaik[0] + W / 2, terbaik[1] + Hh / 2);
-      hindari.push({x: terbaik[0], z: terbaik[1], r: 8 + setengah});
-    });
-    tx.needsUpdate = true;
-    var hidup = tamanHidup(svg, W, Hh, sibuk, dk, lite, hindari); sc.add(hidup.g);
-    function bingkai() { viewer.target.set(0, 0, potret ? 60 : 85); viewer.az = 0; viewer.el = el0; viewer.dist = dist0; viewer.minD = 60; viewer.maxD = dist0 * 1.8; viewer.bound = [330, 520]; }
+    /* ---- bingkai kamera dari proyeksi sudut lahan dengan kamera sungguhan, bukan konstanta per rasio layar ----
+       Lanskap: seluruh taman (termasuk parkir) muat, dengan ruang di atas untuk saklar 2D | 3D. Potret: lebar taman boleh
+       meluap 4% karena bisa digeser, lalu taman ditaruh di tengah pita yang tersisa. Elevasi potret 0.95, lanskap 0.78. */
+    var SUDUT4 = [[-320, -386], [320, -386], [-320, 500], [320, 500]], tmpV = new T.Vector3();
+    function proyeksi(px, py, pz) { var v = tmpV.set(px, py, pz).project(viewer.camera), r = viewer.renderer.domElement; return [(v.x + 1) / 2 * (r.clientWidth || 300), (1 - v.y) / 2 * (r.clientHeight || 220)]; }
+    function kotakLahan() { viewer.place(); viewer.camera.updateMatrixWorld(); var b = {x0: 1e9, x1: -1e9, y0: 1e9, y1: -1e9}; SUDUT4.forEach(function (c) { var q = proyeksi(c[0], 0, c[1]); b.x0 = Math.min(b.x0, q[0]); b.x1 = Math.max(b.x1, q[0]); b.y0 = Math.min(b.y0, q[1]); b.y1 = Math.max(b.y1, q[1]); }); return b; }
+    function bingkai() {
+      var r = viewer.renderer.domElement, w = r.clientWidth || 300, h = r.clientHeight || 220; asp = w / h; potret = asp < 0.7; el0 = potret ? 0.95 : 0.78;
+      var atas = potret ? 135 : 150, bawah = 16, lebarMau = potret ? w * 1.10 : w - 20, tinggiMau = h - atas - bawah;
+      viewer.az = 0; viewer.el = el0; viewer.target.set(0, 0, 60); viewer.dist = 1200;
+      for (var it = 0; it < 10; it++) {
+        var b = kotakLahan(), f = (b.x1 - b.x0) / lebarMau; if (!potret) f = Math.max(f, (b.y1 - b.y0) / tinggiMau);
+        viewer.dist = clamp(viewer.dist * f, 300, 6000); b = kotakLahan();
+        var pusat = (atas + h - bawah) / 2; if (b.y1 - b.y0 > tinggiMau) pusat = atas + (b.y1 - b.y0) / 2;
+        viewer.target.z += ((b.y0 + b.y1) / 2 - pusat) * 886 / (b.y1 - b.y0) * 0.9;
+      }
+      dist0 = viewer.dist; viewer.minD = 60; viewer.maxD = dist0 * 1.8; viewer.bound = [330, 520]; viewer.free = false;
+    }
     bingkai();
-    /* saat HP diputar atau rel di laptop dibuka-tutup: hitung ulang bingkai (kalau pengguna belum menggeser) dan ukuran label */
-    viewer.onResize = function (w, h) { asp = w / h; potret = asp < 0.7; el0 = potret ? 0.95 : 0.78; dist0 = Math.max(1040, (potret ? 615 : 640) / (0.728 * asp)); tinggiHost = h || 600; LH = 0.728 * (potret ? 13 : 16) / tinggiHost;
-      if (!viewer.free) bingkai(); labels.forEach(function (l) { l.scale.set(l.userData.w60 * LH, LH, 1); }); };
+    /* ---- nama kawasan sebagai sprite berukuran piksel tetap, seperti teks kawasan di peta 2D ----
+       Titik tanahnya dipilih di ruang layar dengan kamera bingkai: kandidat di sekitar posisi 2D-nya diproyeksikan dan
+       dinilai jaraknya ke kotak label wahana yang sebenarnya; lalu sprite digeser naik-turun lewat titik tambatnya bila
+       masih beririsan dengan label. Digambar di bawah label wahana, dan dihitung ulang tiap bingkai dihitung ulang. */
+    var kawasan = [], rintang = [{x0: 92, x1: 298, z0: 72, z1: 246}], hindari = [], zonaSp = [];
+    rumah.forEach(function (hs) { rintang.push({x: hs.x, z: hs.z, r: hs.r + 6}); });
+    Array.prototype.forEach.call(svg.querySelectorAll('text.zlbl'), function (t) { var teks = t.textContent.trim(); if (!teks) return; var kecil = /small/.test(t.getAttribute('class') || '');
+      var z = namaKawasan(teks, dk, LZ * (kecil ? 0.78 : 1)); z.userData.kecil = kecil; z.userData.ax = parseFloat(t.getAttribute('x')) - W / 2; z.userData.az = parseFloat(t.getAttribute('y')) - Hh / 2; z.userData.teks = teks; sc.add(z); zonaSp.push(z); });
+    function tulisKawasan() {
+      viewer.place(); viewer.camera.updateMatrixWorld();
+      var labelPx = LH / 0.728 * tinggiHost, rD = viewer.renderer.domElement, wD = rD.clientWidth || 300, hD = rD.clientHeight || 220;
+      var kotakL = antri.map(function (a) { var p = a.ride.g.position, c = proyeksi(p.x, Math.min(a.H, 40) + 6, p.z), hw = a.w60 * labelPx / 2; return [c[0] - hw, c[1] - labelPx, c[0] + hw, c[1]]; });
+      function tabrak(k, b) { return !(k[2] < b[0] || k[0] > b[2] || k[3] < b[1] || k[1] > b[3]); }
+      kawasan = []; hindari = rintang.slice();
+      zonaSp.forEach(function (z) {
+        var u = z.userData, zpx = z.scale.y / 0.728 * hD, hw = u.w60 * zpx / 2, hh = zpx / 2, lebarW = u.teks.length * (u.kecil ? 12 : 16), terbaik = null, skorB = -1e9;
+        [-110, -70, -35, 0, 35, 70, 110].forEach(function (ox) { [-16, 0, 24, 48, 76, 104].forEach(function (oz) {
+          var cx = u.ax + ox, cz = u.az + oz; if (Math.abs(cx) + lebarW / 2 > W / 2 - 4 || cz < -Hh / 2 + 100 || cz > Hh / 2 - 86) return;
+          var c = proyeksi(cx, 0, cz), skor = 1e9;
+          kotakL.forEach(function (k) { var dx = Math.max(k[0] - (c[0] + hw), (c[0] - hw) - k[2]), dy = Math.max(k[1] - (c[1] + hh), (c[1] - hh) - k[3]);
+            skor = Math.min(skor, dx > 0 || dy > 0 ? Math.hypot(Math.max(dx, 0), Math.max(dy, 0)) : Math.max(dx, dy)); });
+          rintang.forEach(function (rt) { skor = Math.min(skor, (rt.r !== undefined ? Math.hypot(rt.x - cx, rt.z - cz) - rt.r : Math.max(rt.x0 - cx, cx - rt.x1, rt.z0 - cz, cz - rt.z1) + 12) * 0.5); });
+          skor -= (Math.abs(ox) + Math.abs(oz)) * 0.04; if (skor > skorB) { skorB = skor; terbaik = [cx, cz]; }
+        }); });
+        if (!terbaik) terbaik = [u.ax, u.az];
+        z.position.set(terbaik[0], 0, terbaik[1]);
+        /* geser tegak di layar lewat titik tambat sampai tidak beririsan dengan label wahana dan tetap di dalam layar */
+        var c = proyeksi(terbaik[0], 0, terbaik[1]), pilih = 0.5, cand = [0.5, 1.55, -0.55, 2.6, -1.6, 3.65];
+        for (var q = 0; q < cand.length; q++) { var cy = cand[q], kotak = [c[0] - hw, c[1] - (1 - cy) * zpx, c[0] + hw, c[1] + cy * zpx]; if (kotak[1] < 2 || kotak[3] > hD - 2) continue; var bentrok = false; for (var k2 = 0; k2 < kotakL.length && !bentrok; k2++) bentrok = tabrak(kotak, kotakL[k2]); if (!bentrok) { pilih = cy; break; } }
+        z.center.set(0.5, pilih); z.center.x = c[0] - hw < 2 ? clamp((c[0] - 2) / (2 * hw), 0, 0.5) : (c[0] + hw > wD - 2 ? clamp(1 - (wD - 2 - c[0]) / (2 * hw), 0.5, 1) : 0.5);
+        kawasan.push({teks: u.teks, x: terbaik[0], z: terbaik[1], skor: skorB, cy: pilih}); hindari.push({x: terbaik[0], z: terbaik[1], r: 6 + lebarW / 2});
+      });
+    }
+    tulisKawasan();
+    var hidup = tamanHidup(svg, W, Hh, sibuk, dk, lite, hindari); sc.add(hidup.g);
+    /* saat HP diputar atau rel di laptop dibuka-tutup: ukuran label ikut; bingkai dan nama kawasan dihitung ulang kalau pengguna belum menggeser */
+    viewer.onResize = function (w, h) { tinggiHost = h || 600; LH = 0.728 * ((w / h) < 0.7 ? 13 : 16) / tinggiHost; LZ = 0.728 * ((w / h) < 0.7 ? 15 : 19) / tinggiHost; labels.forEach(function (l) { l.scale.set(l.userData.w60 * LH, LH, 1); }); zonaSp.forEach(function (z) { var lz = LZ * (z.userData.kecil ? 0.78 : 1); z.scale.set(z.userData.w60 * lz, lz, 1); });
+      if (!viewer.free) { bingkai(); tulisKawasan(); } else { viewer.maxD = dist0 * 1.8; viewer.dist = clamp(viewer.dist, viewer.minD, viewer.maxD); } };
     var ray = new T.Raycaster(), ndc = new T.Vector2();
-    /* ketuk: utamakan model dan label, baru cakram plaza (instanceId -> id) */
+    /* ketuk: label (digambar paling atas) menang dulu, lalu model, baru cakram plaza (instanceId -> id) */
     function pilihDi(cx, cy) { var r = viewer.renderer.domElement.getBoundingClientRect(); ndc.set((cx - r.left) / r.width * 2 - 1, -(cy - r.top) / r.height * 2 + 1); ray.setFromCamera(ndc, viewer.camera); var hit = ray.intersectObjects(pick, true), rid = null, i;
+      for (i = 0; i < hit.length && !rid; i++) if (hit[i].object.isSprite && hit[i].object.userData.rid) rid = hit[i].object.userData.rid;
       for (i = 0; i < hit.length && !rid; i++) if (hit[i].object.userData.rid) rid = hit[i].object.userData.rid;
       for (i = 0; i < hit.length && !rid; i++) { var o = hit[i].object; if (o.userData.rids && hit[i].instanceId !== undefined) rid = o.userData.rids[hit[i].instanceId]; }
       return rid; }
     viewer.onTap = function (e) { var rid = pilihDi(e.clientX, e.clientY); if (rid) onPick(rid); };
     var st = cur = {viewer: viewer, raf: 0, t: 0, park: true}, lastT = performance.now(), diam = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function frame(now) { st.raf = requestAnimationFrame(frame); if (cur !== st || document.hidden) return; var dt = Math.min(0.05, (now - lastT) / 1000); lastT = now; if (!diam) { st.t += dt; for (var i = 0; i < rides.length; i++) { try { rides[i].tick(st.t, dt); } catch (e) {} } } hidup.tick(st.t);
-      /* kabut mengikuti jarak kamera: sudut taman terjauh selalu lebih dekat dari near, laut di belakangnya memudar */
-      sc.fog.near = viewer.dist + 560; sc.fog.far = viewer.dist + 1500;
-      var jauh = viewer.dist > dist0 * 1.3; for (var l = 0; l < labels.length; l++) labels[l].visible = !(jauh && labels[l].userData.kecil);
-      viewer.place(); viewer.render(); }
+    function frame(now) { st.raf = requestAnimationFrame(frame); if (cur !== st || document.hidden) return; var dt = Math.min(0.05, (now - lastT) / 1000); lastT = now; if (!diam) { st.t += dt; for (var i = 0; i < rides.length; i++) { if (rides[i].tutup) continue; try { rides[i].tick(st.t, dt); } catch (e) {} } } hidup.tick(st.t);
+      viewer.place(); viewer.camera.updateMatrixWorld();
+      /* kabut dari sudut taman terjauh ke kamera, jadi seluruh taman selalu jernih berapa pun jarak, geseran, atau putarannya */
+      var cp = viewer.camera.position, terjauh = 0; for (var c4 = 0; c4 < 4; c4++) terjauh = Math.max(terjauh, Math.hypot(SUDUT4[c4][0] - cp.x, cp.y, SUDUT4[c4][1] - cp.z));
+      sc.fog.near = Math.max(terjauh + 40, viewer.dist + 560); sc.fog.far = sc.fog.near + 940;
+      /* label: wahana kecil disembunyikan saat diperkecil jauh; pil yang menyentuh tepi layar digeser ke dalam lewat titik tambatnya */
+      var jauh = viewer.dist > dist0 * 1.3, rD = viewer.renderer.domElement, wD = rD.clientWidth || 300, labelPx = LH / 0.728 * tinggiHost;
+      for (var l = 0; l < labels.length; l++) { var lb = labels[l]; lb.visible = !(jauh && lb.userData.kecil); if (!lb.visible) continue;
+        var px = (tmpV.copy(lb.position).project(viewer.camera).x + 1) / 2 * wD, hw = lb.userData.w60 * labelPx / 2;
+        lb.center.x = px - hw < 4 ? clamp((px - 4) / (2 * hw), 0, 0.5) : (px + hw > wD - 4 ? clamp(1 - (wD - 4 - px) / (2 * hw), 0.5, 1) : 0.5); }
+      viewer.render(); }
     st.raf = requestAnimationFrame(frame);
     var api = st.api = {zoom: function (f) { viewer.dist = clamp(viewer.dist * f, viewer.minD, viewer.maxD); viewer.free = true; }, putar: function (a) { viewer.az += a; viewer.free = true; }, atas: function () { viewer.el = viewer.el > 1.2 ? el0 : 1.5; viewer.free = true; }, fokus: function (id) { var p = letak[id]; if (p) { viewer.target.set(p.x, 0, p.z); viewer.dist = 300; viewer.el = 0.55; viewer.free = true; } },
       /* untuk pengujian: titik layar (px CSS) sebuah wahana pada tinggi y, dan wahana yang kena ketuk di titik layar */
       layar: function (id, y) { var p = letak[id]; if (!p) return null; var v = new T.Vector3(p.x, y || 0, p.z).project(viewer.camera), r = viewer.renderer.domElement.getBoundingClientRect(); return [(v.x + 1) / 2 * r.width + r.left, (1 - v.y) / 2 * r.height + r.top]; },
       pilihDi: pilihDi,
       /* untuk pengujian: mengatur kamera langsung {tz, el, dist, az} */
-      atur: function (o) { if (o.tz !== undefined) viewer.target.set(0, 0, o.tz); if (o.el !== undefined) viewer.el = o.el; if (o.dist !== undefined) viewer.dist = o.dist; if (o.az !== undefined) viewer.az = o.az; viewer.free = true; },
+      atur: function (o) { if (o.tz !== undefined) viewer.target.set(0, 0, o.tz); if (o.el !== undefined) viewer.el = o.el; if (o.dist !== undefined) viewer.dist = o.dist; if (o.az !== undefined) viewer.az = o.az; viewer.free = true; if (o.bingkai) { bingkai(); tulisKawasan(); } },
       /* untuk pengukuran dan pengujian: keadaan kamera, beban render, dan ukuran tiap model di adegan */
       ukur: function () { var inf = viewer.renderer.info.render; return {dist: viewer.dist, el: viewer.el, az: viewer.az, target: [viewer.target.x, viewer.target.y, viewer.target.z], aspect: viewer.camera.aspect, fov: viewer.camera.fov, dist0: dist0, el0: el0, potret: potret, lite: lite, calls: inf.calls, triangles: inf.triangles, fog: [sc.fog.near, sc.fog.far],
         labelTampak: labels.filter(function (l) { return l.visible; }).length, labelPx: LH / 0.728 * tinggiHost,
-        wahana: antri.map(function (a, i) { var p = a.ride.g.position; return {id: a.id, x: p.x, z: p.z, k: a.k, sy: a.sy, R: a.R, H: a.H, plaza: a.plaza, nama: a.nama, w60: labels[i].userData.w60, tampak: labels[i].visible}; })}; }};
+        kawasan: zonaSp.map(function (z) { var c = proyeksi(z.position.x, 0, z.position.z), rk = viewer.renderer.domElement.getBoundingClientRect(), zpx = z.scale.y / 0.728 * tinggiHost, lw = z.userData.w60 * zpx; return {teks: z.userData.teks, x: z.position.x, z: z.position.z, cy: z.center.y, rect: [c[0] - lw * z.center.x + rk.left, c[1] - (1 - z.center.y) * zpx + rk.top, c[0] + lw * (1 - z.center.x) + rk.left, c[1] + z.center.y * zpx + rk.top]}; }),
+        wahana: antri.map(function (a, i) { var p = a.ride.g.position, lb = labels[i], c = proyeksi(p.x, Math.min(a.H, 40) + 6, p.z), lw = lb.userData.w60 * (LH / 0.728 * tinggiHost), lh = LH / 0.728 * tinggiHost, rk = viewer.renderer.domElement.getBoundingClientRect();
+          return {id: a.id, x: p.x, z: p.z, k: a.k, sy: a.sy, R: a.R, H: a.H, plaza: a.plaza, nama: a.nama, tutup: !!a.tutup, w60: lb.userData.w60, tampak: lb.visible, rect: [c[0] - lw * lb.center.x + rk.left, c[1] - lh + rk.top, c[0] + lw * (1 - lb.center.x) + rk.left, c[1] + rk.top]}; })}; }};
     return api;
   }
   /* pengukuran peta 3D yang sedang terpasang, dipakai skrip uji */
