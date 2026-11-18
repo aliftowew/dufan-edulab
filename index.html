@@ -3375,10 +3375,16 @@ var Dufan3D = (function () {
     var st = cur = {viewer: viewer, raf: 0, t: 0, park: true}, lastT = performance.now(), diam = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function frame(now) { st.raf = requestAnimationFrame(frame); if (cur !== st || document.hidden) return; var dt = Math.min(0.05, (now - lastT) / 1000); lastT = now; if (!diam) { st.t += dt; for (var i = 0; i < rides.length; i++) { try { rides[i].tick(st.t, dt); } catch (e) {} } } hidup.tick(st.t); viewer.place(); viewer.render(); }
     st.raf = requestAnimationFrame(frame);
-    return {zoom: function (f) { viewer.dist = clamp(viewer.dist * f, viewer.minD, viewer.maxD); }, putar: function (a) { viewer.az += a; }, atas: function () { viewer.el = viewer.el > 1.2 ? 0.72 : 1.5; }, fokus: function (id) { var p = letak[id]; if (p) { viewer.target.set(p.x, 0, p.z); viewer.dist = 300; viewer.el = 0.55; } }};
+    var api = st.api = {zoom: function (f) { viewer.dist = clamp(viewer.dist * f, viewer.minD, viewer.maxD); }, putar: function (a) { viewer.az += a; }, atas: function () { viewer.el = viewer.el > 1.2 ? 0.72 : 1.5; }, fokus: function (id) { var p = letak[id]; if (p) { viewer.target.set(p.x, 0, p.z); viewer.dist = 300; viewer.el = 0.55; } },
+      /* untuk pengukuran dan pengujian: keadaan kamera, beban render, dan ukuran tiap model di adegan */
+      ukur: function () { var inf = viewer.renderer.info.render; return {dist: viewer.dist, el: viewer.el, az: viewer.az, target: [viewer.target.x, viewer.target.y, viewer.target.z], aspect: viewer.camera.aspect, fov: viewer.camera.fov, calls: inf.calls, triangles: inf.triangles,
+        wahana: rides.map(function (r) { var k = r.g.scale.x; return {id: r.g.userData.rid, x: r.g.position.x, z: r.g.position.z, k: k, R: (r.r || 8) * k, H: r.h * k}; })}; }};
+    return api;
   }
+  /* pengukuran peta 3D yang sedang terpasang, dipakai skrip uji */
+  function ukurPeta() { return cur && cur.park && cur.api ? cur.api.ukur() : null; }
 
-  return {ok: true, BUILD: BUILD, mountRide: mountRide, unmount: unmount, mountPark: mountPark,
+  return {ok: true, BUILD: BUILD, mountRide: mountRide, unmount: unmount, mountPark: mountPark, ukurPeta: ukurPeta,
     k: {T: T, G: G, PI: PI, TAU: TAU, V: V, clamp: clamp, ease: ease, fnum: fnum, rng: rng, M: M, mk: mk, box: box, cyl: cyl, sph: sph, cone: cone, ring: ring, beam: beam, setBeam: setBeam, grp: grp, at: at, rot: rot, person: person, seat: seat, tube: tube, aFrame: aFrame, Seq: Seq, Path: Path, Motion: Motion, rails: rails, supports: supports, ties: ties, ribbon: ribbon, walls: walls, inst: inst}};
 })();
 /* Model 3D, bagian A: wahana yang intinya gerak melingkar. Sudut kutub diukur dari +x ke +z. */
